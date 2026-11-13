@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Student Registration | SOMFORGE</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -65,6 +64,7 @@ h1 {
     text-align: center;
     color: #71808c;
     margin-bottom: 30px;
+    line-height: 1.5;
 }
 
 label {
@@ -115,6 +115,8 @@ button:disabled {
     border-radius: 5px;
     display: none;
     font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .success {
@@ -174,20 +176,12 @@ footer {
     <form id="registrationForm">
 
         <label for="fullName">Full Name</label>
-        <input
-            type="text"
-            id="fullName"
-            placeholder="Enter your full name"
-            required
-        >
+        <input type="text" id="fullName"
+               placeholder="Enter your full name" required>
 
         <label for="email">Email Address</label>
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter your email address"
-            required
-        >
+        <input type="email" id="email"
+               placeholder="Enter your email address" required>
 
         <label for="year">Academic Year</label>
         <select id="year" required>
@@ -197,21 +191,13 @@ footer {
         </select>
 
         <label for="password">Password</label>
-        <input
-            type="password"
-            id="password"
-            placeholder="At least 8 characters"
-            minlength="8"
-            required
-        >
+        <input type="password" id="password"
+               placeholder="At least 8 characters"
+               minlength="8" required>
 
         <label for="confirmPassword">Confirm Password</label>
-        <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Enter your password again"
-            required
-        >
+        <input type="password" id="confirmPassword"
+               placeholder="Enter your password again" required>
 
         <button type="submit" id="submitButton">
             Create Account
@@ -235,6 +221,7 @@ footer {
 <script>
 const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
 
+// Replace this placeholder with your actual Supabase Publishable Key.
 const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
 
 const supabaseClient = window.supabase.createClient(
@@ -246,11 +233,15 @@ const form = document.getElementById("registrationForm");
 const message = document.getElementById("message");
 const button = document.getElementById("submitButton");
 
-form.addEventListener("submit", async function(event) {
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+    message.style.display = "block";
+}
 
+form.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    message.className = "message";
     message.style.display = "none";
 
     const fullName = document.getElementById("fullName").value.trim();
@@ -259,15 +250,18 @@ form.addEventListener("submit", async function(event) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (password !== confirmPassword) {
-        message.textContent = "Your passwords do not match.";
-        message.className = "message error";
+    if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt") {
+        showMessage("The registration page has not been connected to Supabase yet. Please configure its Publishable Key.", "error");
         return;
     }
 
-    if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt") {
-        message.textContent = "Registration is not configured yet.";
-        message.className = "message error";
+    if (password.length < 8) {
+        showMessage("Your password must contain at least 8 characters.", "error");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showMessage("Your passwords do not match.", "error");
         return;
     }
 
@@ -275,12 +269,11 @@ form.addEventListener("submit", async function(event) {
     button.textContent = "Creating Account...";
 
     try {
-
         const { data, error } = await supabaseClient.auth.signUp({
             email: email,
             password: password,
             options: {
-                emailRedirectTo: window.location.origin + "/",
+                emailRedirectTo: "https://somforge.github.io/Somforge-portal/",
                 data: {
                     full_name: fullName,
                     year_level: year
@@ -288,27 +281,28 @@ form.addEventListener("submit", async function(event) {
             }
         });
 
-        if (error) throw error;
+        if (error) {
+            throw error;
+        }
 
-        message.textContent =
-            "Registration successful! Please check your email for a verification link before signing in.";
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+            showMessage("An account may already exist with this email address. Try signing in or resetting your password.", "error");
+            return;
+        }
 
-        message.className = "message success";
+        showMessage(
+            "Your registration request was received. Please check your email for a verification link before signing in. Also check your spam folder.",
+            "success"
+        );
 
         form.reset();
 
     } catch (error) {
-
-        message.textContent = error.message;
-        message.className = "message error";
-
+        showMessage("Registration failed: " + error.message, "error");
     } finally {
-
         button.disabled = false;
         button.textContent = "Create Account";
-
     }
-
 });
 </script>
 
