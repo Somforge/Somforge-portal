@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Registration | SOMFORGE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+    --navy: #102b3f;
+    --blue: #176078;
+    --teal: #168b91;
+    --gold: #e5b94c;
+    --light: #f4f7fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--light);
+    color: #253746;
+    min-height: 100vh;
+}
+
+header {
+    background: var(--navy);
+    padding: 20px 8%;
+}
+
+.logo {
+    color: white;
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.container {
+    max-width: 480px;
+    margin: 55px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #71808c;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin: 17px 0 7px;
+    color: var(--navy);
+}
+
+input, select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccd5dc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    outline: 2px solid var(--teal);
+    border-color: var(--teal);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--blue);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 5px;
+    display: none;
+    font-size: 14px;
+}
+
+.success {
+    display: block;
+    background: #e5f5eb;
+    color: #176b38;
+}
+
+.error {
+    display: block;
+    background: #fdeaea;
+    color: #a32626;
+}
+
+.login {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+}
+
+.login a {
+    color: var(--teal);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #71808c;
+    font-size: 13px;
+}
+
+@media(max-width: 550px) {
+    .container {
+        margin: 25px 15px;
+        padding: 28px 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">SOM<span>FORGE</span></div>
+</header>
+
+<div class="container">
+
+    <h1>Create Your Account</h1>
+
+    <p class="subtitle">
+        Join SOMFORGE and begin your learning journey.
+    </p>
+
+    <form id="registrationForm">
+
+        <label for="fullName">Full Name</label>
+        <input
+            type="text"
+            id="fullName"
+            placeholder="Enter your full name"
+            required
+        >
+
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email address"
+            required
+        >
+
+        <label for="year">Academic Year</label>
+        <select id="year" required>
+            <option value="">Select your academic year</option>
+            <option value="Year 2">MBChB Year 2</option>
+            <option value="Year 3">MBChB Year 3</option>
+        </select>
+
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            placeholder="At least 8 characters"
+            minlength="8"
+            required
+        >
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Enter your password again"
+            required
+        >
+
+        <button type="submit" id="submitButton">
+            Create Account
+        </button>
+
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="login">
+        Already registered?
+        <a href="login.html">Sign in</a>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 SOMFORGE. Forging the Doctors of Tomorrow.
+</footer>
+
+<script>
+const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+const form = document.getElementById("registrationForm");
+const message = document.getElementById("message");
+const button = document.getElementById("submitButton");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    message.className = "message";
+    message.style.display = "none";
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const year = document.getElementById("year").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        message.textContent = "Your passwords do not match.";
+        message.className = "message error";
+        return;
+    }
+
+    if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt") {
+        message.textContent = "Registration is not configured yet.";
+        message.className = "message error";
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Creating Account...";
+
+    try {
+
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                emailRedirectTo: window.location.origin + "/",
+                data: {
+                    full_name: fullName,
+                    year_level: year
+                }
+            }
+        });
+
+        if (error) throw error;
+
+        message.textContent =
+            "Registration successful! Please check your email for a verification link before signing in.";
+
+        message.className = "message success";
+
+        form.reset();
+
+    } catch (error) {
+
+        message.textContent = error.message;
+        message.className = "message error";
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Create Account";
+
+    }
+
+});
+</script>
+
+</body>
+</html>
