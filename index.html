@@ -3,216 +3,697 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOMFORGE | Forging the Doctors of Tomorrow</title>
-<meta name="description" content="SOMFORGE medical learning platform for medical students.">
+
+<title>SOMFORGE | Medical Education</title>
+<meta name="description" content="SOMFORGE is a medical education platform supporting MBChB students through structured teaching, academic resources and examination preparation.">
 
 <style>
 :root {
-    --navy:#102b3f;
-    --blue:#176078;
-    --teal:#168b91;
-    --gold:#e5b94c;
-    --light:#f4f7fa;
-    --text:#253746;
+    --navy: #102b3f;
+    --blue: #176078;
+    --teal: #168b91;
+    --gold: #e5b94c;
+    --light: #f4f7fa;
+    --white: #ffffff;
+    --text: #253746;
+    --muted: #687986;
 }
-* {margin:0;padding:0;box-sizing:border-box;}
-html {scroll-behavior:smooth;}
-body {font-family:Arial,sans-serif;background:var(--light);color:var(--text);line-height:1.6;}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* HEADER */
 
 header {
-    background:var(--navy);
-    padding:18px 7%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:15px;
+    background: var(--navy);
+    padding: 19px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
 }
-.logo {color:white;font-size:27px;font-weight:bold;letter-spacing:2px;}
-.logo span, .footer-logo span {color:var(--gold);}
-nav {display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
-nav a {color:white;text-decoration:none;font-size:14px;}
-nav a:hover {color:var(--gold);}
-.nav-button {background:var(--gold);color:var(--navy);padding:9px 17px;border-radius:5px;font-weight:bold;}
+
+.logo {
+    color: var(--white);
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span,
+.footer-logo span {
+    color: var(--gold);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 27px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #e5edf2;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+nav .login-link {
+    color: var(--white);
+}
+
+nav .register-link {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 10px 19px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+nav .register-link:hover {
+    background: #f0ca68;
+    color: var(--navy);
+}
+
+/* HERO */
 
 .hero {
-    background:linear-gradient(125deg,var(--navy),var(--blue));
-    color:white;
-    padding:110px 8%;
-    text-align:center;
+    background: linear-gradient(120deg, var(--navy), var(--blue));
+    color: var(--white);
+    padding: 115px 8%;
 }
-.hero-content {max-width:850px;margin:auto;}
-.hero-label {color:var(--gold);letter-spacing:3px;font-size:13px;font-weight:bold;margin-bottom:20px;}
-.hero h1 {font-size:52px;line-height:1.2;margin-bottom:22px;}
-.hero h1 span {color:var(--gold);}
-.hero p {font-size:18px;max-width:680px;margin:0 auto 35px;color:#e2edf2;}
-.buttons {display:flex;justify-content:center;gap:15px;flex-wrap:wrap;}
-.button {display:inline-block;padding:13px 26px;border-radius:5px;text-decoration:none;font-weight:bold;}
-.primary {background:var(--gold);color:var(--navy);}
-.secondary {border:1px solid white;color:white;}
 
-.section {padding:80px 8%;text-align:center;}
-.label {color:var(--teal);font-size:13px;font-weight:bold;letter-spacing:2px;margin-bottom:10px;}
-.section h2 {color:var(--navy);font-size:34px;margin-bottom:15px;}
-.intro {max-width:650px;margin:auto;color:#667784;}
-
-.years,.subjects,.features {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:25px;
-    margin-top:40px;
+.hero-content {
+    max-width: 1050px;
+    margin: auto;
 }
-.year-card {
-    background:white;padding:40px 30px;border-radius:12px;
-    border-top:5px solid var(--gold);
-    box-shadow:0 5px 20px rgba(16,43,63,.07);
-}
-.year-number {font-size:42px;font-weight:bold;color:var(--teal);}
-.year-card h3 {color:var(--navy);font-size:23px;margin:10px 0;}
-.year-card p {color:#667784;margin-bottom:20px;}
 
-.subject-section {background:#eaf0f4;}
-.subject-card {
-    background:white;padding:28px 22px;border-radius:10px;
-    text-align:left;box-shadow:0 3px 15px rgba(16,43,63,.05);
+.hero-label {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
 }
-.subject-icon {
-    width:48px;height:48px;background:#e5f2f2;color:var(--teal);
-    border-radius:10px;display:flex;justify-content:center;
-    align-items:center;font-size:23px;margin-bottom:15px;
+
+.hero h1 {
+    max-width: 780px;
+    font-size: 55px;
+    line-height: 1.2;
+    margin-bottom: 25px;
 }
-.subject-card h3 {color:var(--navy);margin-bottom:8px;}
-.subject-card p,.feature p {color:#71808c;font-size:14px;}
 
-.feature {padding:25px;}
-.feature h3 {color:var(--navy);margin-bottom:10px;}
+.hero h1 span {
+    color: var(--gold);
+}
 
-.about {background:white;}
-.about-content {max-width:800px;margin:auto;}
-.about-content p {margin-top:18px;color:#667784;}
+.hero p {
+    max-width: 680px;
+    font-size: 18px;
+    color: #e0eaf0;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: inline-block;
+    padding: 13px 25px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.button-primary {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+.button-primary:hover {
+    background: #f0ca68;
+}
+
+.button-secondary {
+    border: 1px solid #ffffff;
+    color: var(--white);
+}
+
+.button-secondary:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* GENERAL SECTIONS */
+
+.section {
+    padding: 85px 8%;
+}
+
+.section-inner {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section-label {
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.section h2 {
+    color: var(--navy);
+    font-size: 35px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+}
+
+.section-intro {
+    color: var(--muted);
+    max-width: 720px;
+    font-size: 16px;
+}
+
+/* ABOUT */
+
+.about-section {
+    background: var(--white);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 65px;
+    align-items: center;
+}
+
+.about-text p {
+    color: var(--muted);
+    margin-top: 17px;
+}
+
+.about-panel {
+    background: var(--light);
+    border-left: 5px solid var(--gold);
+    padding: 35px;
+    border-radius: 5px;
+}
+
+.about-panel h3 {
+    color: var(--navy);
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.about-panel p {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* LEARNING EXPERIENCE */
+
+.learning-section {
+    background: var(--light);
+}
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 42px;
+}
+
+.learning-item {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 6px;
+    border-bottom: 3px solid var(--teal);
+}
+
+.learning-number {
+    color: var(--teal);
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.learning-item h3 {
+    color: var(--navy);
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.learning-item p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* STUDENTS */
+
+.students-section {
+    background: var(--white);
+}
+
+.students-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.student-levels {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.level {
+    background: var(--light);
+    border: 1px solid #dce5eb;
+    padding: 22px 30px;
+    min-width: 150px;
+    border-radius: 5px;
+}
+
+.level strong {
+    display: block;
+    color: var(--teal);
+    font-size: 29px;
+}
+
+.level span {
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* CALL TO ACTION */
 
 .cta {
-    background:linear-gradient(120deg,var(--navy),var(--blue));
-    color:white;padding:75px 8%;text-align:center;
+    background: linear-gradient(120deg, var(--navy), var(--blue));
+    padding: 75px 8%;
+    text-align: center;
+    color: var(--white);
 }
-.cta h2 {font-size:34px;margin-bottom:15px;}
-.cta p {margin-bottom:25px;color:#e2edf2;}
 
-footer {background:#0b2030;color:white;padding:45px 8% 20px;text-align:center;}
-.footer-logo {font-size:25px;font-weight:bold;letter-spacing:2px;margin-bottom:12px;}
-footer p {color:#bdcbd4;font-size:14px;}
-.footer-bottom {border-top:1px solid #304454;margin-top:30px;padding-top:18px;}
+.cta h2 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
 
-@media(max-width:700px) {
-    header {justify-content:center;}
-    nav {justify-content:center;gap:14px;}
-    .hero {padding:80px 6%;}
-    .hero h1 {font-size:36px;}
-    .hero p {font-size:16px;}
-    .section {padding:60px 6%;}
-    .section h2,.cta h2 {font-size:28px;}
+.cta p {
+    color: #e0eaf0;
+    margin-bottom: 28px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #0b2030;
+    color: var(--white);
+    padding: 50px 8% 20px;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.footer-logo {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.footer-description {
+    color: #bdcbd4;
+    max-width: 350px;
+    font-size: 14px;
+}
+
+.footer-links h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    display: block;
+    color: #bdcbd4;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.footer-links a:hover {
+    color: var(--gold);
+}
+
+.footer-bottom {
+    max-width: 1100px;
+    margin: 35px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid #304454;
+    color: #bdcbd4;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+    header {
+        flex-direction: column;
+        padding: 20px 5%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 17px;
+    }
+
+    .hero {
+        padding: 85px 7%;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .learning-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 65px 7%;
+    }
+
+    .section h2 {
+        font-size: 29px;
+    }
+
+    .students-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cta h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 450px) {
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    nav {
+        gap: 13px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .student-levels {
+        width: 100%;
+    }
+
+    .level {
+        flex: 1;
+        min-width: 120px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <header>
     <div class="logo">SOM<span>FORGE</span></div>
+
     <nav>
         <a href="#home">Home</a>
-        <a href="#programmes">Programmes</a>
-        <a href="#subjects">Subjects</a>
         <a href="#about">About</a>
+        <a href="#learning">Learning</a>
+        <a href="#students">Students</a>
         <a href="#contact">Contact</a>
-        <a href="#programmes" class="nav-button">Get Started</a>
+        <a href="login.html" class="login-link">Login</a>
+        <a href="register.html" class="register-link">Get Started</a>
     </nav>
 </header>
 
+<!-- HERO -->
+
 <section class="hero" id="home">
     <div class="hero-content">
-        <div class="hero-label">MEDICAL EDUCATION • ACADEMIC EXCELLENCE</div>
-        <h1>Forging the <span>Doctors</span> of Tomorrow</h1>
-        <p>Welcome to SOMFORGE — a learning platform dedicated to empowering medical students through deeper understanding, quality academic resources and engaging medical education.</p>
-        <div class="buttons">
-            <a href="#programmes" class="button primary">Explore Programmes</a>
-            <a href="#about" class="button secondary">Discover SOMFORGE</a>
+
+        <div class="hero-label">
+            SOMFORGE MEDICAL EDUCATION
+        </div>
+
+        <h1>
+            Building Knowledge.<br>
+            <span>Shaping Future Doctors.</span>
+        </h1>
+
+        <p>
+            SOMFORGE is a medical education platform created to support
+            medical students through structured teaching, quality
+            academic resources and meaningful examination preparation.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="register.html" class="button button-primary">
+                Join SOMFORGE
+            </a>
+
+            <a href="#about" class="button button-secondary">
+                Learn About Us
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ABOUT -->
+
+<section class="section about-section" id="about">
+    <div class="section-inner about-content">
+
+        <div class="about-text">
+            <div class="section-label">ABOUT SOMFORGE</div>
+
+            <h2>
+                Supporting the Journey Through Medical School
+            </h2>
+
+            <p>
+                Medical training requires a strong understanding of
+                scientific principles, consistent study and the ability
+                to apply knowledge to clinical situations.
+            </p>
+
+            <p>
+                SOMFORGE was established to provide medical students
+                with an organised learning environment where they can
+                access teaching materials, review important concepts
+                and prepare for their examinations.
+            </p>
+
+            <p>
+                Our focus is on helping students develop a deeper
+                understanding of medicine and build confidence in
+                their academic journey.
+            </p>
+        </div>
+
+        <div class="about-panel">
+            <h3>Our Purpose</h3>
+
+            <p>
+                To make quality medical education more accessible
+                through organised learning resources, effective
+                teaching and opportunities for continuous academic
+                development.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- LEARNING EXPERIENCE -->
+
+<section class="section learning-section" id="learning">
+    <div class="section-inner">
+
+        <div class="section-label">THE LEARNING EXPERIENCE</div>
+
+        <h2>A Structured Approach to Learning</h2>
+
+        <p class="section-intro">
+            Students can access a range of learning opportunities
+            designed to support their studies and examination preparation.
+        </p>
+
+        <div class="learning-grid">
+
+            <div class="learning-item">
+                <div class="learning-number">01</div>
+                <h3>Teaching Sessions</h3>
+                <p>
+                    Access organised teaching sessions that explain
+                    important medical concepts and their applications.
+                </p>
+            </div>
+
+            <div class="learning-item">
+                <div class="learning-number">02</div>
+                <h3>Academic Resources</h3>
+                <p>
+                    Study using organised notes, presentations and
+                    other materials relevant to your academic level.
+                </p>
+            </div>
+
+            <div class="learning-item">
+                <div class="learning-number">03</div>
+                <h3>Examination Preparation</h3>
+                <p>
+                    Practise with past examination questions and
+                    strengthen your approach to answering them.
+                </p>
+            </div>
+
         </div>
     </div>
 </section>
 
-<section class="section" id="programmes">
-    <div class="label">OUR PROGRAMMES</div>
-    <h2>Choose Your Academic Level</h2>
-    <p class="intro">Structured learning resources designed to support medical students throughout their academic journey.</p>
+<!-- STUDENTS -->
 
-    <div class="years">
-        <div class="year-card">
-            <div class="year-number">02</div>
-            <h3>MBChB Year 2</h3>
-            <p>Strengthen your understanding of fundamental medical sciences and build a solid foundation for clinical learning.</p>
-            <a href="#subjects" class="button primary">Explore Year 2</a>
+<section class="section students-section" id="students">
+    <div class="section-inner students-content">
+
+        <div>
+            <div class="section-label">WHO WE SERVE</div>
+
+            <h2>Designed for Medical Students</h2>
+
+            <p class="section-intro">
+                SOMFORGE currently focuses on supporting students
+                undertaking the MBChB programme at Copperbelt University.
+            </p>
         </div>
 
-        <div class="year-card">
-            <div class="year-number">03</div>
-            <h3>MBChB Year 3</h3>
-            <p>Develop deeper medical knowledge through integrated learning, disease mechanisms and therapeutic principles.</p>
-            <a href="#subjects" class="button primary">Explore Year 3</a>
+        <div class="student-levels">
+
+            <div class="level">
+                <strong>02</strong>
+                <span>MBChB Year 2</span>
+            </div>
+
+            <div class="level">
+                <strong>03</strong>
+                <span>MBChB Year 3</span>
+            </div>
+
         </div>
+
     </div>
 </section>
 
-<section class="section subject-section" id="subjects">
-    <div class="label">ACADEMIC DEPARTMENTS</div>
-    <h2>Explore Our Learning Areas</h2>
-    <p class="intro">Six essential learning areas supporting your development as a future medical professional.</p>
-
-    <div class="subjects">
-        <div class="subject-card"><div class="subject-icon">⚕</div><h3>Anatomy</h3><p>Explore the structure and organisation of the human body.</p></div>
-        <div class="subject-card"><div class="subject-icon">🧬</div><h3>Biochemistry</h3><p>Understand the molecular and chemical processes of life.</p></div>
-        <div class="subject-card"><div class="subject-icon">♥</div><h3>Physiology</h3><p>Discover how the human body functions and maintains balance.</p></div>
-        <div class="subject-card"><div class="subject-icon">🔬</div><h3>Pathology</h3><p>Understand diseases, their mechanisms and manifestations.</p></div>
-        <div class="subject-card"><div class="subject-icon">💊</div><h3>Therapeutics</h3><p>Learn the principles behind medicines and patient treatment.</p></div>
-        <div class="subject-card"><div class="subject-icon">🩺</div><h3>Clinical Sciences</h3><p>Develop foundational clinical knowledge and practical skills.</p></div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="label">THE SOMFORGE EXPERIENCE</div>
-    <h2>Learn Beyond Memorisation</h2>
-    <p class="intro">Our goal is to encourage understanding, confidence and meaningful academic development.</p>
-
-    <div class="features">
-        <div class="feature"><h3>Quality Resources</h3><p>Access organised academic materials and learning resources.</p></div>
-        <div class="feature"><h3>Interactive Teaching</h3><p>Learn through engaging lessons and guided explanations.</p></div>
-        <div class="feature"><h3>Past Paper Practice</h3><p>Strengthen examination preparation through structured practice.</p></div>
-        <div class="feature"><h3>Recorded Lectures</h3><p>Revisit lessons and reinforce your understanding at your own pace.</p></div>
-    </div>
-</section>
-
-<section class="section about" id="about">
-    <div class="about-content">
-        <div class="label">ABOUT US</div>
-        <h2>Welcome to SOMFORGE</h2>
-        <p>SOMFORGE is an educational initiative committed to supporting medical students through accessible, structured and engaging learning experiences.</p>
-        <p>We believe that becoming a competent doctor requires more than memorising facts. It requires understanding scientific principles, developing clinical reasoning and continuously improving one's knowledge.</p>
-        <p>Our vision is simple: to contribute to the development of knowledgeable, confident and compassionate future doctors.</p>
-    </div>
-</section>
+<!-- CALL TO ACTION -->
 
 <section class="cta" id="contact">
-    <h2>Your Medical Learning Journey Starts Here</h2>
-    <p>Build stronger foundations. Develop deeper understanding. Prepare for tomorrow.</p>
-    <a href="#programmes" class="button primary">Explore SOMFORGE</a>
+
+    <h2>Welcome to SOMFORGE</h2>
+
+    <p>
+        Take an active role in your medical education.
+    </p>
+
+    <a href="register.html" class="button button-primary">
+        Create Your Account
+    </a>
+
 </section>
 
+<!-- FOOTER -->
+
 <footer>
-    <div class="footer-logo">SOM<span>FORGE</span></div>
-    <p>Forging the Doctors of Tomorrow.</p>
-    <div class="footer-bottom">
-        <p>© 2026 SOMFORGE. All rights reserved.</p>
+
+    <div class="footer-content">
+
+        <div>
+            <div class="footer-logo">
+                SOM<span>FORGE</span>
+            </div>
+
+            <p class="footer-description">
+                A medical education initiative committed to supporting
+                students through quality teaching and accessible
+                academic resources.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <h3>Explore</h3>
+            <a href="#home">Home</a>
+            <a href="#about">About SOMFORGE</a>
+            <a href="#learning">Learning Experience</a>
+            <a href="#students">Students</a>
+        </div>
+
+        <div class="footer-links">
+            <h3>Account</h3>
+            <a href="login.html">Student Login</a>
+            <a href="register.html">Create Account</a>
+        </div>
+
     </div>
+
+    <div class="footer-bottom">
+        © 2026 SOMFORGE. All rights reserved.
+    </div>
+
 </footer>
 
 </body>
