@@ -27,7 +27,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
         }
 
         .logo {
@@ -42,7 +41,7 @@
         button {
             border: none;
             border-radius: 6px;
-            padding: 10px 17px;
+            padding: 11px 18px;
             cursor: pointer;
             font-weight: bold;
         }
@@ -58,36 +57,32 @@
             padding: 0 20px;
         }
 
-        .welcome {
+        .welcome, .card, .notice {
             background: white;
-            padding: 28px;
+            padding: 25px;
             border-radius: 12px;
-            margin-bottom: 25px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.04);
         }
 
-        .welcome h1 {
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1, .notice h2 {
             color: #102b4e;
             margin-bottom: 10px;
         }
 
-        .welcome p {
+        .welcome p, .notice p {
             color: #64748b;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             margin-bottom: 25px;
-        }
-
-        .card {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
         }
 
         .card h3 {
@@ -98,29 +93,14 @@
 
         .card p {
             color: #102b4e;
-            font-size: 21px;
+            font-size: 20px;
             font-weight: bold;
         }
 
-        .notice {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            line-height: 1.7;
-        }
-
-        .notice h2 {
-            color: #102b4e;
-            margin-bottom: 10px;
-        }
-
         #message {
-            margin-top: 20px;
-            color: #64748b;
-        }
-
-        .hidden {
-            display: none;
+            margin-top: 12px;
+            color: #b91c1c;
+            font-size: 14px;
         }
 
         @media (max-width: 500px) {
@@ -130,10 +110,6 @@
 
             .logo {
                 font-size: 19px;
-            }
-
-            main {
-                margin-top: 20px;
             }
         }
     </style>
@@ -154,6 +130,7 @@
     </section>
 
     <section class="cards">
+
         <div class="card">
             <h3>Academic Year</h3>
             <p id="year">Loading...</p>
@@ -168,11 +145,12 @@
             <h3>Subscription</h3>
             <p id="subscriptionStatus">Loading...</p>
         </div>
+
     </section>
 
     <section class="notice">
         <h2>Your Learning Portal</h2>
-        <p id="accessMessage">Checking your account and subscription...</p>
+        <p id="accessMessage">Checking your account...</p>
         <p id="message"></p>
     </section>
 
@@ -180,6 +158,7 @@
 
 <script>
     const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
 
     const supabaseClient = window.supabase.createClient(
@@ -188,23 +167,26 @@
     );
 
     async function loadDashboard() {
-        const welcomeMessage = document.getElementById("welcomeMessage");
-        const yearElement = document.getElementById("year");
-        const accountElement = document.getElementById("accountStatus");
-        const subscriptionElement = document.getElementById("subscriptionStatus");
+
+        const welcome = document.getElementById("welcomeMessage");
+        const year = document.getElementById("year");
+        const account = document.getElementById("accountStatus");
+        const subscriptionStatus = document.getElementById("subscriptionStatus");
         const accessMessage = document.getElementById("accessMessage");
         const message = document.getElementById("message");
 
+        // Check whether a student is signed in.
         const { data: authData, error: authError } =
             await supabaseClient.auth.getUser();
 
         if (authError || !authData.user) {
-            window.location.href = "login.html";
+            window.location.replace("login.html");
             return;
         }
 
         const user = authData.user;
 
+        // Retrieve the student's profile.
         const { data: profile, error: profileError } =
             await supabaseClient
                 .from("profiles")
@@ -214,68 +196,85 @@
 
         if (profileError || !profile) {
             accessMessage.textContent =
-                "We could not find your student profile. Please contact the administrator.";
-            message.textContent = profileError ? profileError.message : "";
+                "Your student profile could not be retrieved. Please contact the administrator.";
+
+            message.textContent = profileError
+                ? profileError.message
+                : "Profile not found.";
+
             return;
         }
 
-        welcomeMessage.textContent = "Welcome, " + profile.full_name + "!";
-        yearElement.textContent = profile.year_level || "Not assigned";
-        accountElement.textContent = profile.account_status || "Unknown";
+        welcome.textContent = "Welcome, " + profile.full_name + "!";
+        year.textContent = profile.year_level || "Not assigned";
+        account.textContent = profile.account_status || "Unknown";
 
+        // Only approved accounts can proceed.
         if (profile.account_status !== "approved") {
-            subscriptionElement.textContent = "Unavailable";
+            subscriptionStatus.textContent = "Unavailable";
+
             accessMessage.textContent =
-                "Your account is awaiting administrator approval. Please check again later.";
+                "Your account is awaiting administrator approval. Please contact the administrator if you need assistance.";
+
             return;
         }
 
+        // Retrieve the student's subscriptions.
         const { data: subscriptions, error: subscriptionError } =
             await supabaseClient
                 .from("subscriptions")
                 .select("status, start_date, end_date")
                 .eq("student_id", user.id)
-                .order("end_date", { ascending: false })
-                .limit(1);
+                .order("end_date", { ascending: false });
 
         if (subscriptionError) {
-            subscriptionElement.textContent = "Unable to check";
+            subscriptionStatus.textContent = "Unable to check";
+
             accessMessage.textContent =
                 "We could not verify your subscription. Please contact the administrator.";
+
             message.textContent = subscriptionError.message;
             return;
         }
 
-        const subscription = subscriptions && subscriptions.length
-            ? subscriptions[0]
-            : null;
+        // Check whether at least one subscription is currently valid.
+        const now = new Date();
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const activeSubscription = (subscriptions || []).find(sub => {
 
-        const endDate = subscription && subscription.end_date
-            ? new Date(subscription.end_date + "T23:59:59")
-            : null;
+            if (sub.status !== "active" || !sub.start_date || !sub.end_date) {
+                return false;
+            }
 
-        const active = subscription &&
-            subscription.status === "active" &&
-            endDate &&
-            endDate >= today;
+            const startDate = new Date(sub.start_date);
+            const endDate = new Date(sub.end_date);
 
-        if (active) {
-            subscriptionElement.textContent = "Active";
+            return startDate <= now && endDate >= now;
+        });
+
+        if (activeSubscription) {
+
+            subscriptionStatus.textContent = "Active";
+
             accessMessage.textContent =
                 "Your account is approved and your subscription is active. Your learning resources will appear here once they are connected.";
+
         } else {
-            subscriptionElement.textContent = "Inactive";
+
+            subscriptionStatus.textContent = "Inactive";
+
             accessMessage.textContent =
                 "Your account is approved, but you do not currently have an active subscription. Please contact the administrator about activation or renewal.";
+
         }
     }
 
     document.getElementById("logoutButton").addEventListener("click", async function() {
+
         await supabaseClient.auth.signOut();
-        window.location.href = "login.html";
+
+        window.location.replace("login.html");
+
     });
 
     loadDashboard();
