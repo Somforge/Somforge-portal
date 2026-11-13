@@ -222,7 +222,7 @@ footer {
 const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
 
 // Replace this placeholder with your actual Supabase Publishable Key.
-const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
@@ -250,7 +250,7 @@ form.addEventListener("submit", async function(event) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt") {
+    if (SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_PUBLISHABLE_KEY_HERE") {
         showMessage("The registration page has not been connected to Supabase yet. Please configure its Publishable Key.", "error");
         return;
     }
