@@ -42,7 +42,7 @@ button {
     cursor: pointer;
 }
 
-/* DESKTOP SIDEBAR */
+/* SIDEBAR */
 
 .sidebar {
     position: fixed;
@@ -338,6 +338,38 @@ button {
     line-height: 1.6;
 }
 
+/* COURSE LOADING AND ERRORS */
+
+.course-message {
+    background: white;
+    border: 1px solid #e8edf2;
+    border-radius: 10px;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.course-card {
+    display: block;
+    text-decoration: none;
+}
+
+.course-card .card-icon {
+    color: var(--teal);
+}
+
+.course-year {
+    display: inline-block;
+    background: #e9f5f4;
+    color: var(--teal);
+    border-radius: 20px;
+    padding: 5px 9px;
+    font-size: 10px;
+    margin-top: 12px;
+}
+
 /* ACCESS NOTICE */
 
 .access-notice {
@@ -405,7 +437,6 @@ button {
 /* MOBILE */
 
 @media (max-width: 650px) {
-
     .sidebar {
         display: flex;
         width: 270px;
@@ -560,8 +591,6 @@ button {
     }
 }
 
-/* VERY SMALL PHONES */
-
 @media (max-width: 360px) {
     .learning-grid {
         grid-template-columns: 1fr;
@@ -580,8 +609,6 @@ button {
 
 <body>
 
-<!-- MOBILE HEADER -->
-
 <header class="mobile-header">
     <div class="mobile-logo">SOM<span>FORGE</span></div>
     <button class="menu-button" id="menuButton"
@@ -590,8 +617,6 @@ button {
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
-
-<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
 
@@ -614,8 +639,6 @@ button {
     </div>
 
 </aside>
-
-<!-- MAIN CONTENT -->
 
 <div class="main">
 
@@ -679,24 +702,35 @@ button {
 
         </section>
 
-        <!-- COURSES -->
+        <!-- DYNAMIC COURSES -->
 
         <section id="courses">
 
             <div class="section-heading">
                 <h2>My Courses</h2>
-                <p>Your academic learning resources.</p>
+                <p>Your academic subjects and learning resources.</p>
+            </div>
+
+            <div class="learning-grid" id="coursesGrid">
+                <div class="course-message">
+                    Loading your courses...
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STUDY RESOURCES -->
+
+        <section id="materials">
+
+            <div class="section-heading">
+                <h2>Study Resources</h2>
+                <p>Additional resources to support your learning.</p>
             </div>
 
             <div class="learning-grid">
 
                 <div class="learning-card">
-                    <div class="card-icon">📚</div>
-                    <h3>Course Library</h3>
-                    <p>Access your subjects and organised course content.</p>
-                </div>
-
-                <div class="learning-card" id="materials">
                     <div class="card-icon">📖</div>
                     <h3>Study Materials</h3>
                     <p>Lecture notes, learning resources and reference materials.</p>
@@ -766,9 +800,11 @@ button {
 </div>
 
 <script>
+
+/* SUPABASE CONNECTION */
+
 const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
 
-// Paste the same working legacy anon key used in register.html.
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
 
 const supabaseClient = window.supabase.createClient(
@@ -824,6 +860,105 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+/* COURSE ICONS */
+
+function getCourseIcon(title) {
+
+    const name = (title || "").toLowerCase();
+
+    if (name.includes("anatomy")) return "🦴";
+    if (name.includes("biochemistry")) return "🧪";
+    if (name.includes("physiology")) return "❤️";
+    if (name.includes("pathology")) return "🔬";
+    if (name.includes("therapeutics")) return "💊";
+    if (name.includes("clinical")) return "🩺";
+
+    return "📚";
+}
+
+/* LOAD COURSES FROM SUPABASE */
+
+async function loadCourses(yearLevel) {
+
+    const coursesGrid = document.getElementById("coursesGrid");
+
+    coursesGrid.innerHTML = `
+        <div class="course-message">
+            Loading your academic courses...
+        </div>
+    `;
+
+    const { data: courses, error } = await supabaseClient
+        .from("courses")
+        .select("id, title, description, year_level")
+        .eq("year_level", yearLevel)
+        .order("title");
+
+    if (error) {
+
+        coursesGrid.innerHTML = `
+            <div class="course-message">
+                We could not load your courses. Please try again later
+                or contact the SOMFORGE administrator.
+            </div>
+        `;
+
+        console.error("Course loading error:", error);
+
+        document.getElementById("message").textContent =
+            "Course error: " + error.message;
+
+        return;
+    }
+
+    if (!courses || courses.length === 0) {
+
+        coursesGrid.innerHTML = `
+            <div class="course-message">
+                No courses have been assigned to your academic year yet.
+                Please contact the administrator.
+            </div>
+        `;
+
+        return;
+    }
+
+    coursesGrid.innerHTML = "";
+
+    courses.forEach(course => {
+
+        const card = document.createElement("div");
+
+        card.className = "learning-card course-card";
+
+        const icon = getCourseIcon(course.title);
+
+        const title = document.createElement("h3");
+        title.textContent = course.title || "Untitled course";
+
+        const description = document.createElement("p");
+        description.textContent =
+            course.description || "Explore learning resources for this subject.";
+
+        const iconBox = document.createElement("div");
+        iconBox.className = "card-icon";
+        iconBox.textContent = icon;
+
+        const yearBadge = document.createElement("span");
+        yearBadge.className = "course-year";
+        yearBadge.textContent = course.year_level || yearLevel;
+
+        card.appendChild(iconBox);
+        card.appendChild(title);
+        card.appendChild(description);
+        card.appendChild(yearBadge);
+
+        coursesGrid.appendChild(card);
+
+    });
+
+}
+
 /* LOAD STUDENT DASHBOARD */
 
 async function loadDashboard() {
@@ -831,11 +966,14 @@ async function loadDashboard() {
     const welcome = document.getElementById("welcomeMessage");
     const year = document.getElementById("year");
     const account = document.getElementById("accountStatus");
+
     const subscriptionStatus =
         document.getElementById("subscriptionStatus");
 
     const accessMessage = document.getElementById("accessMessage");
     const message = document.getElementById("message");
+
+    const coursesGrid = document.getElementById("coursesGrid");
 
     try {
 
@@ -865,6 +1003,12 @@ async function loadDashboard() {
                 ? profileError.message
                 : "Profile not found.";
 
+            coursesGrid.innerHTML = `
+                <div class="course-message">
+                    Your profile information is unavailable.
+                </div>
+            `;
+
             return;
         }
 
@@ -893,6 +1037,12 @@ async function loadDashboard() {
             accessMessage.textContent =
                 "Your account is awaiting administrator approval. Your learning resources will become available after approval.";
 
+            coursesGrid.innerHTML = `
+                <div class="course-message">
+                    Your account must be approved before you can access courses.
+                </div>
+            `;
+
             return;
         }
 
@@ -911,6 +1061,12 @@ async function loadDashboard() {
                 "We could not verify your subscription. Please contact the administrator.";
 
             message.textContent = subscriptionError.message;
+
+            coursesGrid.innerHTML = `
+                <div class="course-message">
+                    Subscription verification failed. Please contact the administrator.
+                </div>
+            `;
 
             return;
         }
@@ -940,12 +1096,32 @@ async function loadDashboard() {
             accessMessage.textContent =
                 "Your account is approved and your subscription is active. You can access the SOMFORGE learning portal.";
 
+            if (profile.year_level) {
+                await loadCourses(profile.year_level);
+            } else {
+
+                coursesGrid.innerHTML = `
+                    <div class="course-message">
+                        Your academic year has not been assigned.
+                        Please contact the administrator.
+                    </div>
+                `;
+
+            }
+
         } else {
 
             subscriptionStatus.textContent = "Inactive";
 
             accessMessage.textContent =
                 "Your account is approved, but you do not currently have an active subscription. Please contact the administrator about activation or renewal.";
+
+            coursesGrid.innerHTML = `
+                <div class="course-message">
+                    Your subscription is inactive. Please contact the administrator
+                    to activate or renew your access to courses.
+                </div>
+            `;
 
         }
 
@@ -955,6 +1131,8 @@ async function loadDashboard() {
             "Something went wrong while loading your dashboard.";
 
         message.textContent = error.message;
+
+        console.error(error);
 
     }
 }
@@ -972,7 +1150,10 @@ document.getElementById("logoutButton").addEventListener(
     }
 );
 
+/* START DASHBOARD */
+
 loadDashboard();
+
 </script>
 
 </body>
