@@ -25,10 +25,16 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: var(--background);
     color: var(--text);
+    overflow-x: hidden;
 }
 
 button {
@@ -36,7 +42,7 @@ button {
     cursor: pointer;
 }
 
-/* SIDEBAR */
+/* DESKTOP SIDEBAR */
 
 .sidebar {
     position: fixed;
@@ -49,7 +55,7 @@ button {
     padding: 28px 18px;
     display: flex;
     flex-direction: column;
-    z-index: 10;
+    z-index: 100;
 }
 
 .logo {
@@ -59,7 +65,8 @@ button {
     letter-spacing: 1px;
 }
 
-.logo span {
+.logo span,
+.mobile-logo span {
     color: var(--gold);
 }
 
@@ -115,7 +122,27 @@ button {
 }
 
 .logout:hover {
-    background: #183c63;
+    background: var(--navy-light);
+}
+
+/* MOBILE HEADER */
+
+.mobile-header {
+    display: none;
+}
+
+.menu-button {
+    width: 43px;
+    height: 43px;
+    border: none;
+    border-radius: 8px;
+    background: var(--navy);
+    color: white;
+    font-size: 23px;
+}
+
+.menu-overlay {
+    display: none;
 }
 
 /* MAIN AREA */
@@ -183,13 +210,12 @@ button {
     padding: 35px;
     border-radius: 12px;
     margin-bottom: 27px;
-    position: relative;
-    overflow: hidden;
 }
 
 .welcome h1 {
     font-size: 27px;
     margin-bottom: 12px;
+    line-height: 1.3;
 }
 
 .welcome p {
@@ -214,7 +240,7 @@ button {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 18px;
-    margin-bottom: 32px;
+    margin-bottom: 35px;
 }
 
 .status-card {
@@ -222,6 +248,7 @@ button {
     padding: 23px;
     border-radius: 10px;
     border: 1px solid #e9edf2;
+    min-width: 0;
 }
 
 .status-card h3 {
@@ -235,12 +262,14 @@ button {
     font-size: 20px;
     color: var(--navy);
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
 .status-description {
     font-size: 11px;
     color: var(--muted);
     margin-top: 8px;
+    line-height: 1.5;
 }
 
 /* SECTIONS */
@@ -265,7 +294,7 @@ button {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 17px;
-    margin-bottom: 32px;
+    margin-bottom: 35px;
 }
 
 .learning-card {
@@ -273,10 +302,10 @@ button {
     border: 1px solid #e8edf2;
     border-radius: 10px;
     padding: 22px;
-    text-decoration: none;
     color: inherit;
+    min-height: 150px;
+    min-width: 0;
     transition: 0.2s;
-    min-height: 145px;
 }
 
 .learning-card:hover {
@@ -345,19 +374,15 @@ button {
     font-size: 11px;
 }
 
-/* MOBILE */
+/* TABLET */
 
-.mobile-header {
-    display: none;
-}
-
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .sidebar {
-        width: 210px;
+        width: 220px;
     }
 
     .main {
-        margin-left: 210px;
+        margin-left: 220px;
     }
 
     .learning-grid {
@@ -365,46 +390,189 @@ button {
     }
 
     .status-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .status-card:last-child {
+        grid-column: span 2;
+    }
+
+    .content {
+        padding: 28px 24px;
     }
 }
 
+/* MOBILE */
+
 @media (max-width: 650px) {
+
     .sidebar {
-        display: none;
+        display: flex;
+        width: 270px;
+        max-width: 85%;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 5px 0 20px rgba(0,0,0,0.15);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 90;
+    }
+
+    .menu-overlay.show {
+        display: block;
+    }
+
+    .mobile-header {
+        display: flex;
+        height: 64px;
+        padding: 0 16px;
+        background: var(--navy);
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 80;
+    }
+
+    .mobile-logo {
+        color: white;
+        font-size: 21px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .menu-button {
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.25);
     }
 
     .main {
         margin-left: 0;
+        width: 100%;
     }
 
     .topbar {
-        padding: 0 18px;
-        height: 65px;
+        height: auto;
+        min-height: 68px;
+        padding: 12px 17px;
+    }
+
+    .topbar-title {
+        display: none;
+    }
+
+    .student-profile {
+        margin-left: auto;
     }
 
     .content {
-        padding: 22px 17px;
+        padding: 20px 15px;
     }
 
     .welcome {
         padding: 25px 21px;
+        margin-bottom: 19px;
     }
 
     .welcome h1 {
         font-size: 22px;
     }
 
+    .welcome p {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .welcome-tag {
+        font-size: 11px;
+    }
+
+    .status-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+        margin-bottom: 29px;
+    }
+
+    .status-card {
+        padding: 16px 13px;
+    }
+
+    .status-card:last-child {
+        grid-column: span 2;
+    }
+
+    .status-card h3 {
+        font-size: 11px;
+    }
+
+    .status-card p {
+        font-size: 17px;
+    }
+
+    .learning-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+        margin-bottom: 29px;
+    }
+
+    .learning-card {
+        padding: 16px 13px;
+        min-height: 155px;
+    }
+
+    .learning-card h3 {
+        font-size: 13px;
+    }
+
+    .learning-card p {
+        font-size: 11px;
+    }
+
+    .card-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+        font-size: 18px;
+    }
+
+    .section-heading p {
+        font-size: 12px;
+    }
+
+    .access-notice {
+        padding: 18px 15px;
+    }
+
+    .footer {
+        padding: 20px 5px;
+    }
+}
+
+/* VERY SMALL PHONES */
+
+@media (max-width: 360px) {
     .learning-grid {
         grid-template-columns: 1fr;
     }
 
-    .status-grid {
-        gap: 12px;
+    .learning-card {
+        min-height: 125px;
     }
 
-    .student-name {
-        font-size: 12px;
+    .welcome h1 {
+        font-size: 20px;
     }
 }
 </style>
@@ -412,7 +580,20 @@ button {
 
 <body>
 
-<aside class="sidebar">
+<!-- MOBILE HEADER -->
+
+<header class="mobile-header">
+    <div class="mobile-logo">SOM<span>FORGE</span></div>
+    <button class="menu-button" id="menuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false">☰</button>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
 
     <div class="logo">SOM<span>FORGE</span></div>
 
@@ -434,18 +615,23 @@ button {
 
 </aside>
 
+<!-- MAIN CONTENT -->
+
 <div class="main">
 
     <header class="topbar">
+
         <div class="topbar-title">Student Learning Portal</div>
 
         <div class="student-profile">
             <div class="avatar" id="avatar">S</div>
+
             <div>
                 <div class="student-name" id="topStudentName">Student</div>
                 <div class="student-year" id="topStudentYear">Loading...</div>
             </div>
         </div>
+
     </header>
 
     <main class="content" id="dashboard">
@@ -458,35 +644,48 @@ button {
                 lectures and learning resources from one place.
             </p>
 
-            <div class="welcome-tag">Forging the doctors of tomorrow</div>
+            <div class="welcome-tag">
+                Forging the doctors of tomorrow
+            </div>
         </section>
+
+        <!-- ACCOUNT STATUS -->
 
         <section class="status-grid" id="account">
 
             <div class="status-card">
                 <h3>Academic Year</h3>
                 <p id="year">Loading...</p>
-                <div class="status-description">Your current programme level</div>
+                <div class="status-description">
+                    Your current programme level
+                </div>
             </div>
 
             <div class="status-card">
                 <h3>Account Status</h3>
                 <p id="accountStatus">Loading...</p>
-                <div class="status-description">Student account approval</div>
+                <div class="status-description">
+                    Student account approval
+                </div>
             </div>
 
             <div class="status-card">
                 <h3>Subscription</h3>
                 <p id="subscriptionStatus">Loading...</p>
-                <div class="status-description">Access to learning resources</div>
+                <div class="status-description">
+                    Access to learning resources
+                </div>
             </div>
 
         </section>
 
+        <!-- COURSES -->
+
         <section id="courses">
+
             <div class="section-heading">
                 <h2>My Courses</h2>
-                <p>Your academic subjects will be available here.</p>
+                <p>Your academic learning resources.</p>
             </div>
 
             <div class="learning-grid">
@@ -510,9 +709,13 @@ button {
                 </div>
 
             </div>
+
         </section>
 
+        <!-- LIVE LEARNING -->
+
         <section id="live-classes">
+
             <div class="section-heading">
                 <h2>Live Learning</h2>
                 <p>Stay connected with scheduled teaching sessions.</p>
@@ -539,12 +742,19 @@ button {
                 </div>
 
             </div>
+
         </section>
 
+        <!-- ACCOUNT MESSAGE -->
+
         <section class="access-notice">
+
             <h2>Learning Portal Updates</h2>
+
             <p id="accessMessage">Checking your account...</p>
+
             <p id="message"></p>
+
         </section>
 
         <footer class="footer">
@@ -552,135 +762,215 @@ button {
         </footer>
 
     </main>
+
 </div>
 
 <script>
 const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
+// Paste the same working legacy anon key used in register.html.
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
 
+/* MOBILE NAVIGATION */
+
+const sidebar = document.getElementById("sidebar");
+const menuButton = document.getElementById("menuButton");
+const menuOverlay = document.getElementById("menuOverlay");
+
+function openMenu() {
+    sidebar.classList.add("open");
+    menuOverlay.classList.add("show");
+    menuButton.setAttribute("aria-expanded", "true");
+    menuButton.textContent = "✕";
+}
+
+function closeMenu() {
+    sidebar.classList.remove("open");
+    menuOverlay.classList.remove("show");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.textContent = "☰";
+}
+
+menuButton.addEventListener("click", function() {
+    if (sidebar.classList.contains("open")) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
+});
+
+menuOverlay.addEventListener("click", closeMenu);
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", function() {
+        closeMenu();
+
+        document.querySelectorAll(".nav-links a").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+    });
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeMenu();
+    }
+});
+
+/* LOAD STUDENT DASHBOARD */
+
 async function loadDashboard() {
 
     const welcome = document.getElementById("welcomeMessage");
     const year = document.getElementById("year");
     const account = document.getElementById("accountStatus");
-    const subscriptionStatus = document.getElementById("subscriptionStatus");
+    const subscriptionStatus =
+        document.getElementById("subscriptionStatus");
+
     const accessMessage = document.getElementById("accessMessage");
     const message = document.getElementById("message");
 
-    const { data: authData, error: authError } =
-        await supabaseClient.auth.getUser();
+    try {
 
-    if (authError || !authData.user) {
-        window.location.replace("login.html");
-        return;
-    }
+        const { data: authData, error: authError } =
+            await supabaseClient.auth.getUser();
 
-    const user = authData.user;
-
-    const { data: profile, error: profileError } =
-        await supabaseClient
-            .from("profiles")
-            .select("full_name, year_level, account_status")
-            .eq("id", user.id)
-            .single();
-
-    if (profileError || !profile) {
-
-        accessMessage.textContent =
-            "Your student profile could not be retrieved. Please contact the administrator.";
-
-        message.textContent = profileError
-            ? profileError.message
-            : "Profile not found.";
-
-        return;
-    }
-
-    const studentName = profile.full_name || "Student";
-
-    welcome.textContent = "Welcome, " + studentName + "!";
-    document.getElementById("topStudentName").textContent = studentName;
-    document.getElementById("avatar").textContent =
-        studentName.charAt(0).toUpperCase();
-
-    year.textContent = profile.year_level || "Not assigned";
-    document.getElementById("topStudentYear").textContent =
-        profile.year_level || "Academic year not assigned";
-
-    account.textContent = profile.account_status || "Unknown";
-
-    if (profile.account_status !== "approved") {
-
-        subscriptionStatus.textContent = "Unavailable";
-
-        accessMessage.textContent =
-            "Your account is awaiting administrator approval. Your learning resources will become available after approval.";
-
-        return;
-    }
-
-    const { data: subscriptions, error: subscriptionError } =
-        await supabaseClient
-            .from("subscriptions")
-            .select("status, start_date, end_date")
-            .eq("student_id", user.id)
-            .order("end_date", { ascending: false });
-
-    if (subscriptionError) {
-
-        subscriptionStatus.textContent = "Unable to check";
-
-        accessMessage.textContent =
-            "We could not verify your subscription. Please contact the administrator.";
-
-        message.textContent = subscriptionError.message;
-        return;
-    }
-
-    const now = new Date();
-
-    const activeSubscription = (subscriptions || []).find(sub => {
-
-        if (sub.status !== "active" || !sub.start_date || !sub.end_date) {
-            return false;
+        if (authError || !authData.user) {
+            window.location.replace("login.html");
+            return;
         }
 
-        const startDate = new Date(sub.start_date);
-        const endDate = new Date(sub.end_date);
+        const user = authData.user;
 
-        return startDate <= now && endDate >= now;
-    });
+        const { data: profile, error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .select("full_name, year_level, account_status")
+                .eq("id", user.id)
+                .single();
 
-    if (activeSubscription) {
+        if (profileError || !profile) {
 
-        subscriptionStatus.textContent = "Active";
+            accessMessage.textContent =
+                "Your student profile could not be retrieved. Please contact the administrator.";
+
+            message.textContent = profileError
+                ? profileError.message
+                : "Profile not found.";
+
+            return;
+        }
+
+        const studentName = profile.full_name || "Student";
+
+        welcome.textContent = "Welcome, " + studentName + "!";
+
+        document.getElementById("topStudentName").textContent =
+            studentName;
+
+        document.getElementById("avatar").textContent =
+            studentName.charAt(0).toUpperCase();
+
+        year.textContent = profile.year_level || "Not assigned";
+
+        document.getElementById("topStudentYear").textContent =
+            profile.year_level || "Academic year not assigned";
+
+        account.textContent =
+            profile.account_status || "Unknown";
+
+        if (profile.account_status !== "approved") {
+
+            subscriptionStatus.textContent = "Unavailable";
+
+            accessMessage.textContent =
+                "Your account is awaiting administrator approval. Your learning resources will become available after approval.";
+
+            return;
+        }
+
+        const { data: subscriptions, error: subscriptionError } =
+            await supabaseClient
+                .from("subscriptions")
+                .select("status, start_date, end_date")
+                .eq("student_id", user.id)
+                .order("end_date", { ascending: false });
+
+        if (subscriptionError) {
+
+            subscriptionStatus.textContent = "Unable to check";
+
+            accessMessage.textContent =
+                "We could not verify your subscription. Please contact the administrator.";
+
+            message.textContent = subscriptionError.message;
+
+            return;
+        }
+
+        const now = new Date();
+
+        const activeSubscription = (subscriptions || []).find(sub => {
+
+            if (
+                sub.status !== "active" ||
+                !sub.start_date ||
+                !sub.end_date
+            ) {
+                return false;
+            }
+
+            const startDate = new Date(sub.start_date);
+            const endDate = new Date(sub.end_date);
+
+            return startDate <= now && endDate >= now;
+        });
+
+        if (activeSubscription) {
+
+            subscriptionStatus.textContent = "Active";
+
+            accessMessage.textContent =
+                "Your account is approved and your subscription is active. You can access the SOMFORGE learning portal.";
+
+        } else {
+
+            subscriptionStatus.textContent = "Inactive";
+
+            accessMessage.textContent =
+                "Your account is approved, but you do not currently have an active subscription. Please contact the administrator about activation or renewal.";
+
+        }
+
+    } catch (error) {
 
         accessMessage.textContent =
-            "Your account is approved and your subscription is active. You can access the SOMFORGE learning portal.";
+            "Something went wrong while loading your dashboard.";
 
-    } else {
-
-        subscriptionStatus.textContent = "Inactive";
-
-        accessMessage.textContent =
-            "Your account is approved, but you do not currently have an active subscription. Please contact the administrator about activation or renewal.";
+        message.textContent = error.message;
 
     }
 }
 
-document.getElementById("logoutButton").addEventListener("click", async function() {
+/* LOG OUT */
 
-    await supabaseClient.auth.signOut();
+document.getElementById("logoutButton").addEventListener(
+    "click",
+    async function() {
 
-    window.location.replace("login.html");
+        await supabaseClient.auth.signOut();
 
-});
+        window.location.replace("login.html");
+
+    }
+);
 
 loadDashboard();
 </script>
