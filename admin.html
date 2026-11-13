@@ -1,8 +1,13 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOMFORGE | Admin Dashboard</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<title>SOMFORGE | Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
 :root {
     --navy: #10243a;
     --teal: #087e80;
@@ -28,7 +33,7 @@ body {
     color: var(--text);
 }
 
-button, input, select {
+button, input {
     font-family: inherit;
 }
 
@@ -251,6 +256,7 @@ th {
     text-align: center;
     padding: 35px;
     color: var(--muted);
+    line-height: 1.7;
 }
 
 #adminContent {
@@ -307,132 +313,142 @@ th {
         width: 100%;
     }
 }
-</style></head><body><header>
+</style>
+</head>
+
+<body>
+
+<header>
     <div class="brand">
         SOM<span>FORGE</span>
         <small style="font-size:12px;font-weight:normal;">ADMIN</small>
     </div>
+
     <button id="logoutBtn">Log out</button>
-</header><div class="container"><div id="loading">Checking administrator access...</div>
+</header>
 
-<div id="adminContent">
+<div class="container">
 
-    <div class="welcome">
-        <h1>Administration</h1>
-        <p>Manage students, accounts and subscriptions.</p>
+    <div id="loading">
+        Checking administrator access...
     </div>
 
-    <div id="message" class="message" role="status"></div>
+    <div id="adminContent">
 
-    <div class="stats">
-
-        <div class="stat-card">
-            <p>Total Students</p>
-            <h2 id="totalStudents">0</h2>
+        <div class="welcome">
+            <h1>Administration</h1>
+            <p>Manage students, accounts and subscriptions.</p>
         </div>
 
-        <div class="stat-card">
-            <p>Pending Approval</p>
-            <h2 id="pendingStudents">0</h2>
+        <div id="message" class="message" role="status"></div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <p>Total Students</p>
+                <h2 id="totalStudents">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Pending Approval</p>
+                <h2 id="pendingStudents">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Approved Accounts</p>
+                <h2 id="approvedStudents">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Active Subscriptions</p>
+                <h2 id="activeSubscriptions">0</h2>
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <p>Approved Accounts</p>
-            <h2 id="approvedStudents">0</h2>
+        <div class="panel">
+
+            <div class="panel-heading">
+                <h2>Student Management</h2>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    class="search"
+                    placeholder="Search students..."
+                >
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Academic Year</th>
+                            <th>Account</th>
+                            <th>Subscription</th>
+                            <th>Expiry Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentsTable">
+                        <tr>
+                            <td colspan="6" class="empty">
+                                Loading students...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <p>Active Subscriptions</p>
-            <h2 id="activeSubscriptions">0</h2>
+        <div class="panel">
+
+            <div class="panel-heading">
+                <h2>Subscription Information</h2>
+
+                <button class="btn btn-refresh" id="refreshBtn">
+                    Refresh Data
+                </button>
+            </div>
+
+            <p class="info-text">
+                Approve student accounts before activating subscriptions.
+                Choose 7, 14, 30 or 90 days when activating access.
+                Active subscriptions can be extended or suspended.
+                Expired and suspended subscriptions do not grant access.
+            </p>
+
         </div>
 
     </div>
 
-    <div class="panel">
-
-        <div class="panel-heading">
-            <h2>Student Management</h2>
-
-            <input
-                type="search"
-                id="searchInput"
-                class="search"
-                placeholder="Search students..."
-            >
-        </div>
-
-        <div class="table-wrap">
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Academic Year</th>
-                        <th>Account</th>
-                        <th>Subscription</th>
-                        <th>Expiry Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody id="studentsTable">
-                    <tr>
-                        <td colspan="6" class="empty">
-                            Loading students...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-
-    </div>
-
-    <div class="panel">
-
-        <div class="panel-heading">
-            <h2>Subscription Information</h2>
-
-            <button class="btn btn-refresh" id="refreshBtn">
-                Refresh Data
-            </button>
-        </div>
-
-        <p class="info-text">
-            Approve student accounts before activating subscriptions.
-            Choose 7, 14, 30 or 90 days when activating access.
-            Active subscriptions can be extended or suspended.
-            Expired and suspended subscriptions do not grant access.
-        </p>
-
-    </div>
+    <footer class="footer">
+        SOMFORGE | Forging the doctors of tomorrow
+    </footer>
 
 </div>
 
-<footer class="footer">
-    SOMFORGE | Forging the doctors of tomorrow
-</footer>
+<script>
 
-</div><script>
-
-/* =====================================
-   SUPABASE CONNECTION
-===================================== */
+/* SUPABASE CONNECTION */
 
 const SUPABASE_URL =
     "https://dfgaywdtxpajsqitaszy.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXAiLCJyZWYiOiJkZmdheXd0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
 
-/* =====================================
-   APPLICATION STATE
-===================================== */
+/* APPLICATION STATE */
 
 let students = [];
 let subscriptions = [];
@@ -444,9 +460,7 @@ const messageBox = document.getElementById("message");
 
 let messageTimer;
 
-/* =====================================
-   GENERAL HELPERS
-===================================== */
+/* HELPERS */
 
 function showMessage(message, type = "success") {
 
@@ -465,11 +479,6 @@ function showMessage(message, type = "success") {
     messageTimer = setTimeout(() => {
         messageBox.style.display = "none";
     }, 6000);
-}
-
-function hideLoading() {
-    loading.style.display = "none";
-    adminContent.style.display = "block";
 }
 
 function escapeHTML(value) {
@@ -512,12 +521,6 @@ function subscriptionIsActive(subscription) {
            new Date(subscription.end_date) > now;
 }
 
-/*
-   Select the subscription that currently grants access.
-   If none is active, use the most recently created record
-   for displaying its status.
-*/
-
 function getLatestSubscription(studentId) {
 
     const records = subscriptions
@@ -539,21 +542,39 @@ function getLatestSubscription(studentId) {
     return records[0] || null;
 }
 
-/* =====================================
-   ADMIN AUTHENTICATION
-===================================== */
+/* AUTHENTICATION AND ADMIN ACCESS */
 
 async function checkAdmin() {
 
     try {
 
         const {
+            data: { session },
+            error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+            loading.textContent =
+                "Session verification failed: " + sessionError.message;
+            return;
+        }
+
+        if (!session) {
+            loading.innerHTML =
+                'You are not logged in. ' +
+                '<a href="login.html">Go to login</a>';
+            return;
+        }
+
+        const {
             data: { user },
-            error
+            error: userError
         } = await supabaseClient.auth.getUser();
 
-        if (error || !user) {
-            window.location.replace("login.html");
+        if (userError || !user) {
+            loading.textContent =
+                "Unable to verify your login: " +
+                (userError ? userError.message : "No user found.");
             return;
         }
 
@@ -566,31 +587,34 @@ async function checkAdmin() {
             .eq("id", user.id)
             .single();
 
-        if (profileError || !profile || profile.role !== "admin") {
-
+        if (profileError) {
             loading.textContent =
-                "Access denied. Administrator privileges are required.";
-
-            await supabaseClient.auth.signOut();
-
+                "Could not verify your administrator profile: " +
+                profileError.message;
             return;
         }
 
-        hideLoading();
+        if (!profile || profile.role !== "admin") {
+            loading.textContent =
+                "Access denied. This account does not have administrator privileges.";
+            return;
+        }
+
+        loading.style.display = "none";
+        adminContent.style.display = "block";
 
         await loadData();
 
     } catch (error) {
 
         loading.textContent =
-            "Unable to verify administrator access: " + error.message;
+            "An error occurred: " + error.message;
 
+        console.error(error);
     }
 }
 
-/* =====================================
-   LOAD STUDENTS AND SUBSCRIPTIONS
-===================================== */
+/* LOAD STUDENTS AND SUBSCRIPTIONS */
 
 async function loadData() {
 
@@ -647,9 +671,7 @@ async function loadData() {
     renderStudents();
 }
 
-/* =====================================
-   STATISTICS
-===================================== */
+/* STATISTICS */
 
 function updateStatistics() {
 
@@ -676,9 +698,7 @@ function updateStatistics() {
         activeCount;
 }
 
-/* =====================================
-   RENDER STUDENTS
-===================================== */
+/* DISPLAY STUDENTS */
 
 function renderStudents() {
 
@@ -743,10 +763,11 @@ function renderStudents() {
         const subscriptionClass =
             active
                 ? "active"
-                : subscriptionStatus === "Suspended" ||
-                  subscriptionStatus === "Expired"
+                : subscriptionStatus === "Suspended"
                     ? "suspended"
-                    : "unknown";
+                    : subscriptionStatus === "Expired"
+                        ? "expired"
+                        : "unknown";
 
         return `
             <tr>
@@ -755,9 +776,7 @@ function renderStudents() {
                     <strong>
                         ${escapeHTML(student.full_name || "Unnamed")}
                     </strong>
-
                     <br>
-
                     <small style="color:#718096;">
                         ${escapeHTML(student.email || "")}
                     </small>
@@ -827,9 +846,7 @@ function renderStudents() {
     }).join("");
 }
 
-/* =====================================
-   APPROVE STUDENT
-===================================== */
+/* APPROVE STUDENT */
 
 async function approveStudent(studentId) {
 
@@ -859,9 +876,7 @@ async function approveStudent(studentId) {
     await loadData();
 }
 
-/* =====================================
-   ACTIVATE OR EXTEND SUBSCRIPTION
-===================================== */
+/* ACTIVATE OR EXTEND SUBSCRIPTION */
 
 async function activateSubscription(studentId) {
 
@@ -904,17 +919,9 @@ async function activateSubscription(studentId) {
         return;
     }
 
-    let start;
     let end;
 
     if (existing) {
-
-        /*
-           Extend from the current expiry date.
-           This prevents overlapping active subscriptions.
-        */
-
-        start = new Date(existing.start_date);
 
         end = new Date(
             Math.max(
@@ -949,9 +956,9 @@ async function activateSubscription(studentId) {
 
     } else {
 
-        start = new Date();
-        end = new Date(start);
+        const start = new Date();
 
+        end = new Date(start);
         end.setDate(end.getDate() + days);
 
         const { error } = await supabaseClient
@@ -981,9 +988,7 @@ async function activateSubscription(studentId) {
     await loadData();
 }
 
-/* =====================================
-   SUSPEND SUBSCRIPTION
-===================================== */
+/* SUSPEND SUBSCRIPTION */
 
 async function suspendSubscription(subscriptionId) {
 
@@ -1013,9 +1018,7 @@ async function suspendSubscription(subscriptionId) {
     await loadData();
 }
 
-/* =====================================
-   BUTTON EVENTS
-===================================== */
+/* BUTTON EVENTS */
 
 document.getElementById("logoutBtn")
     .addEventListener("click", async () => {
@@ -1031,11 +1034,11 @@ document.getElementById("refreshBtn")
 document.getElementById("searchInput")
     .addEventListener("input", renderStudents);
 
-/* =====================================
-   START APPLICATION
-===================================== */
+/* START APPLICATION */
 
 checkAdmin();
 
-</script></body>
+</script>
+
+</body>
 </html>
