@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOMFORGE | Admin Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>SOMFORGE | Admin Dashboard</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 :root {
     --navy: #10243a;
     --teal: #087e80;
@@ -31,6 +26,10 @@ body {
     font-family: Arial, sans-serif;
     background: var(--light);
     color: var(--text);
+}
+
+button, input, select {
+    font-family: inherit;
 }
 
 header {
@@ -127,7 +126,7 @@ header button {
     font-size: 19px;
 }
 
-input, select {
+input {
     padding: 10px 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -187,6 +186,11 @@ th {
     color: var(--red);
 }
 
+.unknown {
+    background: #edf0f4;
+    color: #596579;
+}
+
 .btn {
     border: none;
     padding: 8px 11px;
@@ -195,6 +199,11 @@ th {
     font-size: 12px;
     font-weight: bold;
     margin: 2px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn-approve {
@@ -223,6 +232,7 @@ th {
     border-radius: 6px;
     display: none;
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .message.error {
@@ -251,6 +261,19 @@ th {
     text-align: center;
     padding: 25px;
     color: var(--muted);
+}
+
+.info-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    padding: 15px 0 30px;
 }
 
 @media(max-width: 750px) {
@@ -284,110 +307,123 @@ th {
         width: 100%;
     }
 }
-</style>
-</head>
-
-<body>
-
-<header>
-    <div class="brand">SOM<span>FORGE</span> <small style="font-size:12px;font-weight:normal;">ADMIN</small></div>
+</style></head><body><header>
+    <div class="brand">
+        SOM<span>FORGE</span>
+        <small style="font-size:12px;font-weight:normal;">ADMIN</small>
+    </div>
     <button id="logoutBtn">Log out</button>
-</header>
+</header><div class="container"><div id="loading">Checking administrator access...</div>
 
-<div class="container">
+<div id="adminContent">
 
-    <div id="loading">Checking administrator access...</div>
+    <div class="welcome">
+        <h1>Administration</h1>
+        <p>Manage students, accounts and subscriptions.</p>
+    </div>
 
-    <div id="adminContent">
+    <div id="message" class="message" role="status"></div>
 
-        <div class="welcome">
-            <h1>Administration</h1>
-            <p>Manage students, accounts and subscriptions.</p>
+    <div class="stats">
+
+        <div class="stat-card">
+            <p>Total Students</p>
+            <h2 id="totalStudents">0</h2>
         </div>
 
-        <div id="message" class="message"></div>
-
-        <div class="stats">
-            <div class="stat-card">
-                <p>Total Students</p>
-                <h2 id="totalStudents">0</h2>
-            </div>
-
-            <div class="stat-card">
-                <p>Pending Approval</p>
-                <h2 id="pendingStudents">0</h2>
-            </div>
-
-            <div class="stat-card">
-                <p>Approved Accounts</p>
-                <h2 id="approvedStudents">0</h2>
-            </div>
-
-            <div class="stat-card">
-                <p>Active Subscriptions</p>
-                <h2 id="activeSubscriptions">0</h2>
-            </div>
+        <div class="stat-card">
+            <p>Pending Approval</p>
+            <h2 id="pendingStudents">0</h2>
         </div>
 
-        <div class="panel">
-
-            <div class="panel-heading">
-                <h2>Student Management</h2>
-                <input
-                    type="search"
-                    id="searchInput"
-                    class="search"
-                    placeholder="Search students..."
-                >
-            </div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Academic Year</th>
-                            <th>Account</th>
-                            <th>Subscription</th>
-                            <th>Expiry Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="studentsTable">
-                        <tr>
-                            <td colspan="6" class="empty">Loading students...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+        <div class="stat-card">
+            <p>Approved Accounts</p>
+            <h2 id="approvedStudents">0</h2>
         </div>
 
-        <div class="panel">
-            <div class="panel-heading">
-                <h2>Subscription Information</h2>
-                <button class="btn btn-refresh" id="refreshBtn">Refresh Data</button>
-            </div>
-
-            <p style="font-size:14px;color:#718096;line-height:1.7;">
-                Select Activate Subscription beside a student to give them
-                7, 14, 30 or 90 days of access. The expiry date will be
-                calculated automatically.
-            </p>
+        <div class="stat-card">
+            <p>Active Subscriptions</p>
+            <h2 id="activeSubscriptions">0</h2>
         </div>
 
     </div>
+
+    <div class="panel">
+
+        <div class="panel-heading">
+            <h2>Student Management</h2>
+
+            <input
+                type="search"
+                id="searchInput"
+                class="search"
+                placeholder="Search students..."
+            >
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Academic Year</th>
+                        <th>Account</th>
+                        <th>Subscription</th>
+                        <th>Expiry Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="studentsTable">
+                    <tr>
+                        <td colspan="6" class="empty">
+                            Loading students...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-heading">
+            <h2>Subscription Information</h2>
+
+            <button class="btn btn-refresh" id="refreshBtn">
+                Refresh Data
+            </button>
+        </div>
+
+        <p class="info-text">
+            Approve student accounts before activating subscriptions.
+            Choose 7, 14, 30 or 90 days when activating access.
+            Active subscriptions can be extended or suspended.
+            Expired and suspended subscriptions do not grant access.
+        </p>
+
+    </div>
+
 </div>
 
-<script>
+<footer class="footer">
+    SOMFORGE | Forging the doctors of tomorrow
+</footer>
+
+</div><script>
+
 /* =====================================
-   SUPABASE CONFIGURATION
+   SUPABASE CONNECTION
 ===================================== */
 
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_URL =
+    "https://dfgaywdtxpajsqitaszy.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_WORKING_ANON_KEY_HERE";
+const SUPABASE_PUBLISHABLE_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXAiLCJyZWYiOiJkZmdheXd0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
@@ -395,7 +431,7 @@ const supabaseClient = window.supabase.createClient(
 );
 
 /* =====================================
-   APPLICATION
+   APPLICATION STATE
 ===================================== */
 
 let students = [];
@@ -406,15 +442,29 @@ const adminContent = document.getElementById("adminContent");
 const studentsTable = document.getElementById("studentsTable");
 const messageBox = document.getElementById("message");
 
+let messageTimer;
+
+/* =====================================
+   GENERAL HELPERS
+===================================== */
+
 function showMessage(message, type = "success") {
+
+    clearTimeout(messageTimer);
+
     messageBox.textContent = message;
     messageBox.className = "message " + type;
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    messageBox.style.display = "block";
 
-    setTimeout(() => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    messageTimer = setTimeout(() => {
         messageBox.style.display = "none";
-    }, 5000);
+    }, 6000);
 }
 
 function hideLoading() {
@@ -422,15 +472,36 @@ function hideLoading() {
     adminContent.style.display = "block";
 }
 
-function getLatestSubscription(studentId) {
-    const records = subscriptions
-        .filter(s => s.student_id === studentId)
-        .sort((a, b) => new Date(b.end_date) - new Date(a.end_date));
+function escapeHTML(value) {
 
-    return records[0] || null;
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[character]);
+}
+
+function formatDate(dateValue) {
+
+    if (!dateValue) return "Not available";
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+        return "Not available";
+    }
+
+    return date.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    });
 }
 
 function subscriptionIsActive(subscription) {
+
     if (!subscription || subscription.status !== "active") {
         return false;
     }
@@ -441,56 +512,131 @@ function subscriptionIsActive(subscription) {
            new Date(subscription.end_date) > now;
 }
 
-async function checkAdmin() {
-    const { data: { user }, error } = await supabaseClient.auth.getUser();
+/*
+   Select the subscription that currently grants access.
+   If none is active, use the most recently created record
+   for displaying its status.
+*/
 
-    if (error || !user) {
-        window.location.href = "login.html";
-        return;
+function getLatestSubscription(studentId) {
+
+    const records = subscriptions
+        .filter(subscription => subscription.student_id === studentId);
+
+    const activeRecord = records.find(subscription =>
+        subscriptionIsActive(subscription)
+    );
+
+    if (activeRecord) {
+        return activeRecord;
     }
 
-    const { data: profile, error: profileError } = await supabaseClient
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
+    records.sort((a, b) =>
+        new Date(b.created_at || b.end_date) -
+        new Date(a.created_at || a.end_date)
+    );
 
-    if (profileError || !profile || profile.role !== "admin") {
-        loading.textContent = "Access denied. Administrator privileges are required.";
-        await supabaseClient.auth.signOut();
-        return;
-    }
-
-    hideLoading();
-    await loadData();
+    return records[0] || null;
 }
 
-async function loadData() {
-    studentsTable.innerHTML =
-        '<tr><td colspan="6" class="empty">Loading students...</td></tr>';
+/* =====================================
+   ADMIN AUTHENTICATION
+===================================== */
 
-    const { data: studentData, error: studentError } = await supabaseClient
+async function checkAdmin() {
+
+    try {
+
+        const {
+            data: { user },
+            error
+        } = await supabaseClient.auth.getUser();
+
+        if (error || !user) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        const {
+            data: profile,
+            error: profileError
+        } = await supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .single();
+
+        if (profileError || !profile || profile.role !== "admin") {
+
+            loading.textContent =
+                "Access denied. Administrator privileges are required.";
+
+            await supabaseClient.auth.signOut();
+
+            return;
+        }
+
+        hideLoading();
+
+        await loadData();
+
+    } catch (error) {
+
+        loading.textContent =
+            "Unable to verify administrator access: " + error.message;
+
+    }
+}
+
+/* =====================================
+   LOAD STUDENTS AND SUBSCRIPTIONS
+===================================== */
+
+async function loadData() {
+
+    studentsTable.innerHTML = `
+        <tr>
+            <td colspan="6" class="empty">
+                Loading students...
+            </td>
+        </tr>
+    `;
+
+    const {
+        data: studentData,
+        error: studentError
+    } = await supabaseClient
         .from("profiles")
         .select("id, full_name, email, year_level, account_status")
         .eq("role", "student")
         .order("full_name");
 
     if (studentError) {
-        showMessage("Could not load students: " + studentError.message, "error");
+
+        showMessage(
+            "Could not load students: " + studentError.message,
+            "error"
+        );
+
         return;
     }
 
-    const { data: subscriptionData, error: subscriptionError } =
-        await supabaseClient
+    const {
+        data: subscriptionData,
+        error: subscriptionError
+    } = await supabaseClient
         .from("subscriptions")
         .select("id, student_id, start_date, end_date, status, created_at")
         .order("created_at", { ascending: false });
 
     if (subscriptionError) {
+
         showMessage(
-            "Could not load subscriptions: " + subscriptionError.message,
+            "Could not load subscriptions: " +
+            subscriptionError.message,
             "error"
         );
+
         return;
     }
 
@@ -501,118 +647,184 @@ async function loadData() {
     renderStudents();
 }
 
+/* =====================================
+   STATISTICS
+===================================== */
+
 function updateStatistics() {
-    document.getElementById("totalStudents").textContent = students.length;
+
+    document.getElementById("totalStudents").textContent =
+        students.length;
 
     document.getElementById("pendingStudents").textContent =
-        students.filter(s => s.account_status === "pending").length;
+        students.filter(student =>
+            student.account_status === "pending"
+        ).length;
 
     document.getElementById("approvedStudents").textContent =
-        students.filter(s => s.account_status === "approved").length;
+        students.filter(student =>
+            student.account_status === "approved"
+        ).length;
 
     const activeCount = students.filter(student =>
-        subscriptionIsActive(getLatestSubscription(student.id))
+        subscriptionIsActive(
+            getLatestSubscription(student.id)
+        )
     ).length;
 
-    document.getElementById("activeSubscriptions").textContent = activeCount;
+    document.getElementById("activeSubscriptions").textContent =
+        activeCount;
 }
 
+/* =====================================
+   RENDER STUDENTS
+===================================== */
+
 function renderStudents() {
+
     const search = document.getElementById("searchInput")
-        .value.toLowerCase();
+        .value.trim().toLowerCase();
 
     const filtered = students.filter(student =>
-        (student.full_name || "").toLowerCase().includes(search) ||
-        (student.email || "").toLowerCase().includes(search)
+
+        (student.full_name || "")
+            .toLowerCase()
+            .includes(search) ||
+
+        (student.email || "")
+            .toLowerCase()
+            .includes(search)
     );
 
     if (filtered.length === 0) {
-        studentsTable.innerHTML =
-            '<tr><td colspan="6" class="empty">No students found.</td></tr>';
+
+        studentsTable.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    No students found.
+                </td>
+            </tr>
+        `;
+
         return;
     }
 
     studentsTable.innerHTML = filtered.map(student => {
-        const subscription = getLatestSubscription(student.id);
-        const active = subscriptionIsActive(subscription);
 
-        const accountStatus = student.account_status || "unknown";
+        const subscription =
+            getLatestSubscription(student.id);
+
+        const active =
+            subscriptionIsActive(subscription);
+
+        const accountStatus =
+            student.account_status || "unknown";
+
+        const subscriptionStatus =
+            !subscription
+                ? "None"
+                : active
+                    ? "Active"
+                    : subscription.status === "suspended"
+                        ? "Suspended"
+                        : new Date(subscription.end_date) <= new Date()
+                            ? "Expired"
+                            : "Inactive";
 
         const expiry = subscription
-            ? new Date(subscription.end_date).toLocaleDateString()
+            ? formatDate(subscription.end_date)
             : "Not subscribed";
 
-        const subscriptionLabel = active
-            ? "Active"
-            : subscription
-                ? (subscription.status === "suspended" ? "Suspended" : "Inactive")
-                : "None";
+        const accountClass =
+            ["approved", "pending", "rejected"].includes(accountStatus)
+                ? accountStatus
+                : "unknown";
+
+        const subscriptionClass =
+            active
+                ? "active"
+                : subscriptionStatus === "Suspended" ||
+                  subscriptionStatus === "Expired"
+                    ? "suspended"
+                    : "unknown";
 
         return `
             <tr>
+
                 <td>
-                    <strong>${escapeHTML(student.full_name || "Unnamed")}</strong>
+                    <strong>
+                        ${escapeHTML(student.full_name || "Unnamed")}
+                    </strong>
+
                     <br>
-                    <small style="color:#718096;">${escapeHTML(student.email || "")}</small>
+
+                    <small style="color:#718096;">
+                        ${escapeHTML(student.email || "")}
+                    </small>
                 </td>
 
-                <td>${escapeHTML(student.year_level || "Not set")}</td>
+                <td>
+                    ${escapeHTML(student.year_level || "Not set")}
+                </td>
 
                 <td>
-                    <span class="badge ${escapeHTML(accountStatus)}">
+                    <span class="badge ${accountClass}">
                         ${escapeHTML(accountStatus)}
                     </span>
                 </td>
 
                 <td>
-                    <span class="badge ${active ? "active" : "expired"}">
-                        ${subscriptionLabel}
+                    <span class="badge ${subscriptionClass}">
+                        ${escapeHTML(subscriptionStatus)}
                     </span>
                 </td>
 
-                <td>${expiry}</td>
+                <td>${escapeHTML(expiry)}</td>
 
                 <td>
+
                     ${
                         accountStatus === "pending"
-                        ? `<button class="btn btn-approve"
-                            onclick="approveStudent('${student.id}')">
-                            Approve
-                           </button>`
+                        ? `
+                            <button
+                                class="btn btn-approve"
+                                onclick="approveStudent('${student.id}')">
+                                Approve
+                            </button>
+                        `
                         : ""
                     }
 
                     ${
                         accountStatus === "approved"
-                        ? `<button class="btn btn-subscribe"
-                            onclick="activateSubscription('${student.id}')">
-                            Activate
-                           </button>`
+                        ? `
+                            <button
+                                class="btn btn-subscribe"
+                                onclick="activateSubscription('${student.id}')">
+                                ${active ? "Extend" : "Activate"}
+                            </button>
+                        `
                         : ""
                     }
 
                     ${
                         active
-                        ? `<button class="btn btn-suspend"
-                            onclick="suspendSubscription('${subscription.id}')">
-                            Suspend
-                           </button>`
+                        ? `
+                            <button
+                                class="btn btn-suspend"
+                                onclick="suspendSubscription('${subscription.id}')">
+                                Suspend
+                            </button>
+                        `
                         : ""
                     }
+
                 </td>
+
             </tr>
         `;
-    }).join("");
-}
 
-function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[character]);
+    }).join("");
 }
 
 /* =====================================
@@ -620,27 +832,56 @@ function escapeHTML(value) {
 ===================================== */
 
 async function approveStudent(studentId) {
-    if (!confirm("Approve this student's account?")) return;
+
+    if (!confirm("Approve this student's account?")) {
+        return;
+    }
 
     const { error } = await supabaseClient
         .from("profiles")
-        .update({ account_status: "approved" })
+        .update({
+            account_status: "approved"
+        })
         .eq("id", studentId);
 
     if (error) {
-        showMessage("Approval failed: " + error.message, "error");
+
+        showMessage(
+            "Approval failed: " + error.message,
+            "error"
+        );
+
         return;
     }
 
     showMessage("Student account approved successfully.");
+
     await loadData();
 }
 
 /* =====================================
-   ACTIVATE SUBSCRIPTION
+   ACTIVATE OR EXTEND SUBSCRIPTION
 ===================================== */
 
 async function activateSubscription(studentId) {
+
+    const student = students.find(s => s.id === studentId);
+
+    if (!student || student.account_status !== "approved") {
+
+        showMessage(
+            "Approve the student's account before activating a subscription.",
+            "error"
+        );
+
+        return;
+    }
+
+    const existing = subscriptions.find(subscription =>
+        subscription.student_id === studentId &&
+        subscriptionIsActive(subscription)
+    );
+
     const duration = prompt(
         "Choose subscription duration:\n\n" +
         "Enter 7 for 7 days\n" +
@@ -654,30 +895,89 @@ async function activateSubscription(studentId) {
     const days = Number(duration);
 
     if (![7, 14, 30, 90].includes(days)) {
-        showMessage("Please enter 7, 14, 30 or 90.", "error");
+
+        showMessage(
+            "Please enter 7, 14, 30 or 90.",
+            "error"
+        );
+
         return;
     }
 
-    const start = new Date();
-    const end = new Date(start);
+    let start;
+    let end;
 
-    end.setDate(end.getDate() + days);
+    if (existing) {
 
-    const { error } = await supabaseClient
-        .from("subscriptions")
-        .insert({
-            student_id: studentId,
-            start_date: start.toISOString(),
-            end_date: end.toISOString(),
-            status: "active"
-        });
+        /*
+           Extend from the current expiry date.
+           This prevents overlapping active subscriptions.
+        */
 
-    if (error) {
-        showMessage("Subscription activation failed: " + error.message, "error");
-        return;
+        start = new Date(existing.start_date);
+
+        end = new Date(
+            Math.max(
+                Date.now(),
+                new Date(existing.end_date).getTime()
+            )
+        );
+
+        end.setDate(end.getDate() + days);
+
+        const { error } = await supabaseClient
+            .from("subscriptions")
+            .update({
+                end_date: end.toISOString(),
+                status: "active"
+            })
+            .eq("id", existing.id);
+
+        if (error) {
+
+            showMessage(
+                "Subscription extension failed: " + error.message,
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Subscription extended by " + days + " days."
+        );
+
+    } else {
+
+        start = new Date();
+        end = new Date(start);
+
+        end.setDate(end.getDate() + days);
+
+        const { error } = await supabaseClient
+            .from("subscriptions")
+            .insert({
+                student_id: studentId,
+                start_date: start.toISOString(),
+                end_date: end.toISOString(),
+                status: "active"
+            });
+
+        if (error) {
+
+            showMessage(
+                "Subscription activation failed: " + error.message,
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Subscription activated for " + days + " days."
+        );
     }
 
-    showMessage("Subscription activated for " + days + " days.");
     await loadData();
 }
 
@@ -686,42 +986,56 @@ async function activateSubscription(studentId) {
 ===================================== */
 
 async function suspendSubscription(subscriptionId) {
-    if (!confirm("Suspend this subscription?")) return;
 
-    const { error } = await supabaseClient
-        .from("subscriptions")
-        .update({ status: "suspended" })
-        .eq("id", subscriptionId);
-
-    if (error) {
-        showMessage("Could not suspend subscription: " + error.message, "error");
+    if (!confirm("Suspend this subscription?")) {
         return;
     }
 
-    showMessage("Subscription suspended.");
+    const { error } = await supabaseClient
+        .from("subscriptions")
+        .update({
+            status: "suspended"
+        })
+        .eq("id", subscriptionId);
+
+    if (error) {
+
+        showMessage(
+            "Could not suspend subscription: " + error.message,
+            "error"
+        );
+
+        return;
+    }
+
+    showMessage("Subscription suspended successfully.");
+
     await loadData();
 }
 
 /* =====================================
-   BUTTONS
+   BUTTON EVENTS
 ===================================== */
 
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-});
+document.getElementById("logoutBtn")
+    .addEventListener("click", async () => {
 
-document.getElementById("refreshBtn").addEventListener("click", loadData);
+        await supabaseClient.auth.signOut();
 
-document.getElementById("searchInput").addEventListener("input", renderStudents);
+        window.location.replace("login.html");
+    });
+
+document.getElementById("refreshBtn")
+    .addEventListener("click", loadData);
+
+document.getElementById("searchInput")
+    .addEventListener("input", renderStudents);
 
 /* =====================================
-   START
+   START APPLICATION
 ===================================== */
 
 checkAdmin();
 
-</script>
-
-</body>
+</script></body>
 </html>
