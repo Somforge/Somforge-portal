@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account | SOMFORGE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --navy: #102b46;
+    --navy-dark: #0a2036;
+    --teal: #087f83;
+    --gold: #d5a94d;
+    --bg: #f4f7fa;
+    --text: #243447;
+    --muted: #718096;
+    --border: #e4eaf0;
+    --white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+button, input { font: inherit; }
+
+.layout { min-height: 100vh; }
+
+.sidebar {
+    width: 255px;
+    background: var(--navy-dark);
+    color: white;
+    position: fixed;
+    inset: 0 auto 0 0;
+    padding: 30px 20px;
+    z-index: 20;
+}
+
+.brand {
+    font-family: 'Manrope', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0 12px 35px;
+}
+
+.brand span { color: var(--gold); }
+
+.nav-label {
+    color: #91a3b6;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.nav-link {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 13px 14px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,.09);
+    color: white;
+}
+
+.nav-link.active { border-left: 3px solid var(--gold); }
+
+.main {
+    margin-left: 255px;
+    padding: 30px 42px 50px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.topbar h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 25px;
+    color: var(--navy);
+    margin: 0;
+}
+
+.profile-name {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.content { max-width: 1050px; }
+
+.intro { margin-bottom: 28px; }
+
+.intro h2 {
+    font-family: 'Manrope', sans-serif;
+    color: var(--navy);
+    font-size: 23px;
+    margin: 0 0 8px;
+}
+
+.intro p {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+.section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 22px;
+}
+
+.section h3 {
+    font-family: 'Manrope', sans-serif;
+    color: var(--navy);
+    font-size: 16px;
+    margin: 0 0 22px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.detail-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.detail-value {
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #e8f5ef;
+    color: #167347;
+}
+
+.status.pending {
+    background: #fff5df;
+    color: #9a690b;
+}
+
+.status.suspended {
+    background: #fdeaea;
+    color: #b42318;
+}
+
+.subscription-panel {
+    border-left: 4px solid var(--teal);
+    background: #f3f8f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 22px;
+}
+
+.subscription-panel h4 {
+    margin: 0 0 8px;
+    color: var(--navy);
+    font-family: 'Manrope', sans-serif;
+}
+
+.subscription-panel p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.form-group { margin-bottom: 17px; }
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-group input:focus { border-color: var(--teal); }
+
+.btn {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 19px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--teal);
+    color: white;
+}
+
+.btn-primary:hover { background: #066b6e; }
+
+.btn-logout {
+    background: #fceeee;
+    color: #b42318;
+}
+
+.message {
+    font-size: 13px;
+    margin-top: 14px;
+    line-height: 1.5;
+}
+
+.error { color: #b42318; }
+.success { color: #167347; }
+
+.menu-button {
+    display: none;
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--navy);
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 15;
+}
+
+@media(max-width: 800px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .overlay.show { display: block; }
+
+    .main {
+        margin-left: 0;
+        padding: 22px 18px 40px;
+    }
+
+    .menu-button { display: block; }
+
+    .topbar { gap: 15px; }
+
+    .topbar h1 { font-size: 20px; }
+
+    .profile-name { display: none; }
+}
+
+@media(max-width: 500px) {
+    .details-grid { grid-template-columns: 1fr; }
+    .section { padding: 19px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+    <div class="brand">SOM<span>FORGE</span></div>
+
+    <div class="nav-label">Main menu</div>
+
+    <a class="nav-link" href="dashboard.html">Dashboard</a>
+    <a class="nav-link" href="dashboard.html#courses">My Courses</a>
+    <a class="nav-link" href="dashboard.html#learning">Learning Centre</a>
+    <a class="nav-link" href="dashboard.html#examinations">Examination Centre</a>
+    <a class="nav-link" href="dashboard.html#live">Live Learning</a>
+    <a class="nav-link active" href="account.html">My Account</a>
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+        <div style="display:flex;align-items:center;gap:15px;">
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <h1>My Account</h1>
+        </div>
+        <div class="profile-name" id="topName">Loading account...</div>
+    </header>
+
+    <div class="content">
+
+        <div class="intro">
+            <h2>Account information</h2>
+            <p>View your student details and manage your account security.</p>
+        </div>
+
+        <section class="section">
+            <h3>Personal details</h3>
+
+            <div class="details-grid">
+                <div>
+                    <div class="detail-label">Full name</div>
+                    <div class="detail-value" id="fullName">Loading...</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Email address</div>
+                    <div class="detail-value" id="email">Loading...</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Academic year</div>
+                    <div class="detail-value" id="yearLevel">Loading...</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Account status</div>
+                    <div class="detail-value" id="accountStatus">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Subscription information</h3>
+
+            <div class="subscription-panel">
+                <h4 id="subscriptionHeading">Checking subscription...</h4>
+                <p id="subscriptionMessage">Please wait while we retrieve your subscription information.</p>
+            </div>
+
+            <div class="details-grid">
+                <div>
+                    <div class="detail-label">Activation date</div>
+                    <div class="detail-value" id="startDate">—</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Expiry date</div>
+                    <div class="detail-value" id="endDate">—</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Subscription duration</div>
+                    <div class="detail-value" id="duration">—</div>
+                </div>
+
+                <div>
+                    <div class="detail-label">Days remaining</div>
+                    <div class="detail-value" id="daysRemaining">—</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h3>Change password</h3>
+
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="newPassword">New password</label>
+                    <input type="password" id="newPassword" minlength="8" required placeholder="Enter new password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm new password</label>
+                    <input type="password" id="confirmPassword" minlength="8" required placeholder="Confirm new password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update password</button>
+                <div id="passwordMessage" class="message"></div>
+            </form>
+        </section>
+
+        <section class="section">
+            <h3>Sign out</h3>
+            <p style="font-size:13px;color:#718096;line-height:1.7;">
+                Sign out of your SOMFORGE student account on this device.
+            </p>
+            <button class="btn btn-logout" id="logoutButton">Log out</button>
+        </section>
+
+    </div>
+</main>
+
+<script>
+const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("overlay").classList.toggle("show");
+}
+
+function formatDate(dateString) {
+    if (!dateString) return "—";
+
+    return new Date(dateString).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function setStatus(elementId, value) {
+    const element = document.getElementById(elementId);
+    const status = String(value || "Unknown").toLowerCase();
+
+    element.innerHTML = `<span class="status ${status}">${value || "Unknown"}</span>`;
+}
+
+async function loadAccount() {
+    const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
+
+    if (authError || !user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const { data: profile, error: profileError } = await supabaseClient
+        .from("profiles")
+        .select("full_name, email, year_level, account_status")
+        .eq("id", user.id)
+        .single();
+
+    if (profileError || !profile) {
+        document.getElementById("fullName").textContent =
+            "Unable to load profile";
+        return;
+    }
+
+    document.getElementById("fullName").textContent =
+        profile.full_name || "—";
+
+    document.getElementById("email").textContent =
+        profile.email || user.email || "—";
+
+    document.getElementById("yearLevel").textContent =
+        profile.year_level || "—";
+
+    document.getElementById("topName").textContent =
+        profile.full_name || "Student";
+
+    setStatus("accountStatus", profile.account_status);
+
+    const { data: subscriptions, error: subscriptionError } =
+        await supabaseClient
+            .from("subscriptions")
+            .select("start_date, end_date, status, created_at")
+            .eq("student_id", user.id)
+            .order("end_date", { ascending: false });
+
+    if (subscriptionError || !subscriptions || subscriptions.length === 0) {
+        document.getElementById("subscriptionHeading").textContent =
+            "No subscription found";
+
+        document.getElementById("subscriptionMessage").textContent =
+            "Your account does not currently have a subscription record. Please contact the SOMFORGE administrator.";
+
+        return;
+    }
+
+    const now = new Date();
+
+    const activeSubscription = subscriptions.find(sub => {
+        const start = new Date(sub.start_date);
+        const end = new Date(sub.end_date);
+
+        return sub.status === "active" && start <= now && end > now;
+    });
+
+    const subscription = activeSubscription || subscriptions[0];
+
+    document.getElementById("startDate").textContent =
+        formatDate(subscription.start_date);
+
+    document.getElementById("endDate").textContent =
+        formatDate(subscription.end_date);
+
+    const start = new Date(subscription.start_date);
+    const end = new Date(subscription.end_date);
+
+    const totalDuration = Math.max(
+        0,
+        Math.ceil((end - start) / (1000 * 60 * 60 * 24))
+    );
+
+    document.getElementById("duration").textContent =
+        totalDuration + " days";
+
+    if (activeSubscription) {
+        const remaining = Math.max(
+            0,
+            Math.ceil((end - now) / (1000 * 60 * 60 * 24))
+        );
+
+        document.getElementById("subscriptionHeading").textContent =
+            "Subscription active";
+
+        document.getElementById("subscriptionMessage").textContent =
+            "Your learning access is currently active.";
+
+        document.getElementById("daysRemaining").textContent =
+            remaining + (remaining === 1 ? " day" : " days");
+    } else {
+        document.getElementById("subscriptionHeading").textContent =
+            "Subscription inactive";
+
+        document.getElementById("subscriptionMessage").textContent =
+            "Your subscription is not currently active. Please contact the SOMFORGE administrator for assistance.";
+
+        document.getElementById("daysRemaining").textContent =
+            "0 days";
+    }
+}
+
+document.getElementById("passwordForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const message = document.getElementById("passwordMessage");
+
+    message.textContent = "";
+    message.className = "message";
+
+    if (newPassword.length < 8) {
+        message.textContent = "Your password must contain at least 8 characters.";
+        message.classList.add("error");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        message.textContent = "The passwords do not match.";
+        message.classList.add("error");
+        return;
+    }
+
+    const { error } = await supabaseClient.auth.updateUser({
+        password: newPassword
+    });
+
+    if (error) {
+        message.textContent = error.message;
+        message.classList.add("error");
+    } else {
+        message.textContent = "Your password has been updated successfully.";
+        message.classList.add("success");
+        document.getElementById("passwordForm").reset();
+    }
+});
+
+document.getElementById("logoutButton").addEventListener("click", async function() {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        alert("Unable to log out. Please try again.");
+        return;
+    }
+
+    window.location.href = "login.html";
+});
+
+loadAccount();
+</script>
+
+</body>
+</html>
