@@ -64,6 +64,7 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
 }
 
 .brand-symbol {
@@ -79,6 +80,7 @@ button {
     letter-spacing: 1.1px;
     line-height: 1;
     color: var(--navy);
+    white-space: nowrap;
 }
 
 .brand-name span {
@@ -92,7 +94,7 @@ button {
 /* HEADER */
 
 header {
-    height: 84px;
+    min-height: 84px;
     display: flex;
     align-items: center;
     background: white;
@@ -105,7 +107,17 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 35px;
     position: relative;
+    min-height: 84px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 30px;
 }
 
 .nav-links {
@@ -129,6 +141,7 @@ header {
     display: flex;
     align-items: center;
     gap: 23px;
+    flex-shrink: 0;
 }
 
 .login-link {
@@ -159,6 +172,7 @@ header {
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
+    padding: 10px 0 10px 15px;
 }
 
 /* HERO */
@@ -186,16 +200,15 @@ header {
 
 .hero-content {
     display: grid;
-    grid-template-columns: 1.05fr .95fr;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 45px;
-    padding: 75px 0;
+    padding: 90px 0;
     position: relative;
     z-index: 2;
 }
 
 .hero-text {
-    max-width: 600px;
+    max-width: 680px;
 }
 
 .eyebrow {
@@ -271,72 +284,6 @@ header {
 
 .secondary-button:hover {
     background: rgba(255,255,255,.08);
-}
-
-/* HERO MEDICAL VISUAL */
-
-.hero-visual {
-    min-height: 390px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.visual-circle {
-    position: absolute;
-    width: 365px;
-    height: 365px;
-    border: 1px solid rgba(179,218,215,.2);
-    border-radius: 50%;
-}
-
-.visual-circle::before {
-    content: "";
-    position: absolute;
-    inset: 35px;
-    border: 1px solid rgba(179,218,215,.23);
-    border-radius: 50%;
-}
-
-.visual-circle::after {
-    content: "";
-    position: absolute;
-    inset: 75px;
-    border: 1px solid rgba(179,218,215,.28);
-    border-radius: 50%;
-}
-
-.medical-art {
-    width: min(100%, 390px);
-    position: relative;
-    z-index: 2;
-}
-
-.medical-art svg {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-.floating-dot {
-    position: absolute;
-    width: 11px;
-    height: 11px;
-    background: var(--gold);
-    border-radius: 50%;
-    top: 50px;
-    right: 55px;
-}
-
-.floating-ring {
-    position: absolute;
-    width: 65px;
-    height: 65px;
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 50%;
-    bottom: 30px;
-    left: 20px;
 }
 
 /* INTRODUCTION */
@@ -500,9 +447,17 @@ footer {
     color: var(--gold-light);
 }
 
-/* MOBILE */
+/* TABLET */
 
 @media(max-width: 850px) {
+    .navbar {
+        gap: 20px;
+    }
+
+    .nav-menu {
+        gap: 18px;
+    }
+
     .nav-links {
         gap: 18px;
     }
@@ -511,29 +466,28 @@ footer {
         gap: 15px;
     }
 
-    .hero-content {
-        grid-template-columns: 1fr .85fr;
-        gap: 20px;
-    }
-
-    .visual-circle {
-        width: 300px;
-        height: 300px;
-    }
-
     .intro-grid {
         gap: 45px;
     }
 }
 
+/* MOBILE */
+
 @media(max-width: 700px) {
-    header {
-        height: 72px;
+
+    header,
+    .navbar {
+        min-height: 76px;
+    }
+
+    .navbar {
+        justify-content: space-between;
+        gap: 15px;
     }
 
     .brand-symbol {
-        width: 33px;
-        height: 33px;
+        width: 34px;
+        height: 34px;
     }
 
     .brand-name {
@@ -543,39 +497,54 @@ footer {
     .menu-toggle {
         display: block;
         margin-left: auto;
-        margin-right: 17px;
+        font-size: 13px;
+        letter-spacing: .3px;
     }
 
-    .nav-links {
+    .nav-menu {
         display: none;
         position: absolute;
-        top: 57px;
-        left: 0;
-        right: 0;
+        top: calc(100% + 1px);
+        left: -5.55%;
+        right: -5.55%;
+        width: 111.1%;
+        padding: 25px 5%;
         background: white;
-        padding: 23px;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        border: 1px solid var(--border);
-        box-shadow: 0 15px 30px rgba(0,0,0,.08);
+        align-items: stretch;
+        gap: 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 15px 25px rgba(0,0,0,.07);
     }
 
-    .nav-links.open {
+    .nav-menu.open {
         display: flex;
     }
 
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 19px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
     .nav-actions {
-        gap: 12px;
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
+        justify-content: flex-start;
+        gap: 22px;
     }
 
     .login-link {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .register-link {
-        padding: 10px 11px;
-        font-size: 10px;
+        padding: 11px 16px;
+        font-size: 12px;
     }
 
     .hero {
@@ -583,36 +552,21 @@ footer {
     }
 
     .hero-content {
-        grid-template-columns: 1fr;
-        padding-top: 70px;
-        padding-bottom: 55px;
+        padding-top: 75px;
+        padding-bottom: 75px;
     }
 
     .hero h1 {
         font-size: 43px;
     }
 
-    .hero-visual {
-        min-height: 330px;
-        margin-top: 15px;
-    }
-
-    .visual-circle {
-        width: 300px;
-        height: 300px;
-    }
-
-    .medical-art {
-        max-width: 340px;
+    .introduction {
+        padding: 70px 0;
     }
 
     .intro-grid {
         grid-template-columns: 1fr;
         gap: 25px;
-    }
-
-    .introduction {
-        padding: 70px 0;
     }
 
     .intro-heading {
@@ -664,12 +618,17 @@ footer {
         font-size: 18px;
     }
 
-    .nav-actions {
+    .brand {
         gap: 8px;
     }
 
     .hero h1 {
         font-size: 37px;
+    }
+
+    .hero-content {
+        padding-top: 65px;
+        padding-bottom: 65px;
     }
 }
 </style>
@@ -700,16 +659,20 @@ footer {
             Menu
         </button>
 
-        <nav class="nav-links" id="navLinks">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#learning">Learning</a>
-            <a href="#contact">Contact</a>
-        </nav>
+        <div class="nav-menu" id="navMenu">
 
-        <div class="nav-actions">
-            <a href="login.html" class="login-link">Student Login</a>
-            <a href="register.html" class="register-link">Get Started</a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#learning">Learning</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="login.html" class="login-link">Student Login</a>
+                <a href="register.html" class="register-link">Get Started</a>
+            </div>
+
         </div>
 
     </div>
@@ -747,71 +710,6 @@ footer {
                 <a href="#about" class="secondary-button">
                     Discover SOMFORGE
                 </a>
-
-            </div>
-
-        </div>
-
-        <div class="hero-visual">
-
-            <div class="visual-circle"></div>
-            <div class="floating-dot"></div>
-            <div class="floating-ring"></div>
-
-            <div class="medical-art">
-
-                <svg viewBox="0 0 430 390" fill="none"
-                     xmlns="http://www.w3.org/2000/svg"
-                     aria-label="Abstract medical stethoscope illustration">
-
-                    <!-- Subtle background shape -->
-                    <path d="M215 35C309 35 384 110 384 204C384 298 309 373 215 373C121 373 46 298 46 204C46 110 121 35 215 35Z"
-                          fill="#173b59" opacity=".45"/>
-
-                    <!-- Stethoscope tubing -->
-                    <path d="M125 90V151C125 204 160 235 215 235C270 235 305 204 305 151V90"
-                          stroke="#D9E4E9" stroke-width="9"
-                          stroke-linecap="round"/>
-
-                    <!-- Ear pieces -->
-                    <path d="M125 90V69C125 58 134 49 145 49"
-                          stroke="#D9E4E9" stroke-width="9"
-                          stroke-linecap="round"/>
-
-                    <path d="M305 90V69C305 58 296 49 285 49"
-                          stroke="#D9E4E9" stroke-width="9"
-                          stroke-linecap="round"/>
-
-                    <circle cx="145" cy="49" r="10" fill="#BD9857"/>
-                    <circle cx="285" cy="49" r="10" fill="#BD9857"/>
-
-                    <!-- Central tubing -->
-                    <path d="M215 235V267C215 288 232 305 253 305"
-                          stroke="#D9E4E9" stroke-width="9"
-                          stroke-linecap="round"/>
-
-                    <!-- Chest piece -->
-                    <circle cx="278" cy="305" r="31"
-                            stroke="#BD9857" stroke-width="8"/>
-
-                    <circle cx="278" cy="305" r="14"
-                            fill="#BD9857"/>
-
-                    <circle cx="278" cy="305" r="5"
-                            fill="#102B46"/>
-
-                    <!-- Fine decorative heartbeat line -->
-                    <path d="M74 258H122L139 239L157 276L176 246L192 258H222"
-                          stroke="#7FB7B3" stroke-width="3"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"/>
-
-                    <circle cx="74" cy="258" r="5" fill="#BD9857"/>
-
-                    <!-- Small accent -->
-                    <circle cx="346" cy="118" r="6" fill="#BD9857"/>
-
-                </svg>
 
             </div>
 
@@ -991,24 +889,30 @@ footer {
 <script>
 
 const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
+const navMenu = document.getElementById("navMenu");
 
 menuToggle.addEventListener("click", function() {
 
-    const isOpen = navLinks.classList.toggle("open");
+    const isOpen = navMenu.classList.toggle("open");
 
     menuToggle.setAttribute("aria-expanded", isOpen);
+    menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+    );
+
     menuToggle.textContent = isOpen ? "Close" : "Menu";
 
 });
 
-document.querySelectorAll(".nav-links a").forEach(link => {
+document.querySelectorAll(".nav-menu a").forEach(link => {
 
     link.addEventListener("click", function() {
 
-        navLinks.classList.remove("open");
+        navMenu.classList.remove("open");
 
         menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation");
         menuToggle.textContent = "Menu";
 
     });
