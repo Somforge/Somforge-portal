@@ -16,13 +16,15 @@
 <style>
 :root {
     --navy: #102b46;
-    --navy-dark: #0b2035;
-    --teal: #087f83;
-    --gold: #c9a45b;
+    --navy-dark: #091d31;
+    --navy-light: #1b405f;
+    --gold: #bd9857;
+    --gold-light: #dfc18a;
+    --teal: #7fb7b3;
     --white: #ffffff;
     --muted: #687789;
     --light: #f5f7f9;
-    --border: #e8edf1;
+    --border: #e6ebef;
 }
 
 * {
@@ -39,7 +41,7 @@ body {
     font-family: 'DM Sans', sans-serif;
     color: var(--navy);
     background: var(--white);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 a {
@@ -47,62 +49,86 @@ a {
     color: inherit;
 }
 
+button {
+    font: inherit;
+}
+
 .container {
     width: min(1160px, 90%);
     margin: auto;
 }
 
-/* NAVIGATION */
+/* BRAND */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-symbol {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    line-height: 1;
+    color: var(--navy);
+}
+
+.brand-name span {
+    color: var(--gold);
+}
+
+.brand-light .brand-name {
+    color: white;
+}
+
+/* HEADER */
 
 header {
-    height: 82px;
+    height: 84px;
     display: flex;
     align-items: center;
+    background: white;
     border-bottom: 1px solid var(--border);
-    background: rgba(255,255,255,.97);
     position: relative;
-    z-index: 10;
+    z-index: 20;
 }
 
 .navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.logo {
-    font-family: 'Manrope', sans-serif;
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    color: var(--navy);
-}
-
-.logo span {
-    color: var(--teal);
+    justify-content: space-between;
+    position: relative;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 34px;
+    gap: 35px;
 }
 
 .nav-links a {
     font-size: 13px;
     font-weight: 600;
     color: #536273;
-    transition: .2s;
+    transition: color .2s;
 }
 
 .nav-links a:hover {
-    color: var(--teal);
+    color: var(--gold);
 }
 
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 23px;
 }
 
 .login-link {
@@ -114,73 +140,94 @@ header {
 .register-link {
     background: var(--navy);
     color: white;
-    padding: 12px 19px;
+    padding: 12px 20px;
     font-size: 12px;
     font-weight: 700;
-    border-radius: 4px;
-    transition: .2s;
+    transition: background .2s;
 }
 
 .register-link:hover {
-    background: var(--teal);
+    background: var(--gold);
+    color: var(--navy-dark);
 }
 
 .menu-toggle {
     display: none;
     border: none;
-    background: none;
+    background: transparent;
     color: var(--navy);
-    font-size: 25px;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
 }
 
 /* HERO */
 
 .hero {
+    min-height: 570px;
     background: var(--navy);
     color: white;
-    min-height: 570px;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
 }
 
-.hero-content {
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
-    align-items: center;
-    gap: 50px;
-    padding-top: 55px;
-    padding-bottom: 55px;
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border: 1px solid rgba(255,255,255,.045);
+    border-radius: 50%;
+    top: -310px;
+    right: -90px;
 }
 
-.hero-text {
-    max-width: 590px;
+.hero-content {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 45px;
+    padding: 75px 0;
     position: relative;
     z-index: 2;
 }
 
+.hero-text {
+    max-width: 600px;
+}
+
 .eyebrow {
-    color: #b9d8d7;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold-light);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 25px;
 }
 
+.eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+}
+
 .hero h1 {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(40px, 5vw, 61px);
-    line-height: 1.13;
+    font-size: clamp(39px, 5vw, 60px);
+    line-height: 1.16;
     letter-spacing: -2px;
     font-weight: 700;
     margin-bottom: 25px;
 }
 
 .hero h1 span {
-    color: #a8d4d0;
+    color: var(--gold-light);
 }
 
 .hero-description {
@@ -199,48 +246,48 @@ header {
 }
 
 .primary-button {
+    display: inline-block;
     background: var(--gold);
     color: var(--navy-dark);
-    padding: 15px 24px;
+    padding: 14px 24px;
     font-size: 13px;
     font-weight: 700;
-    border-radius: 4px;
     transition: .2s;
 }
 
 .primary-button:hover {
-    background: #e1c17e;
+    background: var(--gold-light);
 }
 
 .secondary-button {
+    display: inline-block;
     color: white;
-    border: 1px solid rgba(255,255,255,.45);
-    padding: 14px 23px;
+    border: 1px solid rgba(255,255,255,.4);
+    padding: 13px 23px;
     font-size: 13px;
     font-weight: 600;
-    border-radius: 4px;
     transition: .2s;
 }
 
 .secondary-button:hover {
-    background: rgba(255,255,255,.1);
+    background: rgba(255,255,255,.08);
 }
 
-/* HERO VISUAL */
+/* HERO MEDICAL VISUAL */
 
 .hero-visual {
     min-height: 390px;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .visual-circle {
     position: absolute;
-    width: 350px;
-    height: 350px;
-    border: 1px solid rgba(179,218,215,.22);
+    width: 365px;
+    height: 365px;
+    border: 1px solid rgba(179,218,215,.2);
     border-radius: 50%;
 }
 
@@ -248,7 +295,7 @@ header {
     content: "";
     position: absolute;
     inset: 35px;
-    border: 1px solid rgba(179,218,215,.25);
+    border: 1px solid rgba(179,218,215,.23);
     border-radius: 50%;
 }
 
@@ -256,110 +303,40 @@ header {
     content: "";
     position: absolute;
     inset: 75px;
-    border: 1px solid rgba(179,218,215,.3);
+    border: 1px solid rgba(179,218,215,.28);
     border-radius: 50%;
 }
 
-.visual-card {
+.medical-art {
+    width: min(100%, 390px);
     position: relative;
     z-index: 2;
-    width: 270px;
-    min-height: 300px;
-    background: #f7fafb;
-    color: var(--navy);
-    padding: 27px;
-    border-radius: 5px;
-    box-shadow: 0 25px 65px rgba(0,0,0,.2);
-    transform: rotate(-3deg);
 }
 
-.visual-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e4eaf0;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-}
-
-.visual-mark {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 1px;
-}
-
-.visual-mark span {
-    color: var(--teal);
-}
-
-.visual-line {
-    width: 34px;
-    height: 3px;
-    background: var(--gold);
-}
-
-.visual-card h3 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 23px;
-    line-height: 1.3;
-    margin-bottom: 12px;
-}
-
-.visual-card p {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 24px;
-}
-
-.visual-rule {
-    height: 5px;
-    background: #e7edf1;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.visual-rule.short {
-    width: 65%;
-}
-
-.visual-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 28px;
-    color: var(--teal);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.gold-dot {
-    width: 10px;
-    height: 10px;
-    background: var(--gold);
-    border-radius: 50%;
+.medical-art svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
 }
 
 .floating-dot {
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     background: var(--gold);
     border-radius: 50%;
-    top: 60px;
+    top: 50px;
     right: 55px;
 }
 
 .floating-ring {
     position: absolute;
-    width: 75px;
-    height: 75px;
-    border: 1px solid rgba(255,255,255,.3);
+    width: 65px;
+    height: 65px;
+    border: 1px solid rgba(255,255,255,.25);
     border-radius: 50%;
-    bottom: 35px;
-    left: 25px;
+    bottom: 30px;
+    left: 20px;
 }
 
 /* INTRODUCTION */
@@ -370,13 +347,13 @@ header {
 
 .intro-grid {
     display: grid;
-    grid-template-columns: .75fr 1.25fr;
+    grid-template-columns: .8fr 1.2fr;
     gap: 90px;
     align-items: start;
 }
 
 .section-label {
-    color: var(--teal);
+    color: var(--gold);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -387,7 +364,7 @@ header {
 .intro-heading {
     font-family: 'Manrope', sans-serif;
     font-size: 32px;
-    line-height: 1.3;
+    line-height: 1.35;
     letter-spacing: -.8px;
 }
 
@@ -492,9 +469,9 @@ header {
 /* FOOTER */
 
 footer {
-    background: #071a2c;
+    background: #071726;
     color: white;
-    padding: 35px 0;
+    padding: 38px 0;
 }
 
 .footer-content {
@@ -520,7 +497,7 @@ footer {
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--gold-light);
 }
 
 /* MOBILE */
@@ -530,14 +507,18 @@ footer {
         gap: 18px;
     }
 
+    .nav-actions {
+        gap: 15px;
+    }
+
     .hero-content {
-        grid-template-columns: 1fr .8fr;
+        grid-template-columns: 1fr .85fr;
         gap: 20px;
     }
 
     .visual-circle {
-        width: 290px;
-        height: 290px;
+        width: 300px;
+        height: 300px;
     }
 
     .intro-grid {
@@ -550,27 +531,34 @@ footer {
         height: 72px;
     }
 
-    .menu-toggle {
-        display: block;
+    .brand-symbol {
+        width: 33px;
+        height: 33px;
     }
 
-    .navbar {
-        position: relative;
+    .brand-name {
+        font-size: 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+        margin-right: 17px;
     }
 
     .nav-links {
         display: none;
         position: absolute;
-        top: 60px;
+        top: 57px;
         left: 0;
         right: 0;
         background: white;
-        padding: 20px;
+        padding: 23px;
         flex-direction: column;
-        align-items: stretch;
-        gap: 18px;
+        align-items: flex-start;
+        gap: 20px;
         border: 1px solid var(--border);
-        box-shadow: 0 12px 25px rgba(0,0,0,.08);
+        box-shadow: 0 15px 30px rgba(0,0,0,.08);
     }
 
     .nav-links.open {
@@ -578,16 +566,16 @@ footer {
     }
 
     .nav-actions {
-        gap: 13px;
+        gap: 12px;
     }
 
     .login-link {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .register-link {
-        padding: 10px 12px;
-        font-size: 11px;
+        padding: 10px 11px;
+        font-size: 10px;
     }
 
     .hero {
@@ -596,8 +584,8 @@ footer {
 
     .hero-content {
         grid-template-columns: 1fr;
-        padding-top: 75px;
-        padding-bottom: 65px;
+        padding-top: 70px;
+        padding-bottom: 55px;
     }
 
     .hero h1 {
@@ -605,13 +593,17 @@ footer {
     }
 
     .hero-visual {
-        min-height: 350px;
+        min-height: 330px;
         margin-top: 15px;
     }
 
     .visual-circle {
-        width: 310px;
-        height: 310px;
+        width: 300px;
+        height: 300px;
+    }
+
+    .medical-art {
+        max-width: 340px;
     }
 
     .intro-grid {
@@ -668,20 +660,16 @@ footer {
 }
 
 @media(max-width: 380px) {
-    .logo {
-        font-size: 21px;
+    .brand-name {
+        font-size: 18px;
     }
 
     .nav-actions {
-        gap: 9px;
+        gap: 8px;
     }
 
     .hero h1 {
         font-size: 37px;
-    }
-
-    .visual-card {
-        width: 245px;
     }
 }
 </style>
@@ -692,10 +680,24 @@ footer {
 <header>
     <div class="container navbar">
 
-        <a href="index.html" class="logo">SOM<span>FORGE</span></a>
+        <a href="index.html" class="brand" aria-label="SOMFORGE Home">
 
-        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
-            ☰
+            <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z"
+                      stroke="#102B46" stroke-width="2.4"/>
+
+                <path d="M10 24H17L21 16L26 32L30 22L33 25H38"
+                      stroke="#BD9857" stroke-width="2.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <span class="brand-name">SOM<span>FORGE</span></span>
+
+        </a>
+
+        <button class="menu-toggle" id="menuToggle"
+                aria-label="Open navigation" aria-expanded="false">
+            Menu
         </button>
 
         <nav class="nav-links" id="navLinks">
@@ -716,10 +718,14 @@ footer {
 <main>
 
 <section class="hero" id="home">
+
     <div class="container hero-content">
 
         <div class="hero-text">
-            <div class="eyebrow">Medical education · Academic development</div>
+
+            <div class="eyebrow">
+                Medical education · Academic development
+            </div>
 
             <h1>
                 Building knowledge.<br>
@@ -733,6 +739,7 @@ footer {
             </p>
 
             <div class="hero-buttons">
+
                 <a href="register.html" class="primary-button">
                     Join SOMFORGE
                 </a>
@@ -740,52 +747,94 @@ footer {
                 <a href="#about" class="secondary-button">
                     Discover SOMFORGE
                 </a>
+
             </div>
+
         </div>
 
         <div class="hero-visual">
+
             <div class="visual-circle"></div>
             <div class="floating-dot"></div>
             <div class="floating-ring"></div>
 
-            <div class="visual-card">
-                <div class="visual-top">
-                    <div class="visual-mark">SOM<span>FORGE</span></div>
-                    <div class="visual-line"></div>
-                </div>
+            <div class="medical-art">
 
-                <h3>Knowledge is the foundation of excellent care.</h3>
+                <svg viewBox="0 0 430 390" fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                     aria-label="Abstract medical stethoscope illustration">
 
-                <p>
-                    Developing understanding, strengthening clinical
-                    foundations and supporting the journey through medicine.
-                </p>
+                    <!-- Subtle background shape -->
+                    <path d="M215 35C309 35 384 110 384 204C384 298 309 373 215 373C121 373 46 298 46 204C46 110 121 35 215 35Z"
+                          fill="#173b59" opacity=".45"/>
 
-                <div class="visual-rule"></div>
-                <div class="visual-rule"></div>
-                <div class="visual-rule short"></div>
+                    <!-- Stethoscope tubing -->
+                    <path d="M125 90V151C125 204 160 235 215 235C270 235 305 204 305 151V90"
+                          stroke="#D9E4E9" stroke-width="9"
+                          stroke-linecap="round"/>
 
-                <div class="visual-bottom">
-                    <span>LEARN · GROW · EXCEL</span>
-                    <div class="gold-dot"></div>
-                </div>
+                    <!-- Ear pieces -->
+                    <path d="M125 90V69C125 58 134 49 145 49"
+                          stroke="#D9E4E9" stroke-width="9"
+                          stroke-linecap="round"/>
+
+                    <path d="M305 90V69C305 58 296 49 285 49"
+                          stroke="#D9E4E9" stroke-width="9"
+                          stroke-linecap="round"/>
+
+                    <circle cx="145" cy="49" r="10" fill="#BD9857"/>
+                    <circle cx="285" cy="49" r="10" fill="#BD9857"/>
+
+                    <!-- Central tubing -->
+                    <path d="M215 235V267C215 288 232 305 253 305"
+                          stroke="#D9E4E9" stroke-width="9"
+                          stroke-linecap="round"/>
+
+                    <!-- Chest piece -->
+                    <circle cx="278" cy="305" r="31"
+                            stroke="#BD9857" stroke-width="8"/>
+
+                    <circle cx="278" cy="305" r="14"
+                            fill="#BD9857"/>
+
+                    <circle cx="278" cy="305" r="5"
+                            fill="#102B46"/>
+
+                    <!-- Fine decorative heartbeat line -->
+                    <path d="M74 258H122L139 239L157 276L176 246L192 258H222"
+                          stroke="#7FB7B3" stroke-width="3"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+
+                    <circle cx="74" cy="258" r="5" fill="#BD9857"/>
+
+                    <!-- Small accent -->
+                    <circle cx="346" cy="118" r="6" fill="#BD9857"/>
+
+                </svg>
+
             </div>
+
         </div>
 
     </div>
+
 </section>
 
 <section class="introduction" id="about">
+
     <div class="container intro-grid">
 
         <div>
             <div class="section-label">About SOMFORGE</div>
+
             <h2 class="intro-heading">
                 Supporting the people behind the profession.
             </h2>
         </div>
 
         <div class="intro-text">
+
             <p>
                 SOMFORGE is a medical learning initiative created to support
                 medical students in their academic and professional development.
@@ -802,15 +851,19 @@ footer {
                 and developing the knowledge that supports responsible
                 clinical practice.
             </p>
+
         </div>
 
     </div>
+
 </section>
 
 <section class="learning" id="learning">
+
     <div class="container">
 
         <div class="learning-header">
+
             <div>
                 <div class="section-label">The learning experience</div>
                 <h2>Learning with purpose.</h2>
@@ -820,46 +873,63 @@ footer {
                 A structured academic environment designed to make learning
                 more organised, accessible and collaborative.
             </p>
+
         </div>
 
         <div class="learning-grid">
 
             <article class="learning-item">
+
                 <div class="learning-number">01</div>
+
                 <h3>Structured Resources</h3>
+
                 <p>
                     Organised academic materials that support learning
                     across the medical curriculum.
                 </p>
+
             </article>
 
             <article class="learning-item">
+
                 <div class="learning-number">02</div>
+
                 <h3>Guided Learning</h3>
+
                 <p>
                     Opportunities to strengthen understanding through
                     focused teaching and academic support.
                 </p>
+
             </article>
 
             <article class="learning-item">
+
                 <div class="learning-number">03</div>
+
                 <h3>Collaborative Study</h3>
+
                 <p>
                     A learning environment that encourages discussion,
                     shared understanding and academic growth.
                 </p>
+
             </article>
 
         </div>
+
     </div>
+
 </section>
 
 <section class="cta" id="contact">
+
     <div class="container cta-content">
 
         <div>
             <h2>Take the next step in your learning.</h2>
+
             <p>
                 Become part of the SOMFORGE learning community.
             </p>
@@ -870,49 +940,84 @@ footer {
         </a>
 
     </div>
+
 </section>
 
 </main>
 
 <footer>
+
     <div class="container footer-content">
 
         <div>
-            <a href="index.html" class="logo" style="color:white;">
-                SOM<span>FORGE</span>
+
+            <a href="index.html" class="brand brand-light">
+
+                <svg class="brand-symbol" viewBox="0 0 48 48"
+                     fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z"
+                          stroke="#FFFFFF" stroke-width="2.4"/>
+
+                    <path d="M10 24H17L21 16L26 32L30 22L33 25H38"
+                          stroke="#BD9857" stroke-width="2.7"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+
+                </svg>
+
+                <span class="brand-name">SOM<span>FORGE</span></span>
+
             </a>
 
-            <p class="footer-copy" style="margin-top:10px;">
+            <p class="footer-copy" style="margin-top:12px;">
                 © <span id="year"></span> SOMFORGE. All rights reserved.
             </p>
+
         </div>
 
         <div class="footer-links">
+
             <a href="#about">About</a>
             <a href="#learning">Learning</a>
             <a href="login.html">Student Login</a>
             <a href="register.html">Register</a>
+
         </div>
 
     </div>
+
 </footer>
 
 <script>
+
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
 menuToggle.addEventListener("click", function() {
-    navLinks.classList.toggle("open");
+
+    const isOpen = navLinks.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", isOpen);
+    menuToggle.textContent = isOpen ? "Close" : "Menu";
+
 });
 
 document.querySelectorAll(".nav-links a").forEach(link => {
+
     link.addEventListener("click", function() {
+
         navLinks.classList.remove("open");
+
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "Menu";
+
     });
+
 });
 
 document.getElementById("year").textContent =
     new Date().getFullYear();
+
 </script>
 
 </body>
