@@ -7,6 +7,7 @@
 <title>Student Portal | SOMFORGE</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,17 +15,16 @@
 <style>
 :root {
     --navy:#102b4e;
-    --navy2:#173b63;
+    --navy-light:#193d64;
     --teal:#159b91;
     --teal-dark:#087c74;
     --gold:#d6a63c;
-    --bg:#f4f7fb;
-    --white:#fff;
-    --text:#243449;
-    --muted:#7b899b;
-    --border:#e7edf3;
-    --green:#16845b;
-    --shadow:0 8px 28px rgba(16,43,78,.055);
+    --background:#f5f7fa;
+    --white:#ffffff;
+    --text:#26374b;
+    --muted:#78889a;
+    --border:#e5eaf0;
+    --shadow:0 4px 18px rgba(16,43,78,.045);
 }
 
 * {
@@ -35,12 +35,12 @@
 
 html {
     scroll-behavior:smooth;
-    scroll-padding-top:95px;
+    scroll-padding-top:100px;
 }
 
 body {
-    font-family:"DM Sans",Arial,sans-serif;
-    background:var(--bg);
+    font-family:"DM Sans",sans-serif;
+    background:var(--background);
     color:var(--text);
     overflow-x:hidden;
 }
@@ -50,10 +50,6 @@ button {
     cursor:pointer;
 }
 
-a {
-    color:inherit;
-}
-
 /* SIDEBAR */
 
 .sidebar {
@@ -61,7 +57,7 @@ a {
     inset:0 auto 0 0;
     width:258px;
     background:var(--navy);
-    color:#fff;
+    color:white;
     padding:27px 19px 20px;
     display:flex;
     flex-direction:column;
@@ -78,21 +74,20 @@ a {
 .brand-mark {
     width:39px;
     height:39px;
-    border-radius:11px;
+    border-radius:9px;
     background:var(--teal);
     display:grid;
     place-items:center;
     font-family:Manrope,sans-serif;
     font-weight:800;
     font-size:18px;
-    color:white;
 }
 
 .brand-name {
     font-family:Manrope,sans-serif;
     font-size:21px;
     font-weight:800;
-    letter-spacing:.4px;
+    letter-spacing:.3px;
 }
 
 .brand-name span,
@@ -101,7 +96,7 @@ a {
 }
 
 .nav-caption {
-    color:#91a7bd;
+    color:#92a7bd;
     font-size:10px;
     font-weight:700;
     text-transform:uppercase;
@@ -123,12 +118,12 @@ a {
     align-items:center;
     gap:13px;
     padding:12px 13px;
-    border-radius:9px;
+    border-radius:7px;
     text-decoration:none;
     color:#c6d3e0;
     font-size:13px;
     font-weight:600;
-    transition:.2s;
+    transition:background .2s,color .2s;
 }
 
 .nav-icon {
@@ -157,7 +152,7 @@ a {
 .sidebar-note {
     color:#9db0c4;
     font-size:11px;
-    line-height:1.6;
+    line-height:1.7;
     padding:0 10px 15px;
 }
 
@@ -165,18 +160,18 @@ a {
     width:100%;
     padding:12px;
     border:1px solid rgba(255,255,255,.2);
-    border-radius:9px;
+    border-radius:7px;
     background:transparent;
     color:white;
     font-size:13px;
-    font-weight:700;
+    font-weight:600;
 }
 
 .logout:hover {
     background:#1c456f;
 }
 
-/* MOBILE NAVIGATION */
+/* MOBILE HEADER */
 
 .mobile-header {
     display:none;
@@ -186,7 +181,7 @@ a {
     display:none;
 }
 
-/* MAIN */
+/* MAIN AREA */
 
 .main {
     margin-left:258px;
@@ -213,20 +208,21 @@ a {
 
 .breadcrumb strong {
     color:var(--navy);
-    font-weight:700;
 }
 
 .profile-area {
     display:flex;
     align-items:center;
     gap:12px;
+    cursor:pointer;
+    text-decoration:none;
 }
 
 .avatar {
-    width:40px;
-    height:40px;
+    width:39px;
+    height:39px;
     border-radius:50%;
-    background:#e3f3f1;
+    background:#e5f1ef;
     color:var(--teal-dark);
     display:grid;
     place-items:center;
@@ -246,38 +242,52 @@ a {
     margin-top:3px;
 }
 
-/* CONTENT */
+/* PAGE CONTENT */
 
 .content {
     max-width:1500px;
     margin:auto;
-    padding:32px 38px 20px;
+    padding:32px 38px 22px;
 }
 
-/* HERO */
+.section {
+    margin-bottom:36px;
+    scroll-margin-top:100px;
+}
+
+/* WELCOME BANNER */
 
 .hero {
     position:relative;
     overflow:hidden;
-    background:linear-gradient(115deg,#102b4e 0%,#173e68 65%,#126d70 120%);
-    border-radius:17px;
-    padding:37px 38px;
+    background:linear-gradient(112deg,#102b4e 0%,#173d65 68%,#126d70 125%);
+    border-radius:13px;
+    padding:39px 40px;
     color:white;
-    margin-bottom:25px;
+    margin-bottom:34px;
     min-height:205px;
 }
 
-.hero:after {
+.hero::before {
     content:"";
     position:absolute;
-    width:290px;
-    height:290px;
-    border:1px solid rgba(255,255,255,.11);
+    width:270px;
+    height:270px;
+    border:1px solid rgba(255,255,255,.12);
     border-radius:50%;
-    right:-55px;
-    top:-125px;
-    box-shadow:0 0 0 35px rgba(255,255,255,.025),
-               0 0 0 70px rgba(255,255,255,.025);
+    right:-65px;
+    top:-135px;
+}
+
+.hero::after {
+    content:"";
+    position:absolute;
+    width:210px;
+    height:210px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:50%;
+    right:5px;
+    top:-105px;
 }
 
 .hero-content {
@@ -288,18 +298,18 @@ a {
 
 .hero-eyebrow {
     color:#a9dcd6;
-    font-size:11px;
+    font-size:10px;
     text-transform:uppercase;
-    letter-spacing:1.8px;
+    letter-spacing:2px;
     font-weight:800;
-    margin-bottom:14px;
+    margin-bottom:15px;
 }
 
 .hero h1 {
     font-family:Manrope,sans-serif;
-    font-size:29px;
-    line-height:1.3;
-    margin-bottom:11px;
+    font-size:30px;
+    line-height:1.35;
+    margin-bottom:12px;
     font-weight:800;
 }
 
@@ -310,41 +320,19 @@ a {
     max-width:580px;
 }
 
-.hero-badge {
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    margin-top:20px;
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.15);
-    padding:8px 12px;
-    border-radius:30px;
-    font-size:11px;
-    color:white;
-}
-
-.hero-badge span {
-    color:var(--gold);
-}
-
 /* SECTION HEADINGS */
-
-.section {
-    margin-bottom:34px;
-    scroll-margin-top:100px;
-}
 
 .section-heading {
     display:flex;
     align-items:flex-end;
     justify-content:space-between;
     gap:15px;
-    margin-bottom:17px;
+    margin-bottom:18px;
 }
 
 .section-heading h2 {
     font-family:Manrope,sans-serif;
-    font-size:19px;
+    font-size:20px;
     font-weight:800;
     color:var(--navy);
 }
@@ -360,9 +348,9 @@ a {
     color:var(--teal-dark);
     font-size:10px;
     font-weight:800;
-    letter-spacing:1.2px;
+    letter-spacing:1.3px;
     text-transform:uppercase;
-    margin-bottom:6px;
+    margin-bottom:7px;
 }
 
 /* OVERVIEW */
@@ -370,41 +358,23 @@ a {
 .overview-grid {
     display:grid;
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:16px;
-    margin-bottom:34px;
+    gap:18px;
 }
 
 .overview-card {
     background:white;
     border:1px solid var(--border);
-    border-radius:13px;
-    padding:20px;
+    border-radius:10px;
+    padding:21px;
     box-shadow:var(--shadow);
     min-width:0;
-}
-
-.overview-top {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:16px;
 }
 
 .overview-label {
     color:var(--muted);
     font-size:11px;
-    font-weight:700;
-}
-
-.overview-icon {
-    width:34px;
-    height:34px;
-    border-radius:9px;
-    background:#edf5f7;
-    display:grid;
-    place-items:center;
-    font-size:16px;
+    font-weight:600;
+    margin-bottom:13px;
 }
 
 .overview-value {
@@ -417,62 +387,56 @@ a {
 
 .overview-foot {
     color:var(--muted);
-    font-size:10px;
-    margin-top:6px;
+    font-size:11px;
+    margin-top:7px;
     line-height:1.5;
 }
 
 .status-pill {
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:7px;
 }
 
 .status-dot {
-    width:7px;
-    height:7px;
+    width:8px;
+    height:8px;
     border-radius:50%;
-    background:var(--green);
+    background:#16845b;
     display:inline-block;
 }
 
 /* COURSES */
 
 .course-count {
-    background:#e7f4f2;
     color:var(--teal-dark);
-    padding:7px 11px;
-    border-radius:30px;
-    font-size:11px;
-    font-weight:800;
-    white-space:nowrap;
+    font-size:12px;
+    font-weight:700;
 }
 
 .courses-grid {
     display:grid;
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:17px;
+    gap:18px;
 }
 
 .course-card {
     position:relative;
-    overflow:hidden;
     background:white;
     border:1px solid var(--border);
-    border-radius:14px;
-    padding:21px;
-    min-height:190px;
+    border-radius:10px;
+    padding:22px;
+    min-height:185px;
     box-shadow:var(--shadow);
-    transition:transform .2s,border-color .2s,box-shadow .2s;
+    transition:border-color .2s,transform .2s;
 }
 
 .course-card:hover {
-    transform:translateY(-4px);
-    border-color:#9bd2cc;
-    box-shadow:0 12px 30px rgba(16,43,78,.09);
+    border-color:#9bcfc9;
+    transform:translateY(-3px);
 }
 
-.course-card:before {
+.course-card::before {
     content:"";
     position:absolute;
     top:0;
@@ -490,9 +454,9 @@ a {
 }
 
 .course-icon {
-    width:45px;
-    height:45px;
-    border-radius:12px;
+    width:43px;
+    height:43px;
+    border-radius:10px;
     display:grid;
     place-items:center;
     font-size:21px;
@@ -501,8 +465,8 @@ a {
 
 .course-number {
     font-size:10px;
-    color:#a0acba;
-    font-weight:800;
+    color:#9aa8b7;
+    font-weight:700;
     letter-spacing:1px;
 }
 
@@ -526,17 +490,14 @@ a {
     align-items:center;
     justify-content:space-between;
     border-top:1px solid #edf1f5;
-    padding-top:13px;
+    padding-top:12px;
     margin-top:15px;
 }
 
 .course-year {
     color:var(--teal-dark);
-    background:#eaf5f3;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:9px;
-    font-weight:800;
+    font-size:10px;
+    font-weight:700;
 }
 
 .course-arrow {
@@ -548,44 +509,44 @@ a {
     grid-column:1/-1;
     background:white;
     border:1px solid var(--border);
-    border-radius:12px;
+    border-radius:10px;
     padding:23px;
     color:var(--muted);
     font-size:12px;
     line-height:1.7;
 }
 
-/* RESOURCE CARDS */
+/* LEARNING RESOURCES */
 
 .resource-grid {
     display:grid;
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:16px;
+    gap:18px;
 }
 
 .resource-card {
     background:white;
     border:1px solid var(--border);
-    border-radius:13px;
+    border-radius:10px;
     padding:21px;
     box-shadow:var(--shadow);
     min-height:155px;
-    transition:.2s;
+    transition:border-color .2s,transform .2s;
 }
 
 .resource-card:hover {
-    border-color:#b4d9d5;
-    transform:translateY(-3px);
+    border-color:#a8d3ce;
+    transform:translateY(-2px);
 }
 
 .resource-icon {
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    background:#eaf4f4;
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    background:#edf5f4;
     display:grid;
     place-items:center;
-    font-size:19px;
+    font-size:18px;
     margin-bottom:15px;
 }
 
@@ -602,15 +563,37 @@ a {
     line-height:1.7;
 }
 
+/* ANNOUNCEMENTS */
+
+.announcement {
+    background:white;
+    border:1px solid var(--border);
+    border-left:3px solid var(--teal);
+    border-radius:8px;
+    padding:20px 22px;
+    margin-bottom:14px;
+}
+
+.announcement h3 {
+    color:var(--navy);
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.announcement p {
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.7;
+}
+
 /* ACCOUNT NOTICE */
 
 .notice {
     background:white;
     border:1px solid var(--border);
-    border-left:4px solid var(--teal);
-    border-radius:12px;
-    padding:21px;
-    margin-bottom:25px;
+    border-radius:9px;
+    padding:20px;
+    margin-bottom:28px;
 }
 
 .notice h3 {
@@ -727,22 +710,28 @@ a {
 
     .mobile-mark {
         background:var(--teal);
-        width:32px;
-        height:32px;
-        border-radius:9px;
+        width:33px;
+        height:33px;
+        border-radius:8px;
         display:grid;
         place-items:center;
-        font-size:14px;
+        font-size:15px;
     }
 
     .menu-button {
-        width:39px;
-        height:39px;
-        border:1px solid rgba(255,255,255,.22);
-        background:rgba(255,255,255,.1);
+        width:40px;
+        height:40px;
+        border:1px solid rgba(255,255,255,.3);
+        background:transparent;
         color:white;
-        border-radius:9px;
-        font-size:21px;
+        border-radius:7px;
+        font-size:20px;
+        display:grid;
+        place-items:center;
+    }
+
+    .menu-button:hover {
+        background:rgba(255,255,255,.1);
     }
 
     .main {
@@ -769,18 +758,18 @@ a {
     }
 
     .content {
-        padding:19px 15px 15px;
+        padding:20px 15px 15px;
     }
 
     .hero {
-        padding:27px 22px;
-        min-height:195px;
-        border-radius:14px;
-        margin-bottom:20px;
+        padding:29px 23px;
+        min-height:190px;
+        border-radius:10px;
+        margin-bottom:27px;
     }
 
     .hero h1 {
-        font-size:23px;
+        font-size:24px;
     }
 
     .hero p {
@@ -789,12 +778,11 @@ a {
 
     .overview-grid {
         grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:10px;
-        margin-bottom:28px;
+        gap:11px;
     }
 
     .overview-card {
-        padding:15px 13px;
+        padding:16px 14px;
     }
 
     .overview-card:last-child {
@@ -807,17 +795,17 @@ a {
 
     .courses-grid {
         grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:11px;
+        gap:12px;
     }
 
     .course-card {
-        padding:15px 13px;
-        min-height:190px;
+        padding:16px 13px;
+        min-height:185px;
     }
 
     .course-icon {
-        width:38px;
-        height:38px;
+        width:37px;
+        height:37px;
         font-size:18px;
     }
 
@@ -831,7 +819,7 @@ a {
 
     .resource-grid {
         grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:11px;
+        gap:12px;
     }
 
     .resource-card {
@@ -840,11 +828,11 @@ a {
     }
 
     .section {
-        margin-bottom:28px;
+        margin-bottom:29px;
     }
 
     .section-heading h2 {
-        font-size:17px;
+        font-size:18px;
     }
 
     .section-heading p {
@@ -911,7 +899,7 @@ a {
     <div class="nav-caption">Account</div>
 
     <ul class="nav-links">
-        <li><a href="#account"><span class="nav-icon">◎</span>My Account</a></li>
+        <li><a href="account.html"><span class="nav-icon">◎</span>My Account</a></li>
     </ul>
 
     <div class="sidebar-bottom">
@@ -932,13 +920,13 @@ a {
             Student Portal &nbsp; / &nbsp; <strong>Dashboard</strong>
         </div>
 
-        <div class="profile-area">
+        <a href="account.html" class="profile-area">
             <div class="avatar" id="avatar">S</div>
             <div>
                 <div class="profile-name" id="topStudentName">Student</div>
                 <div class="profile-year" id="topStudentYear">Loading academic year...</div>
             </div>
-        </div>
+        </a>
     </header>
 
     <main class="content" id="dashboard">
@@ -951,16 +939,12 @@ a {
 
                 <p>
                     Your academic workspace for learning, revision and clinical development.
-                    Explore your subjects and access the resources that support your medical education.
+                    Explore your subjects and access resources that support your medical education.
                 </p>
-
-                <div class="hero-badge">
-                    <span>✦</span> Forging the doctors of tomorrow
-                </div>
             </div>
         </section>
 
-        <section class="section" id="account">
+        <section class="section">
 
             <div class="section-heading">
                 <div>
@@ -973,38 +957,21 @@ a {
             <div class="overview-grid">
 
                 <div class="overview-card">
-                    <div class="overview-top">
-                        <div class="overview-label">Academic year</div>
-                        <div class="overview-icon">🎓</div>
-                    </div>
-
+                    <div class="overview-label">Academic year</div>
                     <div class="overview-value" id="year">Loading...</div>
-
                     <div class="overview-foot">Your current programme level</div>
                 </div>
 
                 <div class="overview-card">
-                    <div class="overview-top">
-                        <div class="overview-label">Account status</div>
-                        <div class="overview-icon">◎</div>
-                    </div>
-
+                    <div class="overview-label">Account status</div>
                     <div class="overview-value" id="accountStatus">Loading...</div>
-
                     <div class="overview-foot">Student account approval</div>
                 </div>
 
                 <div class="overview-card">
-                    <div class="overview-top">
-                        <div class="overview-label">Learning access</div>
-                        <div class="overview-icon">✦</div>
-                    </div>
-
+                    <div class="overview-label">Learning access</div>
                     <div class="overview-value" id="subscriptionStatus">Loading...</div>
-
-                    <div class="overview-foot" id="subscriptionDetail">
-                        Checking subscription...
-                    </div>
+                    <div class="overview-foot" id="subscriptionDetail">Checking subscription...</div>
                 </div>
 
             </div>
@@ -1113,6 +1080,27 @@ a {
                 </div>
 
             </div>
+        </section>
+
+        <section class="section" id="announcements">
+
+            <div class="section-heading">
+                <div>
+                    <div class="section-kicker">Stay informed</div>
+                    <h2>Announcements</h2>
+                    <p>Important information and updates for students.</p>
+                </div>
+            </div>
+
+            <div class="announcement">
+                <h3>Welcome to SOMFORGE</h3>
+                <p>
+                    Your student learning portal brings together academic resources,
+                    revision materials and teaching sessions in one place.
+                    Check this section for future announcements.
+                </p>
+            </div>
+
         </section>
 
         <section class="notice">
@@ -1335,7 +1323,6 @@ async function loadCourses(yearLevel) {
         const arrow = document.createElement("span");
         arrow.className = "course-arrow";
         arrow.textContent = "→";
-        arrow.setAttribute("aria-hidden","true");
 
         bottom.appendChild(badge);
         bottom.appendChild(arrow);
@@ -1419,9 +1406,7 @@ async function loadDashboard() {
 
         if(!approved) {
             subscriptionStatus.textContent = "Unavailable";
-
-            subscriptionDetail.textContent =
-                "Awaiting account approval";
+            subscriptionDetail.textContent = "Awaiting account approval";
 
             accessMessage.textContent =
                 "Your account is awaiting administrator approval. Your learning resources will become available after approval.";
@@ -1442,9 +1427,7 @@ async function loadDashboard() {
 
         if(subscriptionError) {
             subscriptionStatus.textContent = "Unable to check";
-
-            subscriptionDetail.textContent =
-                "Verification required";
+            subscriptionDetail.textContent = "Verification required";
 
             accessMessage.textContent =
                 "We could not verify your subscription. Please contact the administrator.";
