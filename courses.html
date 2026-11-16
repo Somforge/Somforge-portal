@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102B46">
+
+<title>My Courses | SOMFORGE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --navy: #102B46;
+    --navy-light: #193D5C;
+    --teal: #168C91;
+    --gold: #BD9857;
+    --background: #F5F7F8;
+    --white: #FFFFFF;
+    --text: #263746;
+    --muted: #788795;
+    --border: #E5EAEE;
+    --shadow: 0 5px 22px rgba(16,43,70,.045);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 258px;
+    background: var(--navy);
+    color: white;
+    padding: 28px 19px 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 9px 38px;
+}
+
+.brand-symbol {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: white;
+}
+
+.brand-name span,
+.mobile-brand span {
+    color: var(--gold);
+}
+
+.nav-caption {
+    color: #91A8BD;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0 12px;
+    margin: 12px 0;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin: 4px 0;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 13px;
+    border-radius: 6px;
+    color: #C6D3E0;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.nav-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 17px;
+    color: #A9BDCE;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: #1C4568;
+    color: white;
+}
+
+.nav-links a.active {
+    border-left: 3px solid var(--gold);
+    padding-left: 10px;
+}
+
+.nav-links a.active .nav-icon {
+    color: var(--gold);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 18px;
+}
+
+.sidebar-note {
+    color: #9DB0C4;
+    font-size: 11px;
+    line-height: 1.8;
+    padding: 0 10px 15px;
+}
+
+.sidebar-note strong {
+    color: white;
+}
+
+.logout {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 6px;
+    background: transparent;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* MOBILE */
+
+.mobile-header {
+    display: none;
+}
+
+.menu-overlay {
+    display: none;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 258px;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 76px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.breadcrumb {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.breadcrumb strong {
+    color: var(--navy);
+}
+
+.profile-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    background: #E8F2F0;
+    color: var(--teal);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.profile-year {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+/* CONTENT */
+
+.content {
+    max-width: 1450px;
+    margin: auto;
+    padding: 35px 40px;
+}
+
+.page-heading {
+    margin-bottom: 29px;
+}
+
+.eyebrow {
+    color: var(--teal);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+}
+
+.page-heading h1 {
+    font-family: "Manrope", sans-serif;
+    color: var(--navy);
+    font-size: 29px;
+    font-weight: 800;
+    margin-bottom: 9px;
+}
+
+.page-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 650px;
+}
+
+/* YEAR INFORMATION */
+
+.year-panel {
+    background: linear-gradient(110deg, #102B46, #193D5C);
+    border-radius: 9px;
+    padding: 25px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: white;
+    margin-bottom: 34px;
+    position: relative;
+    overflow: hidden;
+}
+
+.year-panel::after {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    right: -55px;
+    top: -100px;
+}
+
+.year-label {
+    color: #B9DDD8;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.year-title {
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.year-description {
+    color: #D5E2EE;
+    font-size: 11px;
+    margin-top: 7px;
+}
+
+.subject-total {
+    position: relative;
+    z-index: 2;
+    text-align: right;
+}
+
+.subject-total strong {
+    display: block;
+    color: white;
+    font-family: "Manrope", sans-serif;
+    font-size: 29px;
+}
+
+.subject-total span {
+    color: #B9DDD8;
+    font-size: 10px;
+}
+
+/* SUBJECTS */
+
+.subject-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 19px;
+}
+
+.subject-heading h2 {
+    color: var(--navy);
+    font-family: "Manrope", sans-serif;
+    font-size: 19px;
+}
+
+.subject-heading p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 18px;
+}
+
+/* SUBJECT CARD */
+
+.subject-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: .2s;
+    position: relative;
+}
+
+.subject-card:hover {
+    transform: translateY(-3px);
+    border-color: #A8D0CC;
+}
+
+.subject-accent {
+    height: 3px;
+    background: var(--accent);
+}
+
+.subject-body {
+    padding: 23px;
+}
+
+.subject-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.subject-icon {
+    width: 49px;
+    height: 49px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--tint);
+    color: var(--accent);
+}
+
+.subject-icon svg {
+    width: 27px;
+    height: 27px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.subject-number {
+    color: #A0ACB8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.subject-card h3 {
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 9px;
+    font-weight: 800;
+}
+
+.subject-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    min-height: 58px;
+}
+
+.subject-footer {
+    border-top: 1px solid #EDF1F4;
+    padding: 15px 23px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.subject-footer span:last-child {
+    font-size: 18px;
+}
+
+/* MESSAGES */
+
+.message-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 25px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    grid-column: 1 / -1;
+}
+
+.message-box.error {
+    border-left: 3px solid #B42318;
+}
+
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 22px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 42px;
+}
+
+.footer strong {
+    color: var(--navy);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+    .sidebar {
+        width: 230px;
+    }
+
+    .main {
+        margin-left: 230px;
+    }
+
+    .content {
+        padding: 28px 25px;
+    }
+
+    .topbar {
+        padding: 0 25px;
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:680px) {
+    .sidebar {
+        width: 275px;
+        max-width: 86%;
+        transform: translateX(-105%);
+        transition: transform .25s ease;
+        box-shadow: 8px 0 30px rgba(0,0,0,.18);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(8,24,43,.48);
+        z-index: 90;
+    }
+
+    .menu-overlay.show {
+        display: block;
+    }
+
+    .mobile-header {
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 17px;
+        background: var(--navy);
+        position: sticky;
+        top: 0;
+        z-index: 80;
+    }
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: white;
+        font-family: "Manrope", sans-serif;
+        font-weight: 800;
+        font-size: 19px;
+    }
+
+    .mobile-brand .brand-symbol {
+        width: 32px;
+        height: 32px;
+    }
+
+    .menu-button {
+        border: none;
+        background: transparent;
+        color: white;
+        font-size: 23px;
+        padding: 7px;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: 65px;
+        padding: 0 16px;
+    }
+
+    .breadcrumb {
+        display: none;
+    }
+
+    .content {
+        padding: 23px 15px;
+    }
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+    .year-panel {
+        padding: 21px 18px;
+    }
+
+    .year-title {
+        font-size: 18px;
+    }
+
+    .subject-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 12px;
+    }
+
+    .subject-body {
+        padding: 17px 13px;
+    }
+
+    .subject-top {
+        margin-bottom: 19px;
+    }
+
+    .subject-icon {
+        width: 41px;
+        height: 41px;
+    }
+
+    .subject-icon svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .subject-card h3 {
+        font-size: 13px;
+    }
+
+    .subject-card p {
+        font-size: 10px;
+        min-height: 72px;
+    }
+
+    .subject-footer {
+        padding: 13px;
+        font-size: 10px;
+    }
+
+    .footer {
+        flex-direction: column;
+        line-height: 1.7;
+    }
+}
+
+@media(max-width:370px) {
+    .subject-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .subject-card p {
+        min-height: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="mobile-header">
+    <div class="mobile-brand">
+        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
+            <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
+            <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7"/>
+        </svg>
+        <div>SOM<span>FORGE</span></div>
+    </div>
+
+    <button class="menu-button" id="menuButton">☰</button>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
+            <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
+            <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7"/>
+        </svg>
+        <div class="brand-name">SOM<span>FORGE</span></div>
+    </div>
+
+    <div class="nav-caption">Workspace</div>
+
+    <ul class="nav-links">
+        <li><a href="dashboard.html"><span class="nav-icon">⌂</span>Dashboard</a></li>
+        <li><a href="courses.html" class="active"><span class="nav-icon">▦</span>My Courses</a></li>
+    </ul>
+
+    <div class="nav-caption">Learning</div>
+
+    <ul class="nav-links">
+        <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
+        <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
+        <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
+    </ul>
+
+    <div class="nav-caption">Account</div>
+
+    <ul class="nav-links">
+        <li><a href="account.html"><span class="nav-icon">◎</span>My Account</a></li>
+    </ul>
+
+    <div class="sidebar-bottom">
+        <div class="sidebar-note">
+            <strong>SOMFORGE</strong><br>
+            Medical Learning Portal
+        </div>
+        <button class="logout" id="logoutButton">↪ &nbsp; Log Out</button>
+    </div>
+
+</aside>
+
+<div class="main">
+
+    <header class="topbar">
+        <div class="breadcrumb">
+            Student Portal &nbsp; / &nbsp; <strong>My Courses</strong>
+        </div>
+
+        <a href="account.html" class="profile-area">
+            <div class="avatar" id="avatar">S</div>
+            <div>
+                <div class="profile-name" id="studentName">Student</div>
+                <div class="profile-year" id="studentYear">Loading...</div>
+            </div>
+        </a>
+    </header>
+
+    <main class="content">
+
+        <section class="page-heading">
+            <div class="eyebrow">ACADEMIC PROGRAMME</div>
+            <h1>My Courses</h1>
+            <p>
+                Explore the subjects that form part of your medical
+                sciences curriculum. Select a subject to access its
+                dedicated learning space.
+            </p>
+        </section>
+
+        <section class="year-panel">
+            <div>
+                <div class="year-label">Your current programme</div>
+                <div class="year-title" id="yearTitle">Loading academic year...</div>
+                <div class="year-description">
+                    Copperbelt University · School of Medicine
+                </div>
+            </div>
+
+            <div class="subject-total">
+                <strong id="subjectCount">—</strong>
+                <span>SUBJECTS</span>
+            </div>
+        </section>
+
+        <section>
+
+            <div class="subject-heading">
+                <div>
+                    <h2>Academic Subjects</h2>
+                    <p>Your subjects and their learning spaces.</p>
+                </div>
+            </div>
+
+            <div class="subject-grid" id="subjectGrid">
+                <div class="message-box">
+                    Loading your academic subjects...
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            <div><strong>SOMFORGE</strong> · Student Learning Portal</div>
+            <div>Forging the doctors of tomorrow.</div>
+        </footer>
+
+    </main>
+
+</div>
+
+<script>
+
+/* SUPABASE CONNECTION */
+
+const SUPABASE_URL =
+    "https://dfgaywdtxpajsqitaszy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    }
+);
+
+
+/* MOBILE MENU */
+
+const sidebar = document.getElementById("sidebar");
+const menuButton = document.getElementById("menuButton");
+const menuOverlay = document.getElementById("menuOverlay");
+
+function closeMenu() {
+    sidebar.classList.remove("open");
+    menuOverlay.classList.remove("show");
+    menuButton.textContent = "☰";
+}
+
+menuButton.addEventListener("click", function() {
+    const open = sidebar.classList.toggle("open");
+    menuOverlay.classList.toggle("show", open);
+    menuButton.textContent = open ? "✕" : "☰";
+});
+
+menuOverlay.addEventListener("click", closeMenu);
+
+
+/* SUBJECT ICONS */
+
+const icons = {
+
+    anatomy: `
+    <svg viewBox="0 0 32 32">
+        <path d="M11 4c-2 1-3 4-1 6l2 2-1 8-2 2c-2 2-1 5 1 6"/>
+        <path d="M21 4c2 1 3 4 1 6l-2 2 1 8 2 2c2 2 1 5-1 6"/>
+        <path d="M11 4c3 2 7 2 10 0M12 12c2 2 6 2 8 0M11 22c3-2 7-2 10 0M11 28c3-2 7-2 10 0"/>
+    </svg>`,
+
+    biochemistry: `
+    <svg viewBox="0 0 32 32">
+        <path d="M16 3v8"/>
+        <path d="M12 3h8"/>
+        <path d="M13 11 7 25a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-6-14"/>
+        <path d="M10 21h12"/>
+        <circle cx="13" cy="24" r="1"/>
+        <circle cx="19" cy="25" r="1"/>
+    </svg>`,
+
+    physiology: `
+    <svg viewBox="0 0 32 32">
+        <path d="M3 17h6l4-9 6 17 4-10h6"/>
+        <path d="M3 17h-1"/>
+        <path d="M29 17h1"/>
+    </svg>`,
+
+    pathology: `
+    <svg viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="11"/>
+        <circle cx="16" cy="16" r="6"/>
+        <path d="M12 13c2-2 5-2 7 0M13 19c2 2 4 2 6 0"/>
+    </svg>`,
+
+    therapeutics: `
+    <svg viewBox="0 0 32 32">
+        <path d="M10 5a6 6 0 0 1 8.5 0l8.5 8.5a6 6 0 0 1-8.5 8.5L10 13.5A6 6 0 0 1 10 5Z"/>
+        <path d="m14 17 8-8"/>
+        <path d="M7 24h8M11 20v8"/>
+    </svg>`,
+
+    clinical: `
+    <svg viewBox="0 0 32 32">
+        <path d="M8 4v7a8 8 0 0 0 16 0V4"/>
+        <path d="M5 4h6M21 4h6"/>
+        <path d="M16 19v3a5 5 0 0 0 10 0v-2"/>
+        <circle cx="26" cy="17" r="2"/>
+    </svg>`
+};
+
+
+/* SUBJECT APPEARANCE */
+
+function getSubjectDetails(title) {
+
+    const name = (title || "").toLowerCase();
+
+    if (name.includes("anatomy")) {
+        return {
+            icon: icons.anatomy,
+            accent: "#BD9857",
+            tint: "#F7F0E4",
+            description: "Explore the structure, organisation and relationships of the human body."
+        };
+    }
+
+    if (name.includes("biochemistry")) {
+        return {
+            icon: icons.biochemistry,
+            accent: "#168C91",
+            tint: "#E7F5F2",
+            description: "Study the chemical processes and molecular foundations of human life."
+        };
+    }
+
+    if (name.includes("physiology")) {
+        return {
+            icon: icons.physiology,
+            accent: "#C46D79",
+            tint: "#F9ECEF",
+            description: "Understand the functions and regulatory mechanisms of the human body."
+        };
+    }
+
+    if (name.includes("pathology")) {
+        return {
+            icon: icons.pathology,
+            accent: "#7186BD",
+            tint: "#EDF0FA",
+            description: "Examine the mechanisms of disease and their effects on body systems."
+        };
+    }
+
+    if (name.includes("therapeutics")) {
+        return {
+            icon: icons.therapeutics,
+            accent: "#8D75B8",
+            tint: "#F1EDF8",
+            description: "Explore the principles of treatment and rational use of medicines."
+        };
+    }
+
+    if (name.includes("clinical")) {
+        return {
+            icon: icons.clinical,
+            accent: "#269A9C",
+            tint: "#E8F5F5",
+            description: "Develop foundational clinical knowledge, examination and practical skills."
+        };
+    }
+
+    return {
+        icon: icons.anatomy,
+        accent: "#168C91",
+        tint: "#E7F5F2",
+        description: "Explore the learning materials available for this subject."
+    };
+}
+
+
+/* LOAD COURSES */
+
+async function loadCourses(yearLevel) {
+
+    const grid = document.getElementById("subjectGrid");
+    const count = document.getElementById("subjectCount");
+
+    const { data: courses, error } = await supabaseClient
+        .from("courses")
+        .select("id,title,description,year_level")
+        .eq("year_level", yearLevel)
+        .order("title");
+
+    if (error) {
+
+        console.error("Course loading error:", error);
+
+        count.textContent = "—";
+
+        grid.innerHTML = `
+            <div class="message-box error">
+                We could not retrieve your academic subjects.
+                Please contact the administrator.
+                <br><br>
+                ${error.message}
+            </div>
+        `;
+
+        return;
+    }
+
+    if (!courses || courses.length === 0) {
+
+        count.textContent = "0";
+
+        grid.innerHTML = `
+            <div class="message-box">
+                No subjects have been assigned to your academic year.
+                Please contact the SOMFORGE administrator.
+            </div>
+        `;
+
+        return;
+    }
+
+    count.textContent = courses.length;
+    grid.innerHTML = "";
+
+    courses.forEach((course, index) => {
+
+        const details = getSubjectDetails(course.title);
+
+        const card = document.createElement("article");
+        card.className = "subject-card";
+
+        card.style.setProperty("--accent", details.accent);
+        card.style.setProperty("--tint", details.tint);
+
+        const accent = document.createElement("div");
+        accent.className = "subject-accent";
+
+        const body = document.createElement("div");
+        body.className = "subject-body";
+
+        const top = document.createElement("div");
+        top.className = "subject-top";
+
+        const icon = document.createElement("div");
+        icon.className = "subject-icon";
+        icon.innerHTML = details.icon;
+
+        const number = document.createElement("div");
+        number.className = "subject-number";
+        number.textContent = "SUBJECT " + String(index + 1).padStart(2, "0");
+
+        top.appendChild(icon);
+        top.appendChild(number);
+
+        const title = document.createElement("h3");
+        title.textContent = course.title;
+
+        const description = document.createElement("p");
+        description.textContent =
+            course.description || details.description;
+
+        const footer = document.createElement("div");
+        footer.className = "subject-footer";
+
+        const label = document.createElement("span");
+        label.textContent = "Subject learning space";
+
+        const arrow = document.createElement("span");
+        arrow.textContent = "→";
+
+        footer.appendChild(label);
+        footer.appendChild(arrow);
+
+        body.appendChild(top);
+        body.appendChild(title);
+        body.appendChild(description);
+
+        card.appendChild(accent);
+        card.appendChild(body);
+        card.appendChild(footer);
+
+        grid.appendChild(card);
+    });
+}
+
+
+/* AUTHENTICATION AND SUBSCRIPTION */
+
+async function loadPage() {
+
+    const grid = document.getElementById("subjectGrid");
+
+    try {
+
+        const { data: sessionData, error: sessionError } =
+            await supabaseClient.auth.getSession();
+
+        if (sessionError) throw sessionError;
+
+        if (!sessionData.session) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        const { data: authData, error: authError } =
+            await supabaseClient.auth.getUser();
+
+        if (authError) throw authError;
+
+        if (!authData.user) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        const user = authData.user;
+
+        const { data: profile, error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .select("full_name,year_level,account_status")
+                .eq("id", user.id)
+                .single();
+
+        if (profileError || !profile) {
+            throw profileError || new Error("Student profile not found.");
+        }
+
+        const name = profile.full_name || "Student";
+
+        document.getElementById("studentName").textContent = name;
+
+        document.getElementById("avatar").textContent =
+            name.charAt(0).toUpperCase();
+
+        document.getElementById("studentYear").textContent =
+            profile.year_level || "Academic year not assigned";
+
+        document.getElementById("yearTitle").textContent =
+            profile.year_level || "Academic year not assigned";
+
+        if (profile.account_status !== "approved") {
+
+            grid.innerHTML = `
+                <div class="message-box">
+                    Your account is awaiting administrator approval.
+                    Your academic subjects will become available once
+                    your account has been approved.
+                </div>
+            `;
+
+            return;
+        }
+
+        const { data: subscriptions, error: subscriptionError } =
+            await supabaseClient
+                .from("subscriptions")
+                .select("status,start_date,end_date")
+                .eq("student_id", user.id)
+                .order("end_date", { ascending: false });
+
+        if (subscriptionError) throw subscriptionError;
+
+        const now = new Date();
+
+        const activeSubscription = (subscriptions || []).find(sub => {
+
+            return sub.status === "active" &&
+                sub.start_date &&
+                sub.end_date &&
+                new Date(sub.start_date) <= now &&
+                new Date(sub.end_date) > now;
+        });
+
+        if (!activeSubscription) {
+
+            grid.innerHTML = `
+                <div class="message-box">
+                    Your subscription is not currently active.
+                    Please contact the administrator to activate
+                    or renew your learning access.
+                </div>
+            `;
+
+            return;
+        }
+
+        if (!profile.year_level) {
+
+            grid.innerHTML = `
+                <div class="message-box">
+                    Your academic year has not been assigned.
+                    Please contact the administrator.
+                </div>
+            `;
+
+            return;
+        }
+
+        await loadCourses(profile.year_level);
+
+    } catch (error) {
+
+        console.error("Page loading error:", error);
+
+        grid.innerHTML = `
+            <div class="message-box error">
+                We encountered a problem loading your courses.
+                Please try again.
+                <br><br>
+                ${error.message}
+            </div>
+        `;
+    }
+}
+
+
+/* LOGOUT */
+
+document.getElementById("logoutButton").addEventListener(
+    "click",
+    async function() {
+
+        this.disabled = true;
+        this.textContent = "Signing out...";
+
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            this.disabled = false;
+            this.textContent = "↪ Log Out";
+            alert("Unable to log out. Please try again.");
+            return;
+        }
+
+        window.location.replace("login.html");
+    }
+);
+
+
+/* START */
+
+loadPage();
+
+</script>
+
+</body>
+</html>
