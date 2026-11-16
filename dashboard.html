@@ -17,17 +17,14 @@
 :root {
     --navy: #102B46;
     --navy-light: #193D5C;
-    --navy-soft: #244B6C;
     --teal: #168C91;
     --teal-dark: #087C74;
     --gold: #BD9857;
-
     --background: #F5F7F8;
     --white: #FFFFFF;
     --text: #263746;
     --muted: #788795;
     --border: #E5EAEE;
-
     --success: #16835D;
     --shadow: 0 5px 22px rgba(16,43,70,.045);
 }
@@ -59,9 +56,7 @@ a {
     color: inherit;
 }
 
-/* =================================
-   BRAND
-================================= */
+/* BRAND */
 
 .brand {
     display: flex;
@@ -91,9 +86,7 @@ a {
     color: var(--gold);
 }
 
-/* =================================
-   SIDEBAR
-================================= */
+/* SIDEBAR */
 
 .sidebar {
     position: fixed;
@@ -114,7 +107,7 @@ a {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     padding: 0 12px;
-    margin: 12px 0 12px;
+    margin: 12px 0;
 }
 
 .nav-links {
@@ -175,7 +168,6 @@ a {
 
 .sidebar-note strong {
     color: white;
-    font-weight: 700;
 }
 
 .logout {
@@ -187,16 +179,13 @@ a {
     color: white;
     font-size: 12px;
     font-weight: 600;
-    transition: background .2s;
 }
 
 .logout:hover {
     background: #1C4568;
 }
 
-/* =================================
-   MOBILE HEADER
-================================= */
+/* MOBILE HEADER */
 
 .mobile-header {
     display: none;
@@ -206,9 +195,7 @@ a {
     display: none;
 }
 
-/* =================================
-   MAIN AREA
-================================= */
+/* MAIN */
 
 .main {
     margin-left: 258px;
@@ -235,14 +222,12 @@ a {
 
 .breadcrumb strong {
     color: var(--navy);
-    font-weight: 700;
 }
 
 .profile-area {
     display: flex;
     align-items: center;
     gap: 12px;
-    cursor: pointer;
     text-decoration: none;
 }
 
@@ -270,9 +255,7 @@ a {
     margin-top: 3px;
 }
 
-/* =================================
-   PAGE CONTENT
-================================= */
+/* CONTENT */
 
 .content {
     max-width: 1500px;
@@ -285,9 +268,7 @@ a {
     scroll-margin-top: 100px;
 }
 
-/* =================================
-   WELCOME BANNER
-================================= */
+/* HERO */
 
 .hero {
     position: relative;
@@ -358,9 +339,7 @@ a {
     max-width: 580px;
 }
 
-/* =================================
-   SECTION HEADINGS
-================================= */
+/* HEADINGS */
 
 .section-heading {
     display: flex;
@@ -394,9 +373,7 @@ a {
     margin-bottom: 7px;
 }
 
-/* =================================
-   ACADEMIC OVERVIEW
-================================= */
+/* OVERVIEW */
 
 .overview-grid {
     display: grid;
@@ -411,11 +388,6 @@ a {
     padding: 23px;
     box-shadow: var(--shadow);
     min-width: 0;
-    transition: border-color .2s;
-}
-
-.overview-card:hover {
-    border-color: #C5D8D8;
 }
 
 .overview-label {
@@ -454,9 +426,7 @@ a {
     display: inline-block;
 }
 
-/* =================================
-   COURSES
-================================= */
+/* COURSES */
 
 .course-count {
     color: var(--teal-dark);
@@ -478,8 +448,8 @@ a {
     padding: 23px;
     min-height: 185px;
     box-shadow: var(--shadow);
-    transition: border-color .2s, transform .2s;
     overflow: hidden;
+    transition: border-color .2s, transform .2s;
 }
 
 .course-card:hover {
@@ -567,9 +537,7 @@ a {
     line-height: 1.8;
 }
 
-/* =================================
-   RESOURCE CARDS
-================================= */
+/* RESOURCES */
 
 .resource-grid {
     display: grid;
@@ -617,9 +585,7 @@ a {
     line-height: 1.8;
 }
 
-/* =================================
-   ANNOUNCEMENTS
-================================= */
+/* ANNOUNCEMENTS */
 
 .announcement {
     background: white;
@@ -642,9 +608,7 @@ a {
     line-height: 1.8;
 }
 
-/* =================================
-   ACCOUNT NOTICE
-================================= */
+/* NOTICE */
 
 .notice {
     background: white;
@@ -672,9 +636,7 @@ a {
     overflow-wrap: anywhere;
 }
 
-/* =================================
-   FOOTER
-================================= */
+/* FOOTER */
 
 .footer {
     border-top: 1px solid var(--border);
@@ -692,9 +654,7 @@ a {
     letter-spacing: .5px;
 }
 
-/* =================================
-   TABLET
-================================= */
+/* TABLET */
 
 @media(max-width:1100px) {
     .sidebar {
@@ -713,18 +673,13 @@ a {
         padding: 0 25px;
     }
 
-    .courses-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
+    .courses-grid,
     .resource-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
     }
 }
 
-/* =================================
-   MOBILE
-================================= */
+/* MOBILE */
 
 @media(max-width:680px) {
     .sidebar {
@@ -791,10 +746,6 @@ a {
         border-radius: 5px;
     }
 
-    .menu-button:hover {
-        background: rgba(255,255,255,.1);
-    }
-
     .main {
         margin-left: 0;
         width: 100%;
@@ -854,7 +805,8 @@ a {
         font-size: 18px;
     }
 
-    .courses-grid {
+    .courses-grid,
+    .resource-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
         gap: 12px;
     }
@@ -876,11 +828,6 @@ a {
 
     .course-card p {
         font-size: 10px;
-    }
-
-    .resource-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-        gap: 12px;
     }
 
     .resource-card {
@@ -922,8 +869,6 @@ a {
 
 <body>
 
-<!-- MOBILE HEADER -->
-
 <header class="mobile-header">
 
     <div class="mobile-brand">
@@ -931,262 +876,143 @@ a {
             <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
             <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-
         <div>SOM<span>FORGE</span></div>
     </div>
 
-    <button
-        class="menu-button"
-        id="menuButton"
-        aria-label="Open navigation"
-        aria-expanded="false"
-    >☰</button>
+    <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
 
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-
         <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
             <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-
         <div class="brand-name">SOM<span>FORGE</span></div>
-
     </div>
 
     <div class="nav-caption">Workspace</div>
 
     <ul class="nav-links">
-        <li>
-            <a href="#dashboard" class="active">
-                <span class="nav-icon">⌂</span>
-                Dashboard
-            </a>
-        </li>
-
-        <li>
-            <a href="#courses">
-                <span class="nav-icon">▦</span>
-                My Courses
-            </a>
-        </li>
+        <li><a href="#dashboard" class="active"><span class="nav-icon">⌂</span>Dashboard</a></li>
+        <li><a href="#courses"><span class="nav-icon">▦</span>My Courses</a></li>
     </ul>
 
     <div class="nav-caption">Learning</div>
 
     <ul class="nav-links">
-        <li>
-            <a href="#learning">
-                <span class="nav-icon">▤</span>
-                Learning Centre
-            </a>
-        </li>
-
-        <li>
-            <a href="#examinations">
-                <span class="nav-icon">✎</span>
-                Examination Centre
-            </a>
-        </li>
-
-        <li>
-            <a href="#live-learning">
-                <span class="nav-icon">▶</span>
-                Live Learning
-            </a>
-        </li>
+        <li><a href="#learning"><span class="nav-icon">▤</span>Learning Centre</a></li>
+        <li><a href="#examinations"><span class="nav-icon">✎</span>Examination Centre</a></li>
+        <li><a href="#live-learning"><span class="nav-icon">▶</span>Live Learning</a></li>
     </ul>
 
     <div class="nav-caption">Account</div>
 
     <ul class="nav-links">
-        <li>
-            <a href="account.html">
-                <span class="nav-icon">◎</span>
-                My Account
-            </a>
-        </li>
+        <li><a href="account.html"><span class="nav-icon">◎</span>My Account</a></li>
     </ul>
 
     <div class="sidebar-bottom">
-
         <div class="sidebar-note">
             <strong>SOMFORGE</strong><br>
             Medical Learning Portal
         </div>
-
-        <button class="logout" id="logoutButton">
-            ↪ &nbsp; Log Out
-        </button>
-
+        <button class="logout" id="logoutButton">↪ &nbsp; Log Out</button>
     </div>
 
 </aside>
 
-<!-- MAIN CONTENT -->
-
 <div class="main">
 
     <header class="topbar">
-
-        <div class="breadcrumb">
-            Student Portal &nbsp; / &nbsp; <strong>Dashboard</strong>
-        </div>
+        <div class="breadcrumb">Student Portal &nbsp; / &nbsp; <strong>Dashboard</strong></div>
 
         <a href="account.html" class="profile-area">
-
             <div class="avatar" id="avatar">S</div>
-
             <div>
                 <div class="profile-name" id="topStudentName">Student</div>
-                <div class="profile-year" id="topStudentYear">
-                    Loading academic year...
-                </div>
+                <div class="profile-year" id="topStudentYear">Loading academic year...</div>
             </div>
-
         </a>
-
     </header>
 
     <main class="content" id="dashboard">
 
-        <!-- WELCOME -->
-
         <section class="hero">
-
             <div class="hero-content">
-
-                <div class="hero-eyebrow">
-                    SOMFORGE · STUDENT LEARNING PORTAL
-                </div>
-
-                <h1 id="welcomeMessage">
-                    Welcome to your learning space.
-                </h1>
-
+                <div class="hero-eyebrow">SOMFORGE · STUDENT LEARNING PORTAL</div>
+                <h1 id="welcomeMessage">Welcome to your learning space.</h1>
                 <p>
                     Your academic workspace for learning, revision and clinical
                     development. Explore your subjects and access resources
                     that support your medical education.
                 </p>
-
             </div>
-
         </section>
-
-        <!-- ACADEMIC OVERVIEW -->
 
         <section class="section">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Your account</div>
                     <h2>Academic Overview</h2>
-                    <p>
-                        A summary of your student account and learning access.
-                    </p>
+                    <p>A summary of your student account and learning access.</p>
                 </div>
-
             </div>
 
             <div class="overview-grid">
 
                 <div class="overview-card">
-
                     <div class="overview-label">Academic year</div>
-
-                    <div class="overview-value" id="year">
-                        Loading...
-                    </div>
-
-                    <div class="overview-foot">
-                        Your current programme level
-                    </div>
-
+                    <div class="overview-value" id="year">Loading...</div>
+                    <div class="overview-foot">Your current programme level</div>
                 </div>
 
                 <div class="overview-card">
-
                     <div class="overview-label">Account status</div>
-
-                    <div class="overview-value" id="accountStatus">
-                        Loading...
-                    </div>
-
-                    <div class="overview-foot">
-                        Student account approval
-                    </div>
-
+                    <div class="overview-value" id="accountStatus">Loading...</div>
+                    <div class="overview-foot">Student account approval</div>
                 </div>
 
                 <div class="overview-card">
-
                     <div class="overview-label">Learning access</div>
-
-                    <div class="overview-value" id="subscriptionStatus">
-                        Loading...
-                    </div>
-
-                    <div class="overview-foot" id="subscriptionDetail">
-                        Checking subscription...
-                    </div>
-
+                    <div class="overview-value" id="subscriptionStatus">Loading...</div>
+                    <div class="overview-foot" id="subscriptionDetail">Checking subscription...</div>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- COURSES -->
-
         <section class="section" id="courses">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Your curriculum</div>
                     <h2>My Courses</h2>
                     <p>Your subjects for the current academic year.</p>
                 </div>
-
-                <div class="course-count" id="courseCount">
-                    Loading subjects
-                </div>
-
+                <div class="course-count" id="courseCount">Loading subjects</div>
             </div>
 
             <div class="courses-grid" id="coursesGrid">
-
-                <div class="course-message">
-                    Loading your academic courses...
-                </div>
-
+                <div class="course-message">Loading your academic courses...</div>
             </div>
 
         </section>
 
-        <!-- LEARNING CENTRE -->
-
         <section class="section" id="learning">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Study and review</div>
                     <h2>Learning Centre</h2>
-                    <p>
-                        Resources to support your understanding of medical sciences.
-                    </p>
+                    <p>Resources to support your understanding of medical sciences.</p>
                 </div>
-
             </div>
 
             <div class="resource-grid">
@@ -1194,45 +1020,33 @@ a {
                 <div class="resource-card">
                     <div class="resource-icon">📚</div>
                     <h3>Lecture Notes</h3>
-                    <p>
-                        Access organised notes and subject learning materials.
-                    </p>
+                    <p>Access organised notes and subject learning materials.</p>
                 </div>
 
                 <div class="resource-card">
                     <div class="resource-icon">▶</div>
                     <h3>Recorded Lectures</h3>
-                    <p>
-                        Revisit teaching sessions and reinforce difficult concepts.
-                    </p>
+                    <p>Revisit teaching sessions and reinforce difficult concepts.</p>
                 </div>
 
                 <div class="resource-card">
                     <div class="resource-icon">📑</div>
                     <h3>Presentations</h3>
-                    <p>
-                        Review lecture presentations and supporting documents.
-                    </p>
+                    <p>Review lecture presentations and supporting documents.</p>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- EXAMINATION CENTRE -->
-
         <section class="section" id="examinations">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Test your understanding</div>
                     <h2>Examination Centre</h2>
-                    <p>
-                        Prepare through practice and structured revision.
-                    </p>
+                    <p>Prepare through practice and structured revision.</p>
                 </div>
-
             </div>
 
             <div class="resource-grid">
@@ -1240,37 +1054,27 @@ a {
                 <div class="resource-card">
                     <div class="resource-icon">📝</div>
                     <h3>Past Examination Papers</h3>
-                    <p>
-                        Practise with previous examination questions.
-                    </p>
+                    <p>Practise with previous examination questions.</p>
                 </div>
 
                 <div class="resource-card">
                     <div class="resource-icon">✓</div>
                     <h3>Practice Questions</h3>
-                    <p>
-                        Strengthen your knowledge through question-based revision.
-                    </p>
+                    <p>Strengthen your knowledge through question-based revision.</p>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- LIVE LEARNING -->
-
         <section class="section" id="live-learning">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Learn together</div>
                     <h2>Live Learning</h2>
-                    <p>
-                        Connect with teaching sessions and academic support.
-                    </p>
+                    <p>Connect with teaching sessions and academic support.</p>
                 </div>
-
             </div>
 
             <div class="resource-grid">
@@ -1278,79 +1082,49 @@ a {
                 <div class="resource-card">
                     <div class="resource-icon">🎥</div>
                     <h3>Live Classes</h3>
-                    <p>
-                        Access scheduled online teaching sessions.
-                    </p>
+                    <p>Access scheduled online teaching sessions.</p>
                 </div>
 
                 <div class="resource-card">
                     <div class="resource-icon">💬</div>
                     <h3>Academic Support</h3>
-                    <p>
-                        Find guidance to support your academic development.
-                    </p>
+                    <p>Find guidance to support your academic development.</p>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- ANNOUNCEMENTS -->
-
         <section class="section" id="announcements">
 
             <div class="section-heading">
-
                 <div>
                     <div class="section-kicker">Stay informed</div>
                     <h2>Announcements</h2>
-                    <p>
-                        Important information and updates for students.
-                    </p>
+                    <p>Important information and updates for students.</p>
                 </div>
-
             </div>
 
             <div class="announcement">
-
                 <h3>Welcome to SOMFORGE</h3>
-
                 <p>
                     Your student learning portal brings together academic
                     resources, revision materials and teaching sessions
                     in one place. Check this section for future announcements.
                 </p>
-
             </div>
 
         </section>
-
-        <!-- ACCOUNT NOTICE -->
 
         <section class="notice">
-
             <h3>Account and Learning Updates</h3>
-
-            <p id="accessMessage">
-                Checking your account...
-            </p>
-
+            <p id="accessMessage">Checking your account...</p>
             <p id="message"></p>
-
         </section>
 
-        <!-- FOOTER -->
-
         <footer class="footer">
-
-            <div>
-                <strong>SOMFORGE</strong> · Student Learning Portal
-            </div>
-
-            <div>
-                Forging the doctors of tomorrow.
-            </div>
-
+            <div><strong>SOMFORGE</strong> · Student Learning Portal</div>
+            <div>Forging the doctors of tomorrow.</div>
         </footer>
 
     </main>
@@ -1359,89 +1133,68 @@ a {
 
 <script>
 
-/* =================================
-   SUPABASE CONNECTION
-================================= */
+/* SUPABASE CONNECTION */
 
-const SUPABASE_URL =
-    "https://dfgaywdtxpajsqitaszy.supabase.co";
+const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3kiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc5NDAyMDk4MCwiZXhwIjoyMTA5NTk2OTgwfQ.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
+    "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    }
 );
 
 
-/* =================================
-   MOBILE NAVIGATION
-================================= */
+/* MOBILE NAVIGATION */
 
 const sidebar = document.getElementById("sidebar");
 const menuButton = document.getElementById("menuButton");
 const menuOverlay = document.getElementById("menuOverlay");
 
 function closeMenu() {
-
     sidebar.classList.remove("open");
     menuOverlay.classList.remove("show");
-
     menuButton.setAttribute("aria-expanded", "false");
     menuButton.textContent = "☰";
-
 }
 
 menuButton.addEventListener("click", function() {
-
     const isOpen = sidebar.classList.toggle("open");
-
     menuOverlay.classList.toggle("show", isOpen);
-
-    menuButton.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
+    menuButton.setAttribute("aria-expanded", String(isOpen));
     menuButton.textContent = isOpen ? "✕" : "☰";
-
 });
 
 menuOverlay.addEventListener("click", closeMenu);
 
 document.addEventListener("keydown", function(event) {
-
-    if (event.key === "Escape") {
-        closeMenu();
-    }
-
+    if (event.key === "Escape") closeMenu();
 });
 
 document.querySelectorAll(".nav-links a").forEach(link => {
-
     link.addEventListener("click", function() {
-
         closeMenu();
 
         if (this.getAttribute("href").startsWith("#")) {
-
             document.querySelectorAll(".nav-links a").forEach(item => {
                 item.classList.remove("active");
             });
 
             this.classList.add("active");
-
         }
-
     });
-
 });
 
 
-/* =================================
-   COURSE APPEARANCE
-================================= */
+/* COURSE APPEARANCE */
 
 function getCourseDetails(title) {
 
@@ -1507,13 +1260,10 @@ function getCourseDetails(title) {
         accent: "#168C91",
         tint: "#E7F5F2"
     };
-
 }
 
 
-/* =================================
-   LOAD COURSES
-================================= */
+/* LOAD COURSES */
 
 async function loadCourses(yearLevel) {
 
@@ -1530,7 +1280,6 @@ async function loadCourses(yearLevel) {
         .order("title");
 
     if (error) {
-
         console.error("Course loading error:", error);
 
         count.textContent = "Unavailable";
@@ -1543,13 +1292,10 @@ async function loadCourses(yearLevel) {
         `;
 
         document.getElementById("message").textContent = error.message;
-
         return;
-
     }
 
     if (!courses || courses.length === 0) {
-
         count.textContent = "No subjects";
 
         grid.innerHTML = `
@@ -1560,7 +1306,6 @@ async function loadCourses(yearLevel) {
         `;
 
         return;
-
     }
 
     count.textContent = courses.length + " subjects";
@@ -1573,15 +1318,8 @@ async function loadCourses(yearLevel) {
         const card = document.createElement("article");
         card.className = "course-card";
 
-        card.style.setProperty(
-            "--course-accent",
-            details.accent
-        );
-
-        card.style.setProperty(
-            "--course-tint",
-            details.tint
-        );
+        card.style.setProperty("--course-accent", details.accent);
+        card.style.setProperty("--course-tint", details.tint);
 
         const top = document.createElement("div");
         top.className = "course-card-top";
@@ -1592,9 +1330,7 @@ async function loadCourses(yearLevel) {
 
         const number = document.createElement("div");
         number.className = "course-number";
-
-        number.textContent =
-            "SUBJECT " + String(index + 1).padStart(2, "0");
+        number.textContent = "SUBJECT " + String(index + 1).padStart(2, "0");
 
         top.appendChild(icon);
         top.appendChild(number);
@@ -1603,9 +1339,7 @@ async function loadCourses(yearLevel) {
         title.textContent = course.title || "Untitled course";
 
         const description = document.createElement("p");
-
-        description.textContent =
-            course.description || details.description;
+        description.textContent = course.description || details.description;
 
         const bottom = document.createElement("div");
         bottom.className = "course-bottom";
@@ -1627,55 +1361,65 @@ async function loadCourses(yearLevel) {
         card.appendChild(bottom);
 
         grid.appendChild(card);
-
     });
-
 }
 
 
-/* =================================
-   LOAD DASHBOARD
-================================= */
+/* LOAD DASHBOARD */
 
 async function loadDashboard() {
 
-    const welcome =
-        document.getElementById("welcomeMessage");
-
-    const year =
-        document.getElementById("year");
-
-    const account =
-        document.getElementById("accountStatus");
-
-    const subscriptionStatus =
-        document.getElementById("subscriptionStatus");
-
-    const subscriptionDetail =
-        document.getElementById("subscriptionDetail");
-
-    const accessMessage =
-        document.getElementById("accessMessage");
-
-    const message =
-        document.getElementById("message");
-
-    const coursesGrid =
-        document.getElementById("coursesGrid");
+    const welcome = document.getElementById("welcomeMessage");
+    const year = document.getElementById("year");
+    const account = document.getElementById("accountStatus");
+    const subscriptionStatus = document.getElementById("subscriptionStatus");
+    const subscriptionDetail = document.getElementById("subscriptionDetail");
+    const accessMessage = document.getElementById("accessMessage");
+    const message = document.getElementById("message");
+    const coursesGrid = document.getElementById("coursesGrid");
 
     try {
+
+        /*
+          Use getSession() to retrieve the session already
+          persisted by the login page.
+        */
+
+        const { data: sessionData, error: sessionError } =
+            await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+            throw sessionError;
+        }
+
+        const session = sessionData.session;
+
+        if (!session) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        /*
+          Verify the authenticated user with Supabase.
+        */
 
         const { data: authData, error: authError } =
             await supabaseClient.auth.getUser();
 
-        if (authError || !authData.user) {
+        if (authError) {
+            throw authError;
+        }
 
+        if (!authData.user) {
             window.location.replace("login.html");
             return;
-
         }
 
         const user = authData.user;
+
+        /*
+          Retrieve the student's profile.
+        */
 
         const { data: profile, error: profileError } =
             await supabaseClient
@@ -1697,31 +1441,25 @@ async function loadDashboard() {
                 '<div class="course-message">Your profile information is unavailable.</div>';
 
             return;
-
         }
 
         const studentName = profile.full_name || "Student";
 
-        welcome.textContent =
-            "Welcome back, " + studentName + ".";
+        welcome.textContent = "Welcome back, " + studentName + ".";
 
-        document.getElementById("topStudentName").textContent =
-            studentName;
+        document.getElementById("topStudentName").textContent = studentName;
 
         document.getElementById("avatar").textContent =
             studentName.charAt(0).toUpperCase();
 
-        year.textContent =
-            profile.year_level || "Not assigned";
+        year.textContent = profile.year_level || "Not assigned";
 
         document.getElementById("topStudentYear").textContent =
             profile.year_level || "Academic year not assigned";
 
-        const approved =
-            profile.account_status === "approved";
+        const approved = profile.account_status === "approved";
 
-        account.textContent =
-            approved ? "Approved" : "Pending";
+        account.textContent = approved ? "Approved" : "Pending";
 
         if (!approved) {
 
@@ -1736,12 +1474,14 @@ async function loadDashboard() {
             coursesGrid.innerHTML =
                 '<div class="course-message">Your account must be approved before you can access courses.</div>';
 
-            document.getElementById("courseCount").textContent =
-                "Locked";
+            document.getElementById("courseCount").textContent = "Locked";
 
             return;
-
         }
+
+        /*
+          Retrieve subscription records.
+        */
 
         const { data: subscriptions, error: subscriptionError } =
             await supabaseClient
@@ -1752,11 +1492,9 @@ async function loadDashboard() {
 
         if (subscriptionError) {
 
-            subscriptionStatus.textContent =
-                "Unable to check";
+            subscriptionStatus.textContent = "Unable to check";
 
-            subscriptionDetail.textContent =
-                "Verification required";
+            subscriptionDetail.textContent = "Verification required";
 
             accessMessage.textContent =
                 "We could not verify your subscription. Please contact the administrator.";
@@ -1767,36 +1505,32 @@ async function loadDashboard() {
                 '<div class="course-message">Subscription verification failed. Please contact the administrator.</div>';
 
             return;
-
         }
 
         const now = new Date();
 
-        const activeSubscription =
-            (subscriptions || []).find(sub => {
+        const activeSubscription = (subscriptions || []).find(sub => {
 
-                if (
-                    sub.status !== "active" ||
-                    !sub.start_date ||
-                    !sub.end_date
-                ) {
-                    return false;
-                }
+            if (
+                sub.status !== "active" ||
+                !sub.start_date ||
+                !sub.end_date
+            ) {
+                return false;
+            }
 
-                const startDate = new Date(sub.start_date);
-                const endDate = new Date(sub.end_date);
+            const startDate = new Date(sub.start_date);
+            const endDate = new Date(sub.end_date);
 
-                return startDate <= now && endDate > now;
-
-            });
+            return startDate <= now && endDate > now;
+        });
 
         if (activeSubscription) {
 
             subscriptionStatus.innerHTML =
                 '<span class="status-pill"><span class="status-dot"></span>Active</span>';
 
-            const expiry =
-                new Date(activeSubscription.end_date);
+            const expiry = new Date(activeSubscription.end_date);
 
             subscriptionDetail.textContent =
                 "Access until " + expiry.toLocaleDateString();
@@ -1805,23 +1539,18 @@ async function loadDashboard() {
                 "Your account is approved and your subscription is active. You have access to the SOMFORGE learning portal.";
 
             if (profile.year_level) {
-
                 await loadCourses(profile.year_level);
-
             } else {
-
                 coursesGrid.innerHTML =
                     '<div class="course-message">Your academic year has not been assigned. Please contact the administrator.</div>';
 
                 document.getElementById("courseCount").textContent =
                     "Year not assigned";
-
             }
 
         } else {
 
-            subscriptionStatus.textContent =
-                "Inactive";
+            subscriptionStatus.textContent = "Inactive";
 
             subscriptionDetail.textContent =
                 "Renewal or activation required";
@@ -1832,52 +1561,47 @@ async function loadDashboard() {
             coursesGrid.innerHTML =
                 '<div class="course-message">Your subscription is inactive. Please contact the administrator to activate or renew your access to courses.</div>';
 
-            document.getElementById("courseCount").textContent =
-                "Locked";
-
+            document.getElementById("courseCount").textContent = "Locked";
         }
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Dashboard loading error:", error);
 
         accessMessage.textContent =
             "Something went wrong while loading your dashboard.";
 
-        message.textContent = error.message;
-
+        message.textContent =
+            error.message || "An unexpected error occurred.";
     }
-
 }
 
 
-/* =================================
-   LOG OUT
-================================= */
+/* LOG OUT */
 
 document.getElementById("logoutButton").addEventListener(
     "click",
     async function() {
 
-        const { error } =
-            await supabaseClient.auth.signOut();
+        const button = this;
+        button.disabled = true;
+        button.textContent = "Signing out...";
+
+        const { error } = await supabaseClient.auth.signOut();
 
         if (error) {
-
+            button.disabled = false;
+            button.textContent = "↪  Log Out";
             alert("Unable to log out. Please try again.");
             return;
-
         }
 
         window.location.replace("login.html");
-
     }
 );
 
 
-/* =================================
-   START DASHBOARD
-================================= */
+/* START DASHBOARD */
 
 loadDashboard();
 
