@@ -19,12 +19,16 @@
     --navy-light: #193D5C;
     --teal: #168C91;
     --gold: #BD9857;
-    --background: #F5F7F8;
-    --white: #FFFFFF;
+
+    --background: #EDF1F3;
+    --surface: #F8F9F8;
+    --card: #F6F7F5;
+
     --text: #263746;
-    --muted: #788795;
-    --border: #E5EAEE;
-    --shadow: 0 5px 22px rgba(16,43,70,.045);
+    --muted: #71808D;
+    --border: #DCE3E6;
+
+    --shadow: 0 4px 16px rgba(16,43,70,.055);
 }
 
 * {
@@ -188,7 +192,7 @@ button {
 
 .topbar {
     height: 76px;
-    background: white;
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
     padding: 0 40px;
     display: flex;
@@ -218,7 +222,7 @@ button {
     width: 39px;
     height: 39px;
     border-radius: 50%;
-    background: #E8F2F0;
+    background: #DDEBE9;
     color: var(--teal);
     display: grid;
     place-items: center;
@@ -277,14 +281,14 @@ button {
 
 .year-panel {
     background: linear-gradient(110deg, #102B46, #193D5C);
-    border-radius: 9px;
+    border-radius: 7px;
     padding: 25px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     color: white;
-    margin-bottom: 34px;
+    margin-bottom: 36px;
     position: relative;
     overflow: hidden;
 }
@@ -321,27 +325,28 @@ button {
     margin-top: 7px;
 }
 
-.subject-total {
+.course-total {
     position: relative;
     z-index: 2;
     text-align: right;
 }
 
-.subject-total strong {
+.course-total strong {
     display: block;
     color: white;
     font-family: "Manrope", sans-serif;
     font-size: 29px;
 }
 
-.subject-total span {
+.course-total span {
     color: #B9DDD8;
     font-size: 10px;
+    letter-spacing: 1px;
 }
 
-/* SUBJECTS */
+/* COURSE HEADING */
 
-.subject-heading {
+.course-heading {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -349,70 +354,79 @@ button {
     margin-bottom: 19px;
 }
 
-.subject-heading h2 {
+.course-heading h2 {
     color: var(--navy);
     font-family: "Manrope", sans-serif;
     font-size: 19px;
 }
 
-.subject-heading p {
+.course-heading p {
     color: var(--muted);
     font-size: 11px;
     margin-top: 6px;
 }
 
-.subject-grid {
+/* COURSE GRID */
+
+.course-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0,1fr));
     gap: 18px;
 }
 
-/* SUBJECT CARD */
+/* COURSE CARD */
 
-.subject-card {
-    background: white;
+.course-card {
+    display: block;
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: 7px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: .2s;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     position: relative;
 }
 
-.subject-card:hover {
+.course-card:hover {
     transform: translateY(-3px);
-    border-color: #A8D0CC;
+    border-color: #8BBDB8;
+    box-shadow: 0 9px 22px rgba(16,43,70,.09);
 }
 
-.subject-accent {
+.course-card:focus-visible {
+    outline: 3px solid var(--teal);
+    outline-offset: 3px;
+}
+
+.course-accent {
     height: 3px;
     background: var(--accent);
 }
 
-.subject-body {
+.course-body {
     padding: 23px;
 }
 
-.subject-top {
+.course-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 23px;
 }
 
-.subject-icon {
-    width: 49px;
-    height: 49px;
+.course-icon {
+    width: 47px;
+    height: 47px;
     display: grid;
     place-items: center;
-    border-radius: 9px;
+    border-radius: 7px;
     background: var(--tint);
     color: var(--accent);
 }
 
-.subject-icon svg {
-    width: 27px;
-    height: 27px;
+.course-icon svg {
+    width: 26px;
+    height: 26px;
     stroke: currentColor;
     fill: none;
     stroke-width: 1.7;
@@ -420,14 +434,22 @@ button {
     stroke-linejoin: round;
 }
 
-.subject-number {
-    color: #A0ACB8;
+.course-number {
+    color: #8997A3;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-.subject-card h3 {
+.course-code {
+    color: var(--teal);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+}
+
+.course-card h3 {
     font-family: "Manrope", sans-serif;
     font-size: 16px;
     color: var(--navy);
@@ -435,34 +457,39 @@ button {
     font-weight: 800;
 }
 
-.subject-card p {
+.course-card p {
     color: var(--muted);
     font-size: 11px;
     line-height: 1.8;
     min-height: 58px;
 }
 
-.subject-footer {
-    border-top: 1px solid #EDF1F4;
+.course-footer {
+    border-top: 1px solid #E2E7E8;
     padding: 15px 23px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--teal);
+    color: var(--navy-light);
     font-size: 11px;
     font-weight: 700;
+    transition: color .2s;
 }
 
-.subject-footer span:last-child {
+.course-card:hover .course-footer {
+    color: var(--teal);
+}
+
+.course-footer span:last-child {
     font-size: 18px;
 }
 
 /* MESSAGES */
 
 .message-box {
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 7px;
     padding: 25px;
     color: var(--muted);
     font-size: 12px;
@@ -473,6 +500,8 @@ button {
 .message-box.error {
     border-left: 3px solid #B42318;
 }
+
+/* FOOTER */
 
 .footer {
     border-top: 1px solid var(--border);
@@ -508,7 +537,7 @@ button {
         padding: 0 25px;
     }
 
-    .subject-grid {
+    .course-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
     }
 }
@@ -601,39 +630,39 @@ button {
         font-size: 18px;
     }
 
-    .subject-grid {
+    .course-grid {
         grid-template-columns: repeat(2,minmax(0,1fr));
         gap: 12px;
     }
 
-    .subject-body {
+    .course-body {
         padding: 17px 13px;
     }
 
-    .subject-top {
-        margin-bottom: 19px;
+    .course-top {
+        margin-bottom: 18px;
     }
 
-    .subject-icon {
+    .course-icon {
         width: 41px;
         height: 41px;
     }
 
-    .subject-icon svg {
+    .course-icon svg {
         width: 23px;
         height: 23px;
     }
 
-    .subject-card h3 {
+    .course-card h3 {
         font-size: 13px;
     }
 
-    .subject-card p {
+    .course-card p {
         font-size: 10px;
         min-height: 72px;
     }
 
-    .subject-footer {
+    .course-footer {
         padding: 13px;
         font-size: 10px;
     }
@@ -645,11 +674,11 @@ button {
 }
 
 @media(max-width:370px) {
-    .subject-grid {
+    .course-grid {
         grid-template-columns: 1fr;
     }
 
-    .subject-card p {
+    .course-card p {
         min-height: auto;
     }
 }
@@ -667,7 +696,7 @@ button {
         <div>SOM<span>FORGE</span></div>
     </div>
 
-    <button class="menu-button" id="menuButton">☰</button>
+    <button class="menu-button" id="menuButton" aria-label="Open navigation menu">☰</button>
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -735,9 +764,8 @@ button {
             <div class="eyebrow">ACADEMIC PROGRAMME</div>
             <h1>My Courses</h1>
             <p>
-                Explore the subjects that form part of your medical
-                sciences curriculum. Select a subject to access its
-                dedicated learning space.
+                Access the courses within your medical sciences programme.
+                Select a course to enter its dedicated learning space.
             </p>
         </section>
 
@@ -750,24 +778,24 @@ button {
                 </div>
             </div>
 
-            <div class="subject-total">
-                <strong id="subjectCount">—</strong>
-                <span>SUBJECTS</span>
+            <div class="course-total">
+                <strong id="courseCount">—</strong>
+                <span>COURSES</span>
             </div>
         </section>
 
         <section>
 
-            <div class="subject-heading">
+            <div class="course-heading">
                 <div>
-                    <h2>Academic Subjects</h2>
-                    <p>Your subjects and their learning spaces.</p>
+                    <h2>Your Courses</h2>
+                    <p>Select a course to access its learning space.</p>
                 </div>
             </div>
 
-            <div class="subject-grid" id="subjectGrid">
+            <div class="course-grid" id="courseGrid">
                 <div class="message-box">
-                    Loading your academic subjects...
+                    Loading your courses...
                 </div>
             </div>
 
@@ -775,7 +803,7 @@ button {
 
         <footer class="footer">
             <div><strong>SOMFORGE</strong> · Student Learning Portal</div>
-            <div>Forging the doctors of tomorrow.</div>
+            <div>Medical education and academic development.</div>
         </footer>
 
     </main>
@@ -805,6 +833,37 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
+/* COURSE CODES */
+
+const COURSE_CODES = {
+    "year 2": {
+        "anatomy": "MBS 200",
+        "physiology": "MBS 210",
+        "pathology": "MBS 220",
+        "therapeutics": "MBS 230",
+        "biochemistry": "MBS 230",
+        "clinical sciences": "MCS 200"
+    },
+
+    "year 3": {
+        "anatomy": "MBS 300",
+        "physiology": "MBS 310",
+        "pathology": "MBS 320",
+        "therapeutics": "MBS 330",
+        "biochemistry": "MBS 330",
+        "clinical sciences": "MCS 300"
+    }
+};
+
+function getCourseCode(title, yearLevel) {
+
+    const year = (yearLevel || "").trim().toLowerCase();
+    const course = (title || "").trim().toLowerCase();
+
+    return COURSE_CODES[year]?.[course] || "COURSE";
+}
+
+
 /* MOBILE MENU */
 
 const sidebar = document.getElementById("sidebar");
@@ -815,18 +874,26 @@ function closeMenu() {
     sidebar.classList.remove("open");
     menuOverlay.classList.remove("show");
     menuButton.textContent = "☰";
+    menuButton.setAttribute("aria-label", "Open navigation menu");
 }
 
 menuButton.addEventListener("click", function() {
+
     const open = sidebar.classList.toggle("open");
+
     menuOverlay.classList.toggle("show", open);
     menuButton.textContent = open ? "✕" : "☰";
+
+    menuButton.setAttribute(
+        "aria-label",
+        open ? "Close navigation menu" : "Open navigation menu"
+    );
 });
 
 menuOverlay.addEventListener("click", closeMenu);
 
 
-/* SUBJECT ICONS */
+/* COURSE ICONS */
 
 const icons = {
 
@@ -878,9 +945,9 @@ const icons = {
 };
 
 
-/* SUBJECT APPEARANCE */
+/* COURSE APPEARANCE */
 
-function getSubjectDetails(title) {
+function getCourseDetails(title) {
 
     const name = (title || "").toLowerCase();
 
@@ -888,7 +955,7 @@ function getSubjectDetails(title) {
         return {
             icon: icons.anatomy,
             accent: "#BD9857",
-            tint: "#F7F0E4",
+            tint: "#F2EBDD",
             description: "Explore the structure, organisation and relationships of the human body."
         };
     }
@@ -897,7 +964,7 @@ function getSubjectDetails(title) {
         return {
             icon: icons.biochemistry,
             accent: "#168C91",
-            tint: "#E7F5F2",
+            tint: "#E3EFEC",
             description: "Study the chemical processes and molecular foundations of human life."
         };
     }
@@ -905,8 +972,8 @@ function getSubjectDetails(title) {
     if (name.includes("physiology")) {
         return {
             icon: icons.physiology,
-            accent: "#C46D79",
-            tint: "#F9ECEF",
+            accent: "#B66F7B",
+            tint: "#F3E9EA",
             description: "Understand the functions and regulatory mechanisms of the human body."
         };
     }
@@ -915,7 +982,7 @@ function getSubjectDetails(title) {
         return {
             icon: icons.pathology,
             accent: "#7186BD",
-            tint: "#EDF0FA",
+            tint: "#E9ECF4",
             description: "Examine the mechanisms of disease and their effects on body systems."
         };
     }
@@ -924,7 +991,7 @@ function getSubjectDetails(title) {
         return {
             icon: icons.therapeutics,
             accent: "#8D75B8",
-            tint: "#F1EDF8",
+            tint: "#EDE9F2",
             description: "Explore the principles of treatment and rational use of medicines."
         };
     }
@@ -933,7 +1000,7 @@ function getSubjectDetails(title) {
         return {
             icon: icons.clinical,
             accent: "#269A9C",
-            tint: "#E8F5F5",
+            tint: "#E3EFED",
             description: "Develop foundational clinical knowledge, examination and practical skills."
         };
     }
@@ -941,9 +1008,26 @@ function getSubjectDetails(title) {
     return {
         icon: icons.anatomy,
         accent: "#168C91",
-        tint: "#E7F5F2",
-        description: "Explore the learning materials available for this subject."
+        tint: "#E3EFEC",
+        description: "Explore the learning materials available for this course."
     };
+}
+
+
+/* DISPLAY ERROR */
+
+function showMessage(message, isError = false) {
+
+    const grid = document.getElementById("courseGrid");
+    const box = document.createElement("div");
+
+    box.className = isError
+        ? "message-box error"
+        : "message-box";
+
+    box.textContent = message;
+
+    grid.replaceChildren(box);
 }
 
 
@@ -951,8 +1035,8 @@ function getSubjectDetails(title) {
 
 async function loadCourses(yearLevel) {
 
-    const grid = document.getElementById("subjectGrid");
-    const count = document.getElementById("subjectCount");
+    const grid = document.getElementById("courseGrid");
+    const count = document.getElementById("courseCount");
 
     const { data: courses, error } = await supabaseClient
         .from("courses")
@@ -966,14 +1050,10 @@ async function loadCourses(yearLevel) {
 
         count.textContent = "—";
 
-        grid.innerHTML = `
-            <div class="message-box error">
-                We could not retrieve your academic subjects.
-                Please contact the administrator.
-                <br><br>
-                ${error.message}
-            </div>
-        `;
+        showMessage(
+            "We could not retrieve your courses. Please contact the administrator. Error: " + error.message,
+            true
+        );
 
         return;
     }
@@ -982,48 +1062,57 @@ async function loadCourses(yearLevel) {
 
         count.textContent = "0";
 
-        grid.innerHTML = `
-            <div class="message-box">
-                No subjects have been assigned to your academic year.
-                Please contact the SOMFORGE administrator.
-            </div>
-        `;
+        showMessage(
+            "No courses have been assigned to your academic year. Please contact the SOMFORGE administrator."
+        );
 
         return;
     }
 
     count.textContent = courses.length;
-    grid.innerHTML = "";
+    grid.replaceChildren();
 
     courses.forEach((course, index) => {
 
-        const details = getSubjectDetails(course.title);
+        const details = getCourseDetails(course.title);
+        const courseCode = getCourseCode(course.title, yearLevel);
 
-        const card = document.createElement("article");
-        card.className = "subject-card";
+        const card = document.createElement("a");
+
+        card.className = "course-card";
+        card.href = "course.html?id=" + encodeURIComponent(course.id);
+
+        card.setAttribute(
+            "aria-label",
+            "Open " + course.title + " learning space"
+        );
 
         card.style.setProperty("--accent", details.accent);
         card.style.setProperty("--tint", details.tint);
 
         const accent = document.createElement("div");
-        accent.className = "subject-accent";
+        accent.className = "course-accent";
 
         const body = document.createElement("div");
-        body.className = "subject-body";
+        body.className = "course-body";
 
         const top = document.createElement("div");
-        top.className = "subject-top";
+        top.className = "course-top";
 
         const icon = document.createElement("div");
-        icon.className = "subject-icon";
+        icon.className = "course-icon";
         icon.innerHTML = details.icon;
 
         const number = document.createElement("div");
-        number.className = "subject-number";
-        number.textContent = "SUBJECT " + String(index + 1).padStart(2, "0");
+        number.className = "course-number";
+        number.textContent = String(index + 1).padStart(2, "0");
 
         top.appendChild(icon);
         top.appendChild(number);
+
+        const code = document.createElement("div");
+        code.className = "course-code";
+        code.textContent = courseCode;
 
         const title = document.createElement("h3");
         title.textContent = course.title;
@@ -1033,10 +1122,10 @@ async function loadCourses(yearLevel) {
             course.description || details.description;
 
         const footer = document.createElement("div");
-        footer.className = "subject-footer";
+        footer.className = "course-footer";
 
         const label = document.createElement("span");
-        label.textContent = "Subject learning space";
+        label.textContent = "Open learning space";
 
         const arrow = document.createElement("span");
         arrow.textContent = "→";
@@ -1045,6 +1134,7 @@ async function loadCourses(yearLevel) {
         footer.appendChild(arrow);
 
         body.appendChild(top);
+        body.appendChild(code);
         body.appendChild(title);
         body.appendChild(description);
 
@@ -1061,7 +1151,7 @@ async function loadCourses(yearLevel) {
 
 async function loadPage() {
 
-    const grid = document.getElementById("subjectGrid");
+    const grid = document.getElementById("courseGrid");
 
     try {
 
@@ -1113,13 +1203,9 @@ async function loadPage() {
 
         if (profile.account_status !== "approved") {
 
-            grid.innerHTML = `
-                <div class="message-box">
-                    Your account is awaiting administrator approval.
-                    Your academic subjects will become available once
-                    your account has been approved.
-                </div>
-            `;
+            showMessage(
+                "Your account is awaiting administrator approval. Your courses will become available once your account has been approved."
+            );
 
             return;
         }
@@ -1146,25 +1232,18 @@ async function loadPage() {
 
         if (!activeSubscription) {
 
-            grid.innerHTML = `
-                <div class="message-box">
-                    Your subscription is not currently active.
-                    Please contact the administrator to activate
-                    or renew your learning access.
-                </div>
-            `;
+            showMessage(
+                "Your subscription is not currently active. Please contact the administrator to activate or renew your learning access."
+            );
 
             return;
         }
 
         if (!profile.year_level) {
 
-            grid.innerHTML = `
-                <div class="message-box">
-                    Your academic year has not been assigned.
-                    Please contact the administrator.
-                </div>
-            `;
+            showMessage(
+                "Your academic year has not been assigned. Please contact the administrator."
+            );
 
             return;
         }
@@ -1175,14 +1254,11 @@ async function loadPage() {
 
         console.error("Page loading error:", error);
 
-        grid.innerHTML = `
-            <div class="message-box error">
-                We encountered a problem loading your courses.
-                Please try again.
-                <br><br>
-                ${error.message}
-            </div>
-        `;
+        showMessage(
+            "We encountered a problem loading your courses. Please try again. " +
+            (error.message || ""),
+            true
+        );
     }
 }
 
