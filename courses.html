@@ -20,13 +20,14 @@
     --teal: #168C91;
     --gold: #BD9857;
 
-    --background: #EDF1F3;
-    --surface: #F8F9F8;
-    --card: #F6F7F5;
+    /* UPDATED PAGE AND CARD COLOURS */
+    --background: #E9EEF1;
+    --surface: #F3F6F7;
+    --card: #DCE6EB;
 
     --text: #263746;
-    --muted: #71808D;
-    --border: #DCE3E6;
+    --muted: #647887;
+    --border: #CCD8DF;
 
     --shadow: 0 4px 16px rgba(16,43,70,.055);
 }
@@ -435,14 +436,14 @@ button {
 }
 
 .course-number {
-    color: #8997A3;
+    color: #718493;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .course-code {
-    color: var(--teal);
+    color: #08777D;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.2px;
@@ -458,14 +459,14 @@ button {
 }
 
 .course-card p {
-    color: var(--muted);
+    color: #526776;
     font-size: 11px;
     line-height: 1.8;
     min-height: 58px;
 }
 
 .course-footer {
-    border-top: 1px solid #E2E7E8;
+    border-top: 1px solid var(--border);
     padding: 15px 23px;
     display: flex;
     justify-content: space-between;
@@ -474,14 +475,11 @@ button {
     font-size: 11px;
     font-weight: 700;
     transition: color .2s;
+    background: rgba(16,43,70,.025);
 }
 
 .course-card:hover .course-footer {
     color: var(--teal);
-}
-
-.course-footer span:last-child {
-    font-size: 18px;
 }
 
 /* MESSAGES */
@@ -1150,8 +1148,6 @@ async function loadCourses(yearLevel) {
 /* AUTHENTICATION AND SUBSCRIPTION */
 
 async function loadPage() {
-
-    const grid = document.getElementById("courseGrid");
 
     try {
 
