@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#102B46">
 
-<title>Student Portal | SOMFORGE</title>
+<title>Dashboard | SOMFORGE</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -18,7 +18,6 @@
     --navy: #102B46;
     --navy-light: #193D5C;
     --teal: #168C91;
-    --teal-dark: #087C74;
     --gold: #BD9857;
     --background: #F5F7F8;
     --white: #FFFFFF;
@@ -35,55 +34,20 @@
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 100px;
-}
-
 body {
     font-family: "DM Sans", sans-serif;
     background: var(--background);
     color: var(--text);
-    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 button {
     font: inherit;
     cursor: pointer;
-}
-
-a {
-    color: inherit;
-}
-
-/* BRAND */
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 9px 35px;
-}
-
-.brand-symbol {
-    width: 37px;
-    height: 37px;
-    flex-shrink: 0;
-}
-
-.brand-name {
-    font-family: "Manrope", sans-serif;
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    line-height: 1;
-    color: white;
-    white-space: nowrap;
-}
-
-.brand-name span,
-.mobile-brand span {
-    color: var(--gold);
 }
 
 /* SIDEBAR */
@@ -98,6 +62,32 @@ a {
     display: flex;
     flex-direction: column;
     z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 9px 38px;
+}
+
+.brand-symbol {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: white;
+}
+
+.brand-name span,
+.mobile-brand span {
+    color: var(--gold);
 }
 
 .nav-caption {
@@ -124,11 +114,10 @@ a {
     gap: 13px;
     padding: 12px 13px;
     border-radius: 6px;
-    text-decoration: none;
     color: #C6D3E0;
     font-size: 13px;
     font-weight: 600;
-    transition: background .2s, color .2s;
+    transition: .2s;
 }
 
 .nav-icon {
@@ -185,7 +174,7 @@ a {
     background: #1C4568;
 }
 
-/* MOBILE HEADER */
+/* MOBILE NAVIGATION */
 
 .mobile-header {
     display: none;
@@ -228,7 +217,6 @@ a {
     display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
 }
 
 .avatar {
@@ -236,11 +224,10 @@ a {
     height: 39px;
     border-radius: 50%;
     background: #E8F2F0;
-    color: var(--teal-dark);
+    color: var(--teal);
     display: grid;
     place-items: center;
     font-weight: 800;
-    font-size: 15px;
 }
 
 .profile-name {
@@ -258,32 +245,20 @@ a {
 /* CONTENT */
 
 .content {
-    max-width: 1500px;
+    max-width: 1450px;
     margin: auto;
-    padding: 34px 40px 24px;
+    padding: 35px 40px;
 }
-
-.section {
-    margin-bottom: 38px;
-    scroll-margin-top: 100px;
-}
-
-/* HERO */
 
 .hero {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(
-        112deg,
-        #102B46 0%,
-        #193D5C 68%,
-        #126D70 125%
-    );
-    border-radius: 12px;
-    padding: 42px;
+    background: linear-gradient(112deg, #102B46, #193D5C 70%, #126D70 130%);
+    border-radius: 11px;
+    padding: 43px;
     color: white;
-    margin-bottom: 37px;
-    min-height: 210px;
+    margin-bottom: 32px;
+    min-height: 220px;
 }
 
 .hero::before {
@@ -291,7 +266,7 @@ a {
     position: absolute;
     width: 300px;
     height: 300px;
-    border: 1px solid rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.13);
     border-radius: 50%;
     right: -70px;
     top: -155px;
@@ -311,10 +286,10 @@ a {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 650px;
+    max-width: 620px;
 }
 
-.hero-eyebrow {
+.eyebrow {
     color: #B9DDD8;
     font-size: 10px;
     text-transform: uppercase;
@@ -326,51 +301,46 @@ a {
 .hero h1 {
     font-family: "Manrope", sans-serif;
     font-size: 30px;
-    line-height: 1.35;
+    line-height: 1.4;
     margin-bottom: 12px;
-    font-weight: 800;
-    letter-spacing: -.7px;
 }
 
 .hero p {
     color: #D5E2EE;
     font-size: 13px;
     line-height: 1.9;
-    max-width: 580px;
 }
 
-/* HEADINGS */
+/* SECTION HEADINGS */
+
+.section {
+    margin-bottom: 34px;
+}
 
 .section-heading {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 19px;
-}
-
-.section-heading h2 {
-    font-family: "Manrope", sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--navy);
-    letter-spacing: -.4px;
-}
-
-.section-heading p {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 6px;
-    line-height: 1.6;
+    margin-bottom: 18px;
 }
 
 .section-kicker {
-    color: var(--teal-dark);
+    color: var(--teal);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.4px;
     text-transform: uppercase;
     margin-bottom: 7px;
+}
+
+.section-heading h2 {
+    font-family: "Manrope", sans-serif;
+    font-size: 20px;
+    color: var(--navy);
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.7;
 }
 
 /* OVERVIEW */
@@ -385,15 +355,13 @@ a {
     background: white;
     border: 1px solid var(--border);
     border-radius: 9px;
-    padding: 23px;
+    padding: 24px;
     box-shadow: var(--shadow);
-    min-width: 0;
 }
 
 .overview-label {
     color: var(--muted);
     font-size: 11px;
-    font-weight: 600;
     margin-bottom: 14px;
 }
 
@@ -408,181 +376,67 @@ a {
 .overview-foot {
     color: var(--muted);
     font-size: 11px;
-    margin-top: 8px;
+    margin-top: 9px;
     line-height: 1.6;
 }
 
-.status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .status-dot {
+    display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: var(--success);
-    display: inline-block;
+    margin-right: 6px;
 }
 
-/* COURSES */
+/* QUICK LINKS */
 
-.course-count {
-    color: var(--teal-dark);
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0,1fr));
-    gap: 18px;
-}
-
-.course-card {
-    position: relative;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 23px;
-    min-height: 185px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: border-color .2s, transform .2s;
-}
-
-.course-card:hover {
-    border-color: #A8D0CC;
-    transform: translateY(-3px);
-}
-
-.course-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--course-accent, var(--teal));
-}
-
-.course-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.course-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 9px;
-    display: grid;
-    place-items: center;
-    font-size: 20px;
-    background: var(--course-tint, #E9F5F4);
-}
-
-.course-number {
-    font-size: 10px;
-    color: #9AA8B7;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.course-card h3 {
-    color: var(--navy);
-    font-family: "Manrope", sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    margin-bottom: 8px;
-}
-
-.course-card p {
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 1.7;
-    min-height: 38px;
-}
-
-.course-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #EDF1F4;
-    padding-top: 12px;
-    margin-top: 15px;
-}
-
-.course-year {
-    color: var(--teal-dark);
-    font-size: 10px;
-    font-weight: 700;
-}
-
-.course-arrow {
-    color: var(--teal-dark);
-    font-size: 17px;
-}
-
-.course-message {
-    grid-column: 1 / -1;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 23px;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.8;
-}
-
-/* RESOURCES */
-
-.resource-grid {
+.quick-links {
     display: grid;
     grid-template-columns: repeat(3, minmax(0,1fr));
     gap: 17px;
 }
 
-.resource-card {
+.quick-link {
     background: white;
     border: 1px solid var(--border);
     border-radius: 9px;
     padding: 22px;
+    min-height: 140px;
     box-shadow: var(--shadow);
-    min-height: 155px;
-    transition: border-color .2s, transform .2s;
+    transition: .2s;
 }
 
-.resource-card:hover {
-    border-color: #B4D5D1;
-    transform: translateY(-2px);
+.quick-link:hover {
+    border-color: #A8D0CC;
+    transform: translateY(-3px);
 }
 
-.resource-icon {
-    width: 39px;
-    height: 39px;
-    border-radius: 9px;
-    background: #EDF5F4;
-    display: grid;
-    place-items: center;
-    font-size: 18px;
-    margin-bottom: 16px;
+.quick-icon {
+    color: var(--teal);
+    font-size: 23px;
+    margin-bottom: 15px;
 }
 
-.resource-card h3 {
+.quick-link h3 {
     color: var(--navy);
     font-family: "Manrope", sans-serif;
-    font-size: 13px;
-    font-weight: 800;
-    margin-bottom: 8px;
+    font-size: 14px;
+    margin-bottom: 7px;
 }
 
-.resource-card p {
+.quick-link p {
     color: var(--muted);
     font-size: 11px;
-    line-height: 1.8;
+    line-height: 1.7;
+}
+
+.quick-arrow {
+    display: block;
+    text-align: right;
+    color: var(--teal);
+    font-size: 18px;
+    margin-top: 10px;
 }
 
 /* ANNOUNCEMENTS */
@@ -590,32 +444,30 @@ a {
 .announcement {
     background: white;
     border: 1px solid var(--border);
-    border-left: 3px solid var(--teal);
+    border-left: 3px solid var(--gold);
     border-radius: 7px;
-    padding: 21px 23px;
+    padding: 22px 24px;
 }
 
 .announcement h3 {
     color: var(--navy);
     font-size: 13px;
-    font-weight: 700;
     margin-bottom: 8px;
 }
 
 .announcement p {
     color: var(--muted);
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.8;
 }
 
-/* NOTICE */
+/* ACCOUNT NOTICE */
 
 .notice {
     background: white;
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 21px;
-    margin-bottom: 30px;
 }
 
 .notice h3 {
@@ -642,7 +494,6 @@ a {
     border-top: 1px solid var(--border);
     padding: 21px 0 10px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     gap: 12px;
     color: var(--muted);
@@ -651,10 +502,9 @@ a {
 
 .footer strong {
     color: var(--navy);
-    letter-spacing: .5px;
 }
 
-/* TABLET */
+/* RESPONSIVE */
 
 @media(max-width:1100px) {
     .sidebar {
@@ -673,13 +523,10 @@ a {
         padding: 0 25px;
     }
 
-    .courses-grid,
-    .resource-grid {
+    .quick-links {
         grid-template-columns: repeat(2,minmax(0,1fr));
     }
 }
-
-/* MOBILE */
 
 @media(max-width:680px) {
     .sidebar {
@@ -695,7 +542,6 @@ a {
     }
 
     .menu-overlay {
-        display: none;
         position: fixed;
         inset: 0;
         background: rgba(8,24,43,.48);
@@ -735,20 +581,15 @@ a {
     }
 
     .menu-button {
-        width: 40px;
-        height: 40px;
         border: none;
         background: transparent;
         color: white;
         font-size: 23px;
-        display: grid;
-        place-items: center;
-        border-radius: 5px;
+        padding: 7px;
     }
 
     .main {
         margin-left: 0;
-        width: 100%;
     }
 
     .topbar {
@@ -764,20 +605,14 @@ a {
         margin-left: auto;
     }
 
-    .avatar {
-        width: 36px;
-        height: 36px;
-    }
-
     .content {
-        padding: 21px 15px 15px;
+        padding: 21px 15px;
     }
 
     .hero {
         padding: 30px 23px;
         min-height: 190px;
-        border-radius: 9px;
-        margin-bottom: 29px;
+        margin-bottom: 27px;
     }
 
     .hero h1 {
@@ -805,63 +640,28 @@ a {
         font-size: 18px;
     }
 
-    .courses-grid,
-    .resource-grid {
+    .quick-links {
         grid-template-columns: repeat(2,minmax(0,1fr));
-        gap: 12px;
+        gap: 11px;
     }
 
-    .course-card {
+    .quick-link {
         padding: 17px 13px;
-        min-height: 185px;
-    }
-
-    .course-icon {
-        width: 37px;
-        height: 37px;
-        font-size: 18px;
-    }
-
-    .course-card h3 {
-        font-size: 13px;
-    }
-
-    .course-card p {
-        font-size: 10px;
-    }
-
-    .resource-card {
-        padding: 17px 13px;
-        min-height: 150px;
     }
 
     .section {
-        margin-bottom: 30px;
-    }
-
-    .section-heading h2 {
-        font-size: 18px;
-    }
-
-    .section-heading p {
-        font-size: 11px;
+        margin-bottom: 29px;
     }
 
     .footer {
         flex-direction: column;
-        align-items: flex-start;
         line-height: 1.7;
     }
 }
 
 @media(max-width:370px) {
-    .courses-grid,
-    .resource-grid {
+    .quick-links {
         grid-template-columns: 1fr;
-    }
-
-    .course-card {
-        min-height: 160px;
     }
 }
 </style>
@@ -870,17 +670,15 @@ a {
 <body>
 
 <header class="mobile-header">
-
     <div class="mobile-brand">
-        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
             <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
             <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div>SOM<span>FORGE</span></div>
     </div>
 
-    <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
-
+    <button class="menu-button" id="menuButton" aria-label="Open navigation">☰</button>
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -888,7 +686,7 @@ a {
 <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
             <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
             <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -898,16 +696,16 @@ a {
     <div class="nav-caption">Workspace</div>
 
     <ul class="nav-links">
-        <li><a href="#dashboard" class="active"><span class="nav-icon">⌂</span>Dashboard</a></li>
-        <li><a href="#courses"><span class="nav-icon">▦</span>My Courses</a></li>
+        <li><a href="dashboard.html" class="active"><span class="nav-icon">⌂</span>Dashboard</a></li>
+        <li><a href="courses.html"><span class="nav-icon">▦</span>My Courses</a></li>
     </ul>
 
     <div class="nav-caption">Learning</div>
 
     <ul class="nav-links">
-        <li><a href="#learning"><span class="nav-icon">▤</span>Learning Centre</a></li>
-        <li><a href="#examinations"><span class="nav-icon">✎</span>Examination Centre</a></li>
-        <li><a href="#live-learning"><span class="nav-icon">▶</span>Live Learning</a></li>
+        <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
+        <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
+        <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
     </ul>
 
     <div class="nav-caption">Account</div>
@@ -929,27 +727,30 @@ a {
 <div class="main">
 
     <header class="topbar">
-        <div class="breadcrumb">Student Portal &nbsp; / &nbsp; <strong>Dashboard</strong></div>
+        <div class="breadcrumb">
+            Student Portal &nbsp; / &nbsp; <strong>Dashboard</strong>
+        </div>
 
         <a href="account.html" class="profile-area">
             <div class="avatar" id="avatar">S</div>
             <div>
                 <div class="profile-name" id="topStudentName">Student</div>
-                <div class="profile-year" id="topStudentYear">Loading academic year...</div>
+                <div class="profile-year" id="topStudentYear">Loading...</div>
             </div>
         </a>
     </header>
 
-    <main class="content" id="dashboard">
+    <main class="content">
 
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-eyebrow">SOMFORGE · STUDENT LEARNING PORTAL</div>
-                <h1 id="welcomeMessage">Welcome to your learning space.</h1>
+                <div class="eyebrow">SOMFORGE · STUDENT PORTAL</div>
+                <h1 id="welcomeMessage">Welcome to your dashboard.</h1>
                 <p>
-                    Your academic workspace for learning, revision and clinical
-                    development. Explore your subjects and access resources
-                    that support your medical education.
+                    Your academic workspace for medical learning,
+                    revision and professional development.
+                    Everything you need to continue your learning
+                    journey is accessible from here.
                 </p>
             </div>
         </section>
@@ -957,11 +758,9 @@ a {
         <section class="section">
 
             <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Your account</div>
-                    <h2>Academic Overview</h2>
-                    <p>A summary of your student account and learning access.</p>
-                </div>
+                <div class="section-kicker">Your account</div>
+                <h2>Academic Overview</h2>
+                <p>A summary of your student account and learning access.</p>
             </div>
 
             <div class="overview-grid">
@@ -979,145 +778,84 @@ a {
                 </div>
 
                 <div class="overview-card">
-                    <div class="overview-label">Learning access</div>
+                    <div class="overview-label">Subscription status</div>
                     <div class="overview-value" id="subscriptionStatus">Loading...</div>
-                    <div class="overview-foot" id="subscriptionDetail">Checking subscription...</div>
+                    <div class="overview-foot" id="subscriptionDetail">Checking access...</div>
                 </div>
 
             </div>
 
         </section>
 
-        <section class="section" id="courses">
+        <section class="section">
 
             <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Your curriculum</div>
-                    <h2>My Courses</h2>
-                    <p>Your subjects for the current academic year.</p>
-                </div>
-                <div class="course-count" id="courseCount">Loading subjects</div>
+                <div class="section-kicker">Navigate your portal</div>
+                <h2>Quick Access</h2>
+                <p>Go directly to the section you want to explore.</p>
             </div>
 
-            <div class="courses-grid" id="coursesGrid">
-                <div class="course-message">Loading your academic courses...</div>
-            </div>
+            <div class="quick-links">
 
-        </section>
+                <a href="courses.html" class="quick-link">
+                    <div class="quick-icon">▦</div>
+                    <h3>My Courses</h3>
+                    <p>Explore your academic subjects and course materials.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
 
-        <section class="section" id="learning">
+                <a href="learning.html" class="quick-link">
+                    <div class="quick-icon">▤</div>
+                    <h3>Learning Centre</h3>
+                    <p>Access notes, presentations and recorded lectures.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
 
-            <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Study and review</div>
-                    <h2>Learning Centre</h2>
-                    <p>Resources to support your understanding of medical sciences.</p>
-                </div>
-            </div>
+                <a href="examinations.html" class="quick-link">
+                    <div class="quick-icon">✎</div>
+                    <h3>Examination Centre</h3>
+                    <p>Prepare with past papers and practice questions.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
 
-            <div class="resource-grid">
+                <a href="live-learning.html" class="quick-link">
+                    <div class="quick-icon">▶</div>
+                    <h3>Live Learning</h3>
+                    <p>Find scheduled online classes and recordings.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
 
-                <div class="resource-card">
-                    <div class="resource-icon">📚</div>
-                    <h3>Lecture Notes</h3>
-                    <p>Access organised notes and subject learning materials.</p>
-                </div>
-
-                <div class="resource-card">
-                    <div class="resource-icon">▶</div>
-                    <h3>Recorded Lectures</h3>
-                    <p>Revisit teaching sessions and reinforce difficult concepts.</p>
-                </div>
-
-                <div class="resource-card">
-                    <div class="resource-icon">📑</div>
-                    <h3>Presentations</h3>
-                    <p>Review lecture presentations and supporting documents.</p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="section" id="examinations">
-
-            <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Test your understanding</div>
-                    <h2>Examination Centre</h2>
-                    <p>Prepare through practice and structured revision.</p>
-                </div>
-            </div>
-
-            <div class="resource-grid">
-
-                <div class="resource-card">
-                    <div class="resource-icon">📝</div>
-                    <h3>Past Examination Papers</h3>
-                    <p>Practise with previous examination questions.</p>
-                </div>
-
-                <div class="resource-card">
-                    <div class="resource-icon">✓</div>
-                    <h3>Practice Questions</h3>
-                    <p>Strengthen your knowledge through question-based revision.</p>
-                </div>
+                <a href="account.html" class="quick-link">
+                    <div class="quick-icon">◎</div>
+                    <h3>My Account</h3>
+                    <p>View your personal details and subscription information.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
 
             </div>
 
         </section>
 
-        <section class="section" id="live-learning">
+        <section class="section">
 
             <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Learn together</div>
-                    <h2>Live Learning</h2>
-                    <p>Connect with teaching sessions and academic support.</p>
-                </div>
-            </div>
-
-            <div class="resource-grid">
-
-                <div class="resource-card">
-                    <div class="resource-icon">🎥</div>
-                    <h3>Live Classes</h3>
-                    <p>Access scheduled online teaching sessions.</p>
-                </div>
-
-                <div class="resource-card">
-                    <div class="resource-icon">💬</div>
-                    <h3>Academic Support</h3>
-                    <p>Find guidance to support your academic development.</p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="section" id="announcements">
-
-            <div class="section-heading">
-                <div>
-                    <div class="section-kicker">Stay informed</div>
-                    <h2>Announcements</h2>
-                    <p>Important information and updates for students.</p>
-                </div>
+                <div class="section-kicker">Stay informed</div>
+                <h2>Announcements</h2>
+                <p>Important information for SOMFORGE students.</p>
             </div>
 
             <div class="announcement">
                 <h3>Welcome to SOMFORGE</h3>
                 <p>
-                    Your student learning portal brings together academic
-                    resources, revision materials and teaching sessions
-                    in one place. Check this section for future announcements.
+                    Welcome to your student portal. Check this section
+                    for important academic updates and announcements.
                 </p>
             </div>
 
         </section>
 
         <section class="notice">
-            <h3>Account and Learning Updates</h3>
+            <h3>Account Information</h3>
             <p id="accessMessage">Checking your account...</p>
             <p id="message"></p>
         </section>
@@ -1133,9 +871,10 @@ a {
 
 <script>
 
-/* SUPABASE CONNECTION */
+/* SUPABASE */
 
-const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+const SUPABASE_URL =
+    "https://dfgaywdtxpajsqitaszy.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
@@ -1153,7 +892,7 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-/* MOBILE NAVIGATION */
+/* MOBILE SIDEBAR */
 
 const sidebar = document.getElementById("sidebar");
 const menuButton = document.getElementById("menuButton");
@@ -1162,15 +901,14 @@ const menuOverlay = document.getElementById("menuOverlay");
 function closeMenu() {
     sidebar.classList.remove("open");
     menuOverlay.classList.remove("show");
-    menuButton.setAttribute("aria-expanded", "false");
     menuButton.textContent = "☰";
 }
 
 menuButton.addEventListener("click", function() {
-    const isOpen = sidebar.classList.toggle("open");
-    menuOverlay.classList.toggle("show", isOpen);
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-    menuButton.textContent = isOpen ? "✕" : "☰";
+    const open = sidebar.classList.toggle("open");
+
+    menuOverlay.classList.toggle("show", open);
+    menuButton.textContent = open ? "✕" : "☰";
 });
 
 menuOverlay.addEventListener("click", closeMenu);
@@ -1179,236 +917,30 @@ document.addEventListener("keydown", function(event) {
     if (event.key === "Escape") closeMenu();
 });
 
-document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", function() {
-        closeMenu();
 
-        if (this.getAttribute("href").startsWith("#")) {
-            document.querySelectorAll(".nav-links a").forEach(item => {
-                item.classList.remove("active");
-            });
-
-            this.classList.add("active");
-        }
-    });
-});
-
-
-/* COURSE APPEARANCE */
-
-function getCourseDetails(title) {
-
-    const name = (title || "").toLowerCase();
-
-    if (name.includes("anatomy")) {
-        return {
-            icon: "🦴",
-            description: "Explore the structure and organisation of the human body.",
-            accent: "#BD9857",
-            tint: "#F7F0E4"
-        };
-    }
-
-    if (name.includes("biochemistry")) {
-        return {
-            icon: "🧪",
-            description: "Understand the chemical processes that sustain human life.",
-            accent: "#168C91",
-            tint: "#E7F5F2"
-        };
-    }
-
-    if (name.includes("physiology")) {
-        return {
-            icon: "❤️",
-            description: "Study the functions and mechanisms of the human body.",
-            accent: "#D66B76",
-            tint: "#FBEDF0"
-        };
-    }
-
-    if (name.includes("pathology")) {
-        return {
-            icon: "🔬",
-            description: "Understand disease processes and their effects on the body.",
-            accent: "#7186BD",
-            tint: "#EDF0FA"
-        };
-    }
-
-    if (name.includes("therapeutics")) {
-        return {
-            icon: "💊",
-            description: "Explore the principles of treatment and rational medicine use.",
-            accent: "#8D75B8",
-            tint: "#F1EDF8"
-        };
-    }
-
-    if (name.includes("clinical")) {
-        return {
-            icon: "🩺",
-            description: "Develop foundational clinical knowledge and practical skills.",
-            accent: "#269A9C",
-            tint: "#E8F5F5"
-        };
-    }
-
-    return {
-        icon: "📚",
-        description: "Explore the learning materials available for this subject.",
-        accent: "#168C91",
-        tint: "#E7F5F2"
-    };
-}
-
-
-/* LOAD COURSES */
-
-async function loadCourses(yearLevel) {
-
-    const grid = document.getElementById("coursesGrid");
-    const count = document.getElementById("courseCount");
-
-    grid.innerHTML =
-        '<div class="course-message">Loading your subjects...</div>';
-
-    const { data: courses, error } = await supabaseClient
-        .from("courses")
-        .select("id,title,description,year_level")
-        .eq("year_level", yearLevel)
-        .order("title");
-
-    if (error) {
-        console.error("Course loading error:", error);
-
-        count.textContent = "Unavailable";
-
-        grid.innerHTML = `
-            <div class="course-message">
-                We could not load your courses. Please try again later
-                or contact the SOMFORGE administrator.
-            </div>
-        `;
-
-        document.getElementById("message").textContent = error.message;
-        return;
-    }
-
-    if (!courses || courses.length === 0) {
-        count.textContent = "No subjects";
-
-        grid.innerHTML = `
-            <div class="course-message">
-                No courses have been assigned to your academic year yet.
-                Please contact the SOMFORGE administrator.
-            </div>
-        `;
-
-        return;
-    }
-
-    count.textContent = courses.length + " subjects";
-    grid.innerHTML = "";
-
-    courses.forEach((course, index) => {
-
-        const details = getCourseDetails(course.title);
-
-        const card = document.createElement("article");
-        card.className = "course-card";
-
-        card.style.setProperty("--course-accent", details.accent);
-        card.style.setProperty("--course-tint", details.tint);
-
-        const top = document.createElement("div");
-        top.className = "course-card-top";
-
-        const icon = document.createElement("div");
-        icon.className = "course-icon";
-        icon.textContent = details.icon;
-
-        const number = document.createElement("div");
-        number.className = "course-number";
-        number.textContent = "SUBJECT " + String(index + 1).padStart(2, "0");
-
-        top.appendChild(icon);
-        top.appendChild(number);
-
-        const title = document.createElement("h3");
-        title.textContent = course.title || "Untitled course";
-
-        const description = document.createElement("p");
-        description.textContent = course.description || details.description;
-
-        const bottom = document.createElement("div");
-        bottom.className = "course-bottom";
-
-        const badge = document.createElement("span");
-        badge.className = "course-year";
-        badge.textContent = course.year_level || yearLevel;
-
-        const arrow = document.createElement("span");
-        arrow.className = "course-arrow";
-        arrow.textContent = "→";
-
-        bottom.appendChild(badge);
-        bottom.appendChild(arrow);
-
-        card.appendChild(top);
-        card.appendChild(title);
-        card.appendChild(description);
-        card.appendChild(bottom);
-
-        grid.appendChild(card);
-    });
-}
-
-
-/* LOAD DASHBOARD */
+/* LOAD STUDENT INFORMATION */
 
 async function loadDashboard() {
 
-    const welcome = document.getElementById("welcomeMessage");
-    const year = document.getElementById("year");
-    const account = document.getElementById("accountStatus");
-    const subscriptionStatus = document.getElementById("subscriptionStatus");
-    const subscriptionDetail = document.getElementById("subscriptionDetail");
     const accessMessage = document.getElementById("accessMessage");
     const message = document.getElementById("message");
-    const coursesGrid = document.getElementById("coursesGrid");
 
     try {
-
-        /*
-          Use getSession() to retrieve the session already
-          persisted by the login page.
-        */
 
         const { data: sessionData, error: sessionError } =
             await supabaseClient.auth.getSession();
 
-        if (sessionError) {
-            throw sessionError;
-        }
+        if (sessionError) throw sessionError;
 
-        const session = sessionData.session;
-
-        if (!session) {
+        if (!sessionData.session) {
             window.location.replace("login.html");
             return;
         }
 
-        /*
-          Verify the authenticated user with Supabase.
-        */
-
         const { data: authData, error: authError } =
             await supabaseClient.auth.getUser();
 
-        if (authError) {
-            throw authError;
-        }
+        if (authError) throw authError;
 
         if (!authData.user) {
             window.location.replace("login.html");
@@ -1416,10 +948,6 @@ async function loadDashboard() {
         }
 
         const user = authData.user;
-
-        /*
-          Retrieve the student's profile.
-        */
 
         const { data: profile, error: profileError } =
             await supabaseClient
@@ -1429,59 +957,50 @@ async function loadDashboard() {
                 .single();
 
         if (profileError || !profile) {
-
             accessMessage.textContent =
                 "Your student profile could not be retrieved. Please contact the administrator.";
 
-            message.textContent = profileError
-                ? profileError.message
-                : "Profile not found.";
-
-            coursesGrid.innerHTML =
-                '<div class="course-message">Your profile information is unavailable.</div>';
+            message.textContent =
+                profileError ? profileError.message : "Profile not found.";
 
             return;
         }
 
         const studentName = profile.full_name || "Student";
 
-        welcome.textContent = "Welcome back, " + studentName + ".";
+        document.getElementById("welcomeMessage").textContent =
+            "Welcome back, " + studentName + ".";
 
-        document.getElementById("topStudentName").textContent = studentName;
+        document.getElementById("topStudentName").textContent =
+            studentName;
 
         document.getElementById("avatar").textContent =
             studentName.charAt(0).toUpperCase();
 
-        year.textContent = profile.year_level || "Not assigned";
+        document.getElementById("year").textContent =
+            profile.year_level || "Not assigned";
 
         document.getElementById("topStudentYear").textContent =
             profile.year_level || "Academic year not assigned";
 
         const approved = profile.account_status === "approved";
 
-        account.textContent = approved ? "Approved" : "Pending";
+        document.getElementById("accountStatus").textContent =
+            approved ? "Approved" : "Pending";
 
         if (!approved) {
 
-            subscriptionStatus.textContent = "Unavailable";
+            document.getElementById("subscriptionStatus").textContent =
+                "Unavailable";
 
-            subscriptionDetail.textContent =
+            document.getElementById("subscriptionDetail").textContent =
                 "Awaiting account approval";
 
             accessMessage.textContent =
-                "Your account is awaiting administrator approval. Your learning resources will become available after approval.";
-
-            coursesGrid.innerHTML =
-                '<div class="course-message">Your account must be approved before you can access courses.</div>';
-
-            document.getElementById("courseCount").textContent = "Locked";
+                "Your account is awaiting administrator approval. Please check again after the administrator has approved it.";
 
             return;
         }
-
-        /*
-          Retrieve subscription records.
-        */
 
         const { data: subscriptions, error: subscriptionError } =
             await supabaseClient
@@ -1490,22 +1009,7 @@ async function loadDashboard() {
                 .eq("student_id", user.id)
                 .order("end_date", { ascending: false });
 
-        if (subscriptionError) {
-
-            subscriptionStatus.textContent = "Unable to check";
-
-            subscriptionDetail.textContent = "Verification required";
-
-            accessMessage.textContent =
-                "We could not verify your subscription. Please contact the administrator.";
-
-            message.textContent = subscriptionError.message;
-
-            coursesGrid.innerHTML =
-                '<div class="course-message">Subscription verification failed. Please contact the administrator.</div>';
-
-            return;
-        }
+        if (subscriptionError) throw subscriptionError;
 
         const now = new Date();
 
@@ -1519,57 +1023,40 @@ async function loadDashboard() {
                 return false;
             }
 
-            const startDate = new Date(sub.start_date);
-            const endDate = new Date(sub.end_date);
-
-            return startDate <= now && endDate > now;
+            return new Date(sub.start_date) <= now &&
+                   new Date(sub.end_date) > now;
         });
 
         if (activeSubscription) {
 
-            subscriptionStatus.innerHTML =
-                '<span class="status-pill"><span class="status-dot"></span>Active</span>';
+            document.getElementById("subscriptionStatus").innerHTML =
+                '<span class="status-dot"></span>Active';
 
-            const expiry = new Date(activeSubscription.end_date);
-
-            subscriptionDetail.textContent =
-                "Access until " + expiry.toLocaleDateString();
+            document.getElementById("subscriptionDetail").textContent =
+                "Expires " +
+                new Date(activeSubscription.end_date).toLocaleDateString();
 
             accessMessage.textContent =
-                "Your account is approved and your subscription is active. You have access to the SOMFORGE learning portal.";
-
-            if (profile.year_level) {
-                await loadCourses(profile.year_level);
-            } else {
-                coursesGrid.innerHTML =
-                    '<div class="course-message">Your academic year has not been assigned. Please contact the administrator.</div>';
-
-                document.getElementById("courseCount").textContent =
-                    "Year not assigned";
-            }
+                "Your account is approved and your subscription is active. You can access the learning sections of SOMFORGE.";
 
         } else {
 
-            subscriptionStatus.textContent = "Inactive";
+            document.getElementById("subscriptionStatus").textContent =
+                "Inactive";
 
-            subscriptionDetail.textContent =
-                "Renewal or activation required";
+            document.getElementById("subscriptionDetail").textContent =
+                "Activation or renewal required";
 
             accessMessage.textContent =
                 "Your account is approved, but you do not currently have an active subscription. Please contact the administrator about activation or renewal.";
-
-            coursesGrid.innerHTML =
-                '<div class="course-message">Your subscription is inactive. Please contact the administrator to activate or renew your access to courses.</div>';
-
-            document.getElementById("courseCount").textContent = "Locked";
         }
 
     } catch (error) {
 
-        console.error("Dashboard loading error:", error);
+        console.error("Dashboard error:", error);
 
         accessMessage.textContent =
-            "Something went wrong while loading your dashboard.";
+            "We encountered a problem loading your account information.";
 
         message.textContent =
             error.message || "An unexpected error occurred.";
@@ -1583,15 +1070,14 @@ document.getElementById("logoutButton").addEventListener(
     "click",
     async function() {
 
-        const button = this;
-        button.disabled = true;
-        button.textContent = "Signing out...";
+        this.disabled = true;
+        this.textContent = "Signing out...";
 
         const { error } = await supabaseClient.auth.signOut();
 
         if (error) {
-            button.disabled = false;
-            button.textContent = "↪  Log Out";
+            this.disabled = false;
+            this.textContent = "↪ Log Out";
             alert("Unable to log out. Please try again.");
             return;
         }
@@ -1601,7 +1087,7 @@ document.getElementById("logoutButton").addEventListener(
 );
 
 
-/* START DASHBOARD */
+/* START */
 
 loadDashboard();
 
