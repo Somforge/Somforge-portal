@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#102b4e">
+    <meta name="theme-color" content="#102b46">
+
     <title>Student Login | SOMFORGE</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --navy: #102b4e;
-            --navy-deep: #0a1d35;
-            --gold: #c69a45;
-            --gold-light: #e2c27f;
+            --navy: #102b46;
+            --navy-dark: #091d31;
+            --gold: #bd9857;
+            --gold-light: #dfc18a;
             --text: #25364a;
             --muted: #718096;
             --border: #dfe5ec;
-            --background: #f6f8fb;
+            --background: #f5f7f9;
         }
 
         * {
@@ -32,7 +34,7 @@
 
         body {
             min-height: 100vh;
-            font-family: "DM Sans", sans-serif;
+            font-family: 'DM Sans', sans-serif;
             background: var(--background);
             color: var(--text);
             display: flex;
@@ -43,36 +45,60 @@
             text-decoration: none;
         }
 
-        .topbar {
-            width: 100%;
-            padding: 25px 7%;
-            background: #fff;
-            border-bottom: 1px solid #e9edf2;
-        }
+        /* BRAND */
 
         .brand {
-            font-family: "Manrope", sans-serif;
-            font-size: 25px;
-            font-weight: 800;
-            letter-spacing: -1.2px;
-            color: var(--navy);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
-        .brand span {
+        .brand-symbol {
+            width: 37px;
+            height: 37px;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-family: 'Manrope', sans-serif;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+            line-height: 1;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .brand-name span {
             color: var(--gold);
         }
 
+        /* HEADER */
+
+        .topbar {
+            width: 100%;
+            padding: 23px 7%;
+            background: white;
+            border-bottom: 1px solid #e6ebef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
         .home-link {
-            float: right;
-            margin-top: 5px;
             color: var(--navy);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
+            transition: color .2s;
         }
 
         .home-link:hover {
             color: var(--gold);
         }
+
+        /* MAIN */
 
         .main {
             flex: 1;
@@ -88,14 +114,16 @@
             min-height: 560px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            background: #fff;
+            background: white;
             border: 1px solid #e7ebf0;
             box-shadow: 0 18px 55px rgba(16, 43, 78, 0.08);
         }
 
+        /* WELCOME PANEL */
+
         .welcome-panel {
             background: var(--navy);
-            color: #fff;
+            color: white;
             padding: 65px 50px;
             display: flex;
             flex-direction: column;
@@ -108,7 +136,7 @@
         .welcome-panel::after {
             content: "";
             position: absolute;
-            border: 1px solid rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,.09);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -142,7 +170,7 @@
         }
 
         .welcome-panel h1 {
-            font-family: "Manrope", sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: clamp(32px, 4vw, 43px);
             line-height: 1.2;
             letter-spacing: -1.5px;
@@ -163,6 +191,8 @@
             margin-top: 35px;
         }
 
+        /* LOGIN FORM */
+
         .form-panel {
             padding: 65px 55px;
             display: flex;
@@ -171,10 +201,10 @@
         }
 
         .form-panel h2 {
-            font-family: "Manrope", sans-serif;
+            font-family: 'Manrope', sans-serif;
             color: var(--navy);
             font-size: 29px;
-            letter-spacing: -0.8px;
+            letter-spacing: -.8px;
             margin-bottom: 9px;
         }
 
@@ -197,10 +227,6 @@
             margin-bottom: 9px;
         }
 
-        input {
-            font-family: inherit;
-        }
-
         .input-wrap {
             position: relative;
         }
@@ -210,11 +236,12 @@
             height: 49px;
             padding: 0 48px 0 15px;
             border: 1px solid var(--border);
-            background: #fff;
+            background: white;
             color: var(--text);
+            font-family: inherit;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color .2s, box-shadow .2s;
         }
 
         .email-input {
@@ -223,12 +250,14 @@
 
         .input-wrap input:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(198,154,69,0.12);
+            box-shadow: 0 0 0 3px rgba(189,152,87,.12);
         }
 
         input::placeholder {
             color: #a3adba;
         }
+
+        /* PASSWORD EYE */
 
         .password-toggle {
             position: absolute;
@@ -267,12 +296,16 @@
             stroke-linejoin: round;
         }
 
+        /* CAPS LOCK */
+
         .caps-warning {
             display: none;
             margin-top: 8px;
             font-size: 12px;
             color: #a66a18;
         }
+
+        /* FORGOT PASSWORD */
 
         .forgot {
             display: block;
@@ -288,27 +321,31 @@
             color: var(--gold);
         }
 
+        /* BUTTON */
+
         .submit-button {
             width: 100%;
             height: 51px;
             border: none;
             background: var(--navy);
-            color: #fff;
+            color: white;
             font-family: inherit;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s, opacity 0.2s;
+            transition: background .2s, opacity .2s;
         }
 
         .submit-button:hover {
-            background: #1b426c;
+            background: #1b405f;
         }
 
         .submit-button:disabled {
-            opacity: 0.65;
+            opacity: .65;
             cursor: not-allowed;
         }
+
+        /* MESSAGES */
 
         #message {
             display: none;
@@ -327,6 +364,8 @@
             border-left-color: #31965d;
         }
 
+        /* REGISTER */
+
         .register-prompt {
             text-align: center;
             color: var(--muted);
@@ -343,22 +382,32 @@
             color: var(--gold);
         }
 
+        /* FOOTER */
+
         footer {
             text-align: center;
             padding: 22px 15px;
             color: #8994a3;
             font-size: 12px;
-            border-top: 1px solid #e9edf2;
-            background: #fff;
+            border-top: 1px solid #e6ebef;
+            background: white;
         }
 
-        @media (max-width: 760px) {
+        /* MOBILE */
+
+        @media(max-width: 760px) {
+
             .topbar {
                 padding: 21px 6%;
             }
 
-            .brand {
-                font-size: 23px;
+            .brand-symbol {
+                width: 34px;
+                height: 34px;
+            }
+
+            .brand-name {
+                font-size: 20px;
             }
 
             .main {
@@ -403,7 +452,16 @@
             }
         }
 
-        @media (max-width: 380px) {
+        @media(max-width: 380px) {
+
+            .brand {
+                gap: 8px;
+            }
+
+            .brand-name {
+                font-size: 18px;
+            }
+
             .home-link {
                 font-size: 12px;
             }
@@ -419,28 +477,59 @@
 <body>
 
     <header class="topbar">
-        <a href="index.html" class="brand">SOM<span>FORGE</span></a>
+
+        <a href="index.html" class="brand" aria-label="SOMFORGE Home">
+
+            <svg class="brand-symbol" viewBox="0 0 48 48"
+                 fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z"
+                      stroke="#102B46" stroke-width="2.4"/>
+
+                <path d="M10 24H17L21 16L26 32L30 22L33 25H38"
+                      stroke="#BD9857" stroke-width="2.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+
+            </svg>
+
+            <span class="brand-name">SOM<span>FORGE</span></span>
+
+        </a>
+
         <a href="index.html" class="home-link">Back to Home</a>
+
     </header>
 
     <main class="main">
+
         <div class="login-layout">
 
             <section class="welcome-panel">
+
                 <div class="welcome-content">
-                    <div class="eyebrow">SOMFORGE Learning Portal</div>
+
+                    <div class="eyebrow">
+                        SOMFORGE Learning Portal
+                    </div>
+
                     <h1>Welcome back.</h1>
+
                     <p>
                         Continue your medical learning journey.
                         Sign in to access your courses, study materials
                         and learning resources.
                     </p>
+
                     <div class="gold-line"></div>
+
                 </div>
+
             </section>
 
             <section class="form-panel">
+
                 <h2>Student Sign In</h2>
+
                 <p class="form-intro">
                     Enter your account details to continue to your portal.
                 </p>
@@ -448,8 +537,11 @@
                 <form id="loginForm">
 
                     <div class="form-group">
+
                         <label for="email">Email Address</label>
+
                         <div class="input-wrap">
+
                             <input
                                 type="email"
                                 id="email"
@@ -458,13 +550,17 @@
                                 autocomplete="email"
                                 required
                             >
+
                         </div>
+
                     </div>
 
                     <div class="form-group">
+
                         <label for="password">Password</label>
 
                         <div class="input-wrap">
+
                             <input
                                 type="password"
                                 id="password"
@@ -481,23 +577,35 @@
                                 aria-pressed="false"
                                 title="Show password"
                             >
-                                <svg id="eyeIcon" viewBox="0 0 24 24" aria-hidden="true">
+
+                                <svg id="eyeIcon" viewBox="0 0 24 24"
+                                     aria-hidden="true">
+
                                     <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
+
                                     <circle cx="12" cy="12" r="3"></circle>
+
                                 </svg>
+
                             </button>
+
                         </div>
 
                         <p class="caps-warning" id="capsWarning">
                             Caps Lock is on.
                         </p>
+
                     </div>
 
                     <a href="forgot-password.html" class="forgot">
                         Forgot your password?
                     </a>
 
-                    <button type="submit" class="submit-button" id="loginButton">
+                    <button
+                        type="submit"
+                        class="submit-button"
+                        id="loginButton"
+                    >
                         Sign In
                     </button>
 
@@ -509,23 +617,33 @@
                     Don't have an account?
                     <a href="register.html">Create an account</a>
                 </p>
+
             </section>
 
         </div>
+
     </main>
 
     <footer>
-        © 2026 SOMFORGE. All rights reserved.
+        © <span id="year"></span> SOMFORGE. All rights reserved.
     </footer>
 
     <script>
-        const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
-        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
+
+        /* SUPABASE CONNECTION */
+
+        const SUPABASE_URL =
+            "https://dfgaywdtxpajsqitaszy.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
 
         const supabaseClient = window.supabase.createClient(
             SUPABASE_URL,
             SUPABASE_PUBLISHABLE_KEY
         );
+
+        /* ELEMENTS */
 
         const loginForm = document.getElementById("loginForm");
         const emailInput = document.getElementById("email");
@@ -535,6 +653,8 @@
         const passwordToggle = document.getElementById("passwordToggle");
         const eyeIcon = document.getElementById("eyeIcon");
         const capsWarning = document.getElementById("capsWarning");
+
+        /* EYE ICONS */
 
         const eyeOpen = `
             <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
@@ -548,10 +668,14 @@
             <path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.4 0 2.6-.3 3.7-.8"></path>
         `;
 
+        /* SHOW / HIDE PASSWORD */
+
         passwordToggle.addEventListener("click", function() {
+
             const isHidden = passwordInput.type === "password";
 
             passwordInput.type = isHidden ? "text" : "password";
+
             eyeIcon.innerHTML = isHidden ? eyeClosed : eyeOpen;
 
             passwordToggle.setAttribute(
@@ -564,70 +688,124 @@
                 isHidden ? "true" : "false"
             );
 
-            passwordToggle.title = isHidden ? "Hide password" : "Show password";
+            passwordToggle.title =
+                isHidden ? "Hide password" : "Show password";
+
             passwordInput.focus();
+
         });
 
+        /* CAPS LOCK WARNING */
+
         passwordInput.addEventListener("keyup", function(event) {
+
             capsWarning.style.display =
                 event.getModifierState("CapsLock") ? "block" : "none";
+
         });
 
         passwordInput.addEventListener("blur", function() {
             capsWarning.style.display = "none";
         });
 
+        /* MESSAGE DISPLAY */
+
         function showMessage(text, type = "error") {
+
             message.textContent = text;
-            message.className = type === "success" ? "success" : "";
+
+            message.className =
+                type === "success" ? "success" : "";
+
             message.style.display = "block";
+
         }
 
+        /* LOGIN */
+
         loginForm.addEventListener("submit", async function(event) {
+
             event.preventDefault();
 
             const email = emailInput.value.trim();
             const password = passwordInput.value;
 
             if (!email || !password) {
-                showMessage("Please enter both your email address and password.");
+
+                showMessage(
+                    "Please enter both your email address and password."
+                );
+
                 return;
+
             }
 
             loginButton.disabled = true;
             loginButton.textContent = "Signing in...";
+
             message.style.display = "none";
 
             try {
-                const { error } = await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
+
+                const { error } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email: email,
+                        password: password
+
+                    });
 
                 if (error) {
+
                     let friendlyMessage = error.message;
 
-                    if (error.message.toLowerCase().includes("invalid login credentials")) {
-                        friendlyMessage = "The email address or password is incorrect. Please check your details and try again.";
+                    if (
+                        error.message.toLowerCase().includes(
+                            "invalid login credentials"
+                        )
+                    ) {
+
+                        friendlyMessage =
+                            "The email address or password is incorrect. Please check your details and try again.";
+
                     }
 
                     showMessage(friendlyMessage);
+
                     loginButton.disabled = false;
                     loginButton.textContent = "Sign In";
+
                     return;
+
                 }
 
-                showMessage("Sign in successful. Redirecting...", "success");
+                showMessage(
+                    "Sign in successful. Redirecting...",
+                    "success"
+                );
+
                 loginButton.textContent = "Please wait...";
 
                 window.location.href = "dashboard.html";
 
             } catch (error) {
-                showMessage("Something went wrong. Please check your connection and try again.");
+
+                showMessage(
+                    "Something went wrong. Please check your connection and try again."
+                );
+
                 loginButton.disabled = false;
                 loginButton.textContent = "Sign In";
+
             }
+
         });
+
+        /* CURRENT YEAR */
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
     </script>
 
 </body>
