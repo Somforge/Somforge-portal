@@ -1,310 +1,907 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Registration | SOMFORGE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102B46">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Create Your Account | SOMFORGE</title>
 
-<style>
-:root {
-    --navy: #102b3f;
-    --blue: #176078;
-    --teal: #168b91;
-    --gold: #e5b94c;
-    --light: #f4f7fa;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body {
-    font-family: Arial, sans-serif;
-    background: var(--light);
-    color: #253746;
-    min-height: 100vh;
-}
-
-header {
-    background: var(--navy);
-    padding: 20px 8%;
-}
-
-.logo {
-    color: white;
-    font-size: 27px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.logo span {
-    color: var(--gold);
-}
-
-.container {
-    max-width: 480px;
-    margin: 55px auto;
-    padding: 40px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-}
-
-h1 {
-    color: var(--navy);
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #71808c;
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin: 17px 0 7px;
-    color: var(--navy);
-}
-
-input, select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd5dc;
-    border-radius: 5px;
-    font-size: 15px;
-}
-
-input:focus, select:focus {
-    outline: 2px solid var(--teal);
-    border-color: var(--teal);
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 25px;
-    background: var(--teal);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    background: var(--blue);
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.message {
-    margin-top: 18px;
-    padding: 12px;
-    border-radius: 5px;
-    display: none;
-    font-size: 14px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-.success {
-    display: block;
-    background: #e5f5eb;
-    color: #176b38;
-}
-
-.error {
-    display: block;
-    background: #fdeaea;
-    color: #a32626;
-}
-
-.login {
-    text-align: center;
-    margin-top: 22px;
-    font-size: 14px;
-}
-
-.login a {
-    color: var(--teal);
-    font-weight: bold;
-    text-decoration: none;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #71808c;
-    font-size: 13px;
-}
-
-@media(max-width: 550px) {
-    .container {
-        margin: 25px 15px;
-        padding: 28px 22px;
+  <style>
+    :root {
+      --navy: #102B46;
+      --navy-light: #193D5C;
+      --teal: #168C91;
+      --gold: #BD9857;
+      --text: #263746;
+      --muted: #778592;
+      --border: #DFE6EB;
+      --background: #F5F7F8;
+      --white: #FFFFFF;
+      --success: #16835D;
+      --danger: #C44747;
     }
-}
-</style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--background);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .topbar {
+      height: 82px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border-bottom: 1px solid #E9EDF0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand-symbol {
+      width: 37px;
+      height: 37px;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      line-height: 1;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .topbar-text {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .topbar-text a {
+      color: var(--navy);
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 20px;
+    }
+
+    .register-layout {
+      width: 100%;
+      max-width: 1060px;
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 18px 55px rgba(16, 43, 70, 0.08);
+      border: 1px solid #E8EDF0;
+    }
+
+    /* LEFT PANEL */
+
+    .intro-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      color: var(--white);
+      padding: 58px 43px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .intro-panel::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 50%;
+      right: -190px;
+      top: 100px;
+    }
+
+    .intro-panel::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(189,152,87,0.35);
+      border-radius: 50%;
+      right: -105px;
+      top: 165px;
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 1;
+      margin-top: 55px;
+    }
+
+    .intro-line {
+      width: 43px;
+      height: 3px;
+      background: var(--gold);
+      margin-bottom: 25px;
+    }
+
+    .intro-content h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(30px, 3vw, 39px);
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      margin-bottom: 20px;
+    }
+
+    .intro-content h1 span {
+      color: #D5B77D;
+    }
+
+    .intro-content p {
+      max-width: 340px;
+      color: rgba(255,255,255,0.76);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .intro-footer {
+      position: relative;
+      z-index: 1;
+      color: rgba(255,255,255,0.55);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    /* FORM PANEL */
+
+    .form-panel {
+      padding: 48px 55px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-heading {
+      margin-bottom: 28px;
+    }
+
+    .form-heading .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .form-heading h2 {
+      font-family: 'Manrope', sans-serif;
+      color: var(--navy);
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 8px;
+    }
+
+    .form-heading p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #344654;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      height: 47px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 14px;
+      outline: none;
+      background: #FFFFFF;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input::placeholder {
+      color: #A4AFB8;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(22,140,145,0.09);
+    }
+
+    .password-input {
+      padding-right: 49px !important;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #87949E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+    }
+
+    .password-toggle:hover {
+      color: var(--navy);
+    }
+
+    .password-toggle svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .password-hint {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .password-strength {
+      height: 3px;
+      width: 100%;
+      background: #E9EEF1;
+      border-radius: 5px;
+      margin-top: 9px;
+      overflow: hidden;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      background: var(--danger);
+      transition: width 0.25s, background 0.25s;
+    }
+
+    .strength-label {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .message {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 17px;
+    }
+
+    .message.error {
+      display: block;
+      color: #A63232;
+      background: #FFF0F0;
+      border: 1px solid #F5D1D1;
+    }
+
+    .message.success {
+      display: block;
+      color: #176B4D;
+      background: #ECF8F2;
+      border: 1px solid #C8E9D9;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 49px;
+      border: none;
+      border-radius: 6px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .submit-btn:hover {
+      background: var(--navy-light);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .form-bottom {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .form-bottom a {
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    .terms {
+      margin-top: 17px;
+      color: #929DA6;
+      font-size: 10px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .page-footer {
+      text-align: center;
+      padding: 18px;
+      color: #9AA5AD;
+      font-size: 10px;
+    }
+
+    @media (max-width: 800px) {
+      .topbar {
+        height: 72px;
+        padding: 0 5%;
+      }
+
+      .register-layout {
+        max-width: 520px;
+        grid-template-columns: 1fr;
+      }
+
+      .intro-panel {
+        min-height: 210px;
+        padding: 30px 32px;
+      }
+
+      .intro-content {
+        margin-top: 25px;
+      }
+
+      .intro-content h1 {
+        font-size: 27px;
+        margin-bottom: 10px;
+      }
+
+      .intro-content p {
+        font-size: 12px;
+        max-width: 390px;
+      }
+
+      .intro-footer {
+        display: none;
+      }
+
+      .intro-panel::before {
+        top: -180px;
+        right: -80px;
+      }
+
+      .intro-panel::after {
+        top: -130px;
+        right: -25px;
+      }
+
+      .form-panel {
+        padding: 38px 35px 42px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 25px 13px;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .brand-symbol {
+        width: 32px;
+        height: 32px;
+      }
+
+      .brand-name {
+        font-size: 20px;
+      }
+
+      .topbar-text {
+        font-size: 11px;
+      }
+
+      .intro-panel {
+        min-height: 185px;
+        padding: 25px 24px;
+      }
+
+      .intro-content {
+        margin-top: 15px;
+      }
+
+      .intro-content h1 {
+        font-size: 25px;
+      }
+
+      .form-panel {
+        padding: 32px 23px 35px;
+      }
+
+      .form-heading h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">SOM<span>FORGE</span></div>
-</header>
+  <header class="topbar">
+    <a href="index.html" class="brand" aria-label="SOMFORGE Home">
+      <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#102B46" stroke-width="2.4"/>
+        <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">SOM<span>FORGE</span></span>
+    </a>
 
-<div class="container">
-
-    <h1>Create Your Account</h1>
-
-    <p class="subtitle">
-        Join SOMFORGE and begin your learning journey.
-    </p>
-
-    <form id="registrationForm">
-
-        <label for="fullName">Full Name</label>
-        <input type="text" id="fullName"
-               placeholder="Enter your full name" required>
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email"
-               placeholder="Enter your email address" required>
-
-        <label for="year">Academic Year</label>
-        <select id="year" required>
-            <option value="">Select your academic year</option>
-            <option value="Year 2">MBChB Year 2</option>
-            <option value="Year 3">MBChB Year 3</option>
-        </select>
-
-        <label for="password">Password</label>
-        <input type="password" id="password"
-               placeholder="At least 8 characters"
-               minlength="8" required>
-
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword"
-               placeholder="Enter your password again" required>
-
-        <button type="submit" id="submitButton">
-            Create Account
-        </button>
-
-    </form>
-
-    <div id="message" class="message"></div>
-
-    <div class="login">
-        Already registered?
-        <a href="login.html">Sign in</a>
+    <div class="topbar-text">
+      Already registered?
+      <a href="login.html">Sign in</a>
     </div>
+  </header>
 
-</div>
+  <main>
+    <div class="register-layout">
 
-<footer>
-    © 2026 SOMFORGE. Forging the Doctors of Tomorrow.
-</footer>
+      <section class="intro-panel">
+        <div class="brand">
+          <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
+            <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="brand-name" style="color:#FFFFFF;">SOM<span>FORGE</span></span>
+        </div>
 
-<script>
-const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+        <div class="intro-content">
+          <div class="intro-line"></div>
+          <h1>Your medical learning, <span>organised.</span></h1>
+          <p>
+            Create your student account to access your learning materials,
+            academic resources and online learning activities.
+          </p>
+        </div>
 
-// Replace this placeholder with your actual Supabase Publishable Key.
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmZ2F5d2R0eHBhanNxaXRhc3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwMjA5ODAsImV4cCI6MjEwOTU5Njk4MH0.BAB1xZxEi9mXfeniBnU78X8chGo_8u99xe3nYErUOeg";
+        <div class="intro-footer">
+          SOMFORGE Medical Learning Portal<br>
+          Copperbelt University
+        </div>
+      </section>
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+      <section class="form-panel">
 
-const form = document.getElementById("registrationForm");
-const message = document.getElementById("message");
-const button = document.getElementById("submitButton");
+        <div class="form-heading">
+          <div class="eyebrow">Student registration</div>
+          <h2>Create your account</h2>
+          <p>Enter your details below to register for the SOMFORGE learning portal.</p>
+        </div>
 
-function showMessage(text, type) {
-    message.textContent = text;
-    message.className = "message " + type;
-    message.style.display = "block";
-}
+        <div id="message" class="message" role="alert" aria-live="polite"></div>
 
-form.addEventListener("submit", async function(event) {
-    event.preventDefault();
+        <form id="registerForm">
 
-    message.style.display = "none";
+          <div class="form-group">
+            <label for="fullName">Full name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter your full name"
+              maxlength="100"
+              autocomplete="name"
+              required
+            >
+          </div>
 
-    const fullName = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const year = document.getElementById("year").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email address"
+              autocomplete="email"
+              required
+            >
+          </div>
 
-    if (SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_PUBLISHABLE_KEY_HERE") {
-        showMessage("The registration page has not been connected to Supabase yet. Please configure its Publishable Key.", "error");
-        return;
+          <div class="form-group">
+            <label for="yearLevel">Academic year</label>
+            <select id="yearLevel" name="yearLevel" required>
+              <option value="">Select your academic year</option>
+              <option value="Year 2">Year 2 MBChB</option>
+              <option value="Year 3">Year 3 MBChB</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Create password</label>
+
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="password-input"
+                placeholder="Create a password"
+                minlength="8"
+                maxlength="72"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="password"
+                aria-label="Show password"
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="password-strength">
+              <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <span class="strength-label" id="strengthLabel">Use at least 8 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm password</label>
+
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                class="password-input"
+                placeholder="Enter your password again"
+                minlength="8"
+                maxlength="72"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="confirmPassword"
+                aria-label="Show password"
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span id="buttonText">Create account</span>
+            <span class="spinner" id="spinner"></span>
+          </button>
+
+        </form>
+
+        <p class="terms">
+          By creating an account, you confirm that the registration details
+          you have provided are accurate.
+        </p>
+
+        <div class="form-bottom">
+          Already have an account?
+          <a href="login.html">Sign in here</a>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    &copy; <span id="currentYear"></span> SOMFORGE. All rights reserved.
+  </footer>
+
+  <script>
+    // SUPABASE CONFIGURATION
+    const SUPABASE_URL = "https://dfgaywdtxpajsqitaszy.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_qbKofq4A0gD4-b7X4Hy6ew_ptyv1lyt";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const form = document.getElementById("registerForm");
+    const messageBox = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const buttonText = document.getElementById("buttonText");
+    const spinner = document.getElementById("spinner");
+
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    // PASSWORD VISIBILITY
+    document.querySelectorAll(".password-toggle").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        const showing = input.type === "text";
+
+        input.type = showing ? "password" : "text";
+        button.setAttribute("aria-pressed", String(!showing));
+        button.setAttribute(
+          "aria-label",
+          showing ? "Show password" : "Hide password"
+        );
+
+        button.innerHTML = showing
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+               <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+               <circle cx="12" cy="12" r="3"/>
+             </svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+               <path d="M3 3l18 18"/>
+               <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+               <path d="M9.9 5.2A11.5 11.5 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.1 3.9"/>
+               <path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.1 0 2.1-.2 3-.5"/>
+             </svg>`;
+      });
+    });
+
+    // PASSWORD STRENGTH INDICATOR
+    const passwordInput = document.getElementById("password");
+    const strengthBar = document.getElementById("strengthBar");
+    const strengthLabel = document.getElementById("strengthLabel");
+
+    passwordInput.addEventListener("input", () => {
+      const password = passwordInput.value;
+      let score = 0;
+
+      if (password.length >= 8) score++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      const levels = [
+        { width: "0%", color: "#E9EEF1", text: "Use at least 8 characters." },
+        { width: "25%", color: "#C44747", text: "Weak password" },
+        { width: "50%", color: "#D49B3D", text: "Fair password" },
+        { width: "75%", color: "#168C91", text: "Good password" },
+        { width: "100%", color: "#16835D", text: "Strong password" }
+      ];
+
+      const level = password.length === 0
+        ? levels[0]
+        : levels[Math.max(1, score)];
+
+      strengthBar.style.width = level.width;
+      strengthBar.style.background = level.color;
+      strengthLabel.textContent = level.text;
+    });
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = "message " + type;
+      messageBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
-    if (password.length < 8) {
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      spinner.style.display = isLoading ? "block" : "none";
+      buttonText.textContent = isLoading
+        ? "Creating account..."
+        : "Create account";
+    }
+
+    // CHECK FOR AN EXISTING SESSION
+    async function checkExistingSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+
+      if (session) {
+        window.location.replace("dashboard.html");
+      }
+    }
+
+    checkExistingSession();
+
+    // REGISTRATION
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      messageBox.className = "message";
+      messageBox.textContent = "";
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const yearLevel = document.getElementById("yearLevel").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+      if (fullName.length < 2) {
+        showMessage("Please enter your full name.", "error");
+        return;
+      }
+
+      if (!yearLevel) {
+        showMessage("Please select your academic year.", "error");
+        return;
+      }
+
+      if (password.length < 8) {
         showMessage("Your password must contain at least 8 characters.", "error");
         return;
-    }
+      }
 
-    if (password !== confirmPassword) {
-        showMessage("Your passwords do not match.", "error");
+      if (password.length > 72) {
+        showMessage("Please use a password of no more than 72 characters.", "error");
         return;
-    }
+      }
 
-    button.disabled = true;
-    button.textContent = "Creating Account...";
+      if (password !== confirmPassword) {
+        showMessage("The passwords do not match. Please check and try again.", "error");
+        return;
+      }
 
-    try {
+      setLoading(true);
+
+      try {
         const { data, error } = await supabaseClient.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                emailRedirectTo: "https://somforge.github.io/Somforge-portal/",
-                data: {
-                    full_name: fullName,
-                    year_level: year
-                }
-            }
+          email: email,
+          password: password,
+          options: {
+            data: {
+              full_name: fullName,
+              year_level: yearLevel
+            },
+            emailRedirectTo:
+              "https://somforge.github.io/Somforge-portal/login.html"
+          }
         });
 
         if (error) {
-            throw error;
+          if (
+            error.message.toLowerCase().includes("already registered") ||
+            error.message.toLowerCase().includes("already exists")
+          ) {
+            throw new Error(
+              "An account with this email may already exist. Please sign in instead."
+            );
+          }
+
+          throw error;
         }
 
-        if (data.user && data.user.identities && data.user.identities.length === 0) {
-            showMessage("An account may already exist with this email address. Try signing in or resetting your password.", "error");
-            return;
+        if (data.session) {
+          showMessage(
+            "Your account has been created successfully. Redirecting you to the student portal...",
+            "success"
+          );
+
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1800);
+
+        } else {
+          showMessage(
+            "Your registration was successful. Please check your email for a verification link. After verifying your email, return here to sign in. Your account will require administrator approval before access is granted.",
+            "success"
+          );
+
+          form.reset();
+          strengthBar.style.width = "0%";
+          strengthLabel.textContent = "Use at least 8 characters.";
         }
+
+      } catch (error) {
+        console.error("Registration error:", error);
 
         showMessage(
-            "Your registration request was received. Please check your email for a verification link before signing in. Also check your spam folder.",
-            "success"
+          error.message || "Registration could not be completed. Please try again.",
+          "error"
         );
 
-        form.reset();
-
-    } catch (error) {
-        showMessage("Registration failed: " + error.message, "error");
-    } finally {
-        button.disabled = false;
-        button.textContent = "Create Account";
-    }
-});
-</script>
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
 
 </body>
 </html>
