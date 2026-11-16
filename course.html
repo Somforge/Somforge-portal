@@ -596,6 +596,7 @@ button {
     flex-shrink: 0;
     background: var(--navy);
     color: white;
+    border: none;
     border-radius: 4px;
     padding: 10px 15px;
     font-size: 12px;
@@ -605,6 +606,11 @@ button {
 
 .material-button:hover {
     background: var(--teal);
+}
+
+.material-button:disabled {
+    opacity: .6;
+    cursor: wait;
 }
 
 /* WRITTEN CONTENT */
@@ -935,8 +941,8 @@ button {
             <div class="eyebrow">COURSE LEARNING SPACE</div>
             <h1 id="pageTitle">Loading course...</h1>
             <p>
-                Access course materials, practice questions, assignments
-                and important course notifications.
+                Access course documents, past papers, quizzes, assignments
+                and course guidance in one place.
             </p>
         </section>
 
@@ -1053,36 +1059,44 @@ function getCourseCode(title, yearLevel) {
 /* CATEGORY SETTINGS */
 
 const CATEGORIES = {
+    course_document: {
+        title: "Course Documents",
+        description: "Lecture notes, handouts, reading materials and other course documents.",
+        icon: "▤",
+        accent: "#168C91",
+        tint: "#E3EFEC"
+    },
+
     past_paper: {
         title: "Past Papers",
-        description: "Previous examination papers and practice questions.",
-        icon: "▤",
+        description: "Previous examination papers and examination practice questions.",
+        icon: "▧",
         accent: "#B99558",
         tint: "#F3EBDD"
     },
 
     quiz: {
         title: "Quizzes",
-        description: "Test your understanding with practice quizzes.",
+        description: "Test your understanding with practice quizzes and assessments.",
         icon: "✎",
-        accent: "#168C91",
-        tint: "#E3EFEC"
+        accent: "#7186BD",
+        tint: "#E9ECF4"
     },
 
     assignment: {
         title: "Assignments",
         description: "Course assignments and academic activities.",
         icon: "▣",
-        accent: "#7186BD",
-        tint: "#E9ECF4"
-    },
-
-    notification: {
-        title: "Course Notifications",
-        description: "Important announcements and course updates.",
-        icon: "♧",
         accent: "#B66F7B",
         tint: "#F3E9EA"
+    },
+
+    course_guidance: {
+        title: "Course Guidance",
+        description: "Study strategies, recommended resources, important topics and examination guidance.",
+        icon: "◎",
+        accent: "#168C91",
+        tint: "#E3EFEC"
     }
 };
 
@@ -1216,6 +1230,8 @@ function renderCategories() {
     const grid = document.getElementById("categoryGrid");
 
     grid.replaceChildren();
+
+    /* Object.keys preserves the order defined in CATEGORIES. */
 
     const availableCategories = Object.keys(CATEGORIES).filter(category => {
         return currentMaterials.some(material =>
