@@ -547,6 +547,43 @@ td small{font-size:12px;line-height:1.5}
  .material-row{align-items:flex-start}
 }
 
+
+/* ADMIN APP NAVIGATION + PAGE SYSTEM */
+.nav-caption{padding:0 15px 8px;color:#8f9baa;font-size:10px;font-weight:800;letter-spacing:1.8px}
+.admin-nav a{gap:0}
+.admin-nav a::before{display:none}
+.admin-nav .nav-icon{display:inline-grid;place-items:center;width:22px;margin-right:13px;color:#d1b17b;font-size:17px}
+.admin-view{display:none}
+.admin-view.active-view{display:block;animation:adminFade .22s ease}
+@keyframes adminFade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.page-heading{margin:0 0 27px;padding:0 0 22px;border-bottom:1px solid var(--admin-line)}
+.page-heading h1{font:500 36px "Playfair Display",Georgia,serif;color:var(--admin-ink);margin:7px 0}
+.page-heading p{font-size:14px;color:var(--admin-muted);line-height:1.6}
+.overview-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:20px}
+.overview-panel h2{font:500 23px "Playfair Display",Georgia,serif;margin:9px 0 6px;color:var(--admin-ink)}
+.overview-panel>p{font-size:13px;line-height:1.7;color:var(--admin-muted)}
+.shortcut-list{display:grid;gap:8px;margin-top:19px}
+.shortcut-list button{display:flex;align-items:center;gap:13px;width:100%;padding:14px;border:1px solid var(--admin-line);border-radius:7px;background:#fff;text-align:left;cursor:pointer;color:var(--admin-ink);transition:.18s}
+.shortcut-list button:hover{border-color:#c5a166;background:#fcfaf6;transform:translateX(2px)}
+.shortcut-list button>span:first-child{display:grid;place-items:center;width:36px;height:36px;border-radius:7px;background:#f2ebdf;color:#896c3d;font-size:18px}
+.shortcut-list button>span:nth-child(2){display:grid;gap:4px;flex:1}
+.shortcut-list strong{font-size:13px}.shortcut-list small{font-size:11px;color:var(--admin-muted)}
+.shortcut-list button>b{font-size:20px;color:#9a8057}
+.overview-note{background:#f0ece3}
+.status-line{display:flex;align-items:center;gap:9px;margin:20px 0 13px;font-size:13px;font-weight:700;color:#35664a}
+.status-line i{width:8px;height:8px;border-radius:50%;background:#3d9b68;box-shadow:0 0 0 4px #dcecdf}
+.overview-note .small-note{padding-top:14px;border-top:1px solid #ddd5c7;font-size:12px}
+.subscription-help{margin-top:18px}
+@media(max-width:1100px){.overview-grid{grid-template-columns:1fr}}
+@media(max-width:760px){
+ .nav-caption{display:none}
+ .admin-nav{flex-wrap:nowrap}
+ .admin-nav a{display:flex;align-items:center}
+ .admin-nav .nav-icon{margin-right:7px}
+ .page-heading h1{font-size:30px}
+}
+@media(max-width:480px){.overview-panel{padding:17px 14px}.shortcut-list button{padding:11px}.shortcut-list small{line-height:1.4}}
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"></head>
 
@@ -559,10 +596,11 @@ td small{font-size:12px;line-height:1.5}
         <small>ADMIN</small>
     </a>
     <nav class="admin-nav" aria-label="Administration navigation">
-        <a class="active" href="#overview">Overview</a>
-        <a href="#students">Students</a>
-        <a href="#subscriptions">Subscriptions</a>
-        <a href="#content">Content</a>
+        <span class="nav-caption">WORKSPACE</span>
+        <a class="active" href="#overview" data-view="overview"><span class="nav-icon">⌂</span>Overview</a>
+        <a href="#students" data-view="students"><span class="nav-icon">♙</span>Students</a>
+        <a href="#subscriptions" data-view="subscriptions"><span class="nav-icon">▤</span>Subscriptions</a>
+        <a href="#content" data-view="content"><span class="nav-icon">▣</span>Learning library</a>
     </nav>
     <div class="admin-actions">
         <button class="admin-refresh" id="refreshBtn" type="button">Refresh data</button>
@@ -570,7 +608,7 @@ td small{font-size:12px;line-height:1.5}
     </div>
 </header>
 
-<div class="container" id="overview">
+<main class="container" id="adminWorkspace">
 
     <div id="loading">
         Checking administrator access...
@@ -578,6 +616,7 @@ td small{font-size:12px;line-height:1.5}
 
     <div id="adminContent">
 
+        <section class="admin-view active-view" id="view-overview" data-page="overview">
         <div class="welcome">
             <h1>Administration</h1>
             <p>Manage students, accounts and subscriptions.</p>
@@ -608,7 +647,29 @@ td small{font-size:12px;line-height:1.5}
             </div>
 
         </div>
+        <div class="overview-grid">
+            <section class="panel overview-panel">
+                <span class="panel-kicker">QUICK ACCESS</span>
+                <h2>Management shortcuts</h2>
+                <p>Go directly to the area you need to manage.</p>
+                <div class="shortcut-list">
+                    <button type="button" data-go="students"><span>♙</span><span><strong>Review students</strong><small>Approve accounts and manage access</small></span><b>→</b></button>
+                    <button type="button" data-go="subscriptions"><span>▤</span><span><strong>Manage subscriptions</strong><small>Review active, expired and suspended access</small></span><b>→</b></button>
+                    <button type="button" data-go="content"><span>▣</span><span><strong>Publish learning materials</strong><small>Add resources to the student library</small></span><b>→</b></button>
+                </div>
+            </section>
+            <section class="panel overview-panel overview-note">
+                <span class="panel-kicker">ADMINISTRATOR</span>
+                <h2>Workspace status</h2>
+                <p>Your administrator workspace is connected to the SOMFORGE learning portal.</p>
+                <div class="status-line"><i></i><span>Admin access verified</span></div>
+                <p class="small-note">Use the navigation to manage student accounts, subscriptions and course resources.</p>
+            </section>
+        </div>
+        </section>
 
+        <section class="admin-view" id="view-students" data-page="students">
+        <div class="page-heading"><span class="panel-kicker">PEOPLE</span><h1>Students</h1><p>Review registrations, approve accounts and manage student access.</p></div>
         <div class="panel" id="students">
 
             <div class="panel-heading">
@@ -648,24 +709,23 @@ td small{font-size:12px;line-height:1.5}
             </div>
 
         </div>
+        </section>
 
+        <section class="admin-view" id="view-subscriptions" data-page="subscriptions">
+        <div class="page-heading"><span class="panel-kicker">ACCESS CONTROL</span><h1>Subscriptions</h1><p>Monitor learning access and subscription periods.</p></div>
         <div class="panel" id="subscriptions">
 
             <div class="panel-heading">
-                <div><span class="panel-kicker">ACCESS CONTROL</span><h2>Subscription Information</h2></div>
-
+                <div><span class="panel-kicker">ACCESS CONTROL</span><h2>Subscription register</h2><p>Latest subscription records and their current status.</p></div>
+                <input type="search" id="subscriptionSearch" class="search" placeholder="Search subscriptions…">
             </div>
-
-            <p class="info-text">
-                Approve student accounts before activating subscriptions.
-                Choose 7, 14, 30 or 90 days when activating access.
-                Active subscriptions can be extended or suspended.
-                Expired and suspended subscriptions do not grant access.
-            </p>
-
-
+            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Start date</th><th>Expiry date</th><th>Status</th><th>Action</th></tr></thead><tbody id="subscriptionsTable"><tr><td colspan="5" class="empty">Loading subscriptions…</td></tr></tbody></table></div>
+            <p class="info-text subscription-help">Approve student accounts before activating subscriptions. From the Students page, choose 7, 14, 30 or 90 days when activating access. Active subscriptions can be extended or suspended.</p>
         </div>
+        </section>
 
+        <section class="admin-view" id="view-content" data-page="content">
+        <div class="page-heading"><span class="panel-kicker">LEARNING LIBRARY</span><h1>Learning library</h1><p>Publish and organise course resources for students.</p></div>
         <section class="panel" id="content">
             <div class="panel-heading">
                 <div><span class="panel-kicker">LEARNING LIBRARY</span><h2>Content Management</h2><p>Publish course resources and organise them by year, course, term and category.</p></div>
@@ -695,6 +755,7 @@ td small{font-size:12px;line-height:1.5}
                     <div id="materialsList" class="materials-list"><p class="empty">Loading resources…</p></div>
                 </div>
             </div>
+        </section>
         </section>
 
     </div>
@@ -971,6 +1032,30 @@ function updateStatistics() {
 
     document.getElementById("activeSubscriptions").textContent =
         activeCount;
+    renderSubscriptions();
+}
+
+/* SUBSCRIPTION REGISTER */
+function renderSubscriptions() {
+    const body = document.getElementById("subscriptionsTable");
+    if (!body) return;
+    const query = (document.getElementById("subscriptionSearch")?.value || "").trim().toLowerCase();
+    const rows = [...subscriptions].sort((a,b) => new Date(b.created_at || b.start_date) - new Date(a.created_at || a.start_date))
+        .filter(sub => {
+            const student = students.find(item => item.id === sub.student_id);
+            return [student?.full_name, student?.email, sub.status].join(" ").toLowerCase().includes(query);
+        });
+    if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="5" class="empty">No matching subscription records.</td></tr>';
+        return;
+    }
+    body.innerHTML = rows.map(sub => {
+        const student = students.find(item => item.id === sub.student_id);
+        const active = subscriptionIsActive(sub);
+        const status = active ? "Active" : sub.status === "suspended" ? "Suspended" : new Date(sub.end_date) <= new Date() ? "Expired" : (sub.status || "Inactive");
+        const cls = active ? "active" : status.toLowerCase() === "suspended" ? "suspended" : status.toLowerCase() === "expired" ? "expired" : "unknown";
+        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + escapeHTML(formatDate(sub.start_date)) + '</td><td>' + escapeHTML(formatDate(sub.end_date)) + '</td><td><span class="badge ' + cls + '">' + escapeHTML(status) + '</span></td><td>' + (active ? '<button class="btn btn-suspend" onclick="suspendSubscription(\'' + sub.id + '\')">Suspend</button>' : '<span class="info-text">—</span>') + '</td></tr>';
+    }).join("");
 }
 
 /* DISPLAY STUDENTS */
@@ -1460,6 +1545,26 @@ document.getElementById("materialForm").addEventListener("submit", publishLearni
 document.getElementById("materialYear").addEventListener("change", populateCourseOptions);
 document.getElementById("materialSearch").addEventListener("input", renderLearningMaterials);
 document.getElementById("refreshContentBtn").addEventListener("click", loadContentData);
+
+/* PAGE NAVIGATION */
+function showAdminView(view) {
+    document.querySelectorAll(".admin-view").forEach(section => section.classList.toggle("active-view", section.dataset.page === view));
+    document.querySelectorAll(".admin-nav a[data-view]").forEach(link => {
+        const active = link.dataset.view === view;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+    });
+    document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showAdminView(button.dataset.go), { once: true }));
+    history.replaceState(null, "", "#" + view);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+document.querySelectorAll(".admin-nav a[data-view]").forEach(link => link.addEventListener("click", event => {
+    event.preventDefault();
+    showAdminView(link.dataset.view);
+}));
+document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showAdminView(button.dataset.go)));
+document.getElementById("subscriptionSearch").addEventListener("input", renderSubscriptions);
 
 /* START APPLICATION */
 
