@@ -239,11 +239,23 @@ button, input { font: inherit; }
     color: #b42318;
 }
 
-.message {
-    font-size: 13px;
-    margin-top: 14px;
-    line-height: 1.5;
-}
+.message{font-size:13px;margin-top:14px;line-height:1.5}
+.package-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.package-card{border:1px solid var(--border);border-radius:8px;padding:16px;background:#fff}
+.package-card strong{display:block;font-family:'Manrope',sans-serif;font-size:21px;color:var(--navy)}
+.package-card span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.payment-details{background:#f7f9fb;border:1px solid var(--border);border-radius:8px;padding:16px;margin:16px 0}
+.payment-details p{margin:7px 0;font-size:13px}
+.payment-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.payment-form .form-group{margin:0}
+.payment-form input,.payment-form select{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:6px;background:white}
+.payment-form .full{grid-column:1/-1}
+.payment-history{width:100%;border-collapse:collapse;font-size:13px}
+.payment-history th,.payment-history td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border)}
+.payment-history th{color:var(--muted);font-weight:600}
+.payment-status{font-weight:700;text-transform:capitalize}
+.whatsapp-link{display:inline-block;margin-top:14px;color:#087f83;font-weight:700;text-decoration:none}
+@media(max-width:650px){.package-grid{grid-template-columns:1fr}.payment-form{grid-template-columns:1fr}.payment-form .full{grid-column:auto}.payment-history{min-width:560px}.payment-history-wrap{overflow-x:auto}}
 
 .error { color: #b42318; }
 .success { color: #167347; }
@@ -386,6 +398,33 @@ button, input { font: inherit; }
             </div>
         </section>
 
+        <section class="section" id="payment">
+            <h3>Subscription packages</h3>
+            <p style="font-size:13px;color:#718096;line-height:1.7;margin-top:-10px">Choose a package to access all courses available for your registered academic year.</p>
+            <div class="package-grid">
+                <div class="package-card"><strong>K120</strong><span>1 month · 30 days</span></div>
+                <div class="package-card"><strong>K320</strong><span>3 months · 90 days</span></div>
+                <div class="package-card"><strong>K550</strong><span>1 semester · 6 months</span></div>
+            </div>
+            <div class="payment-details">
+                <strong style="color:var(--navy)">Payment details</strong>
+                <p><b>MTN Mobile Money:</b> 0768744352 — Ethan Makasa</p>
+                <p><b>Airtel Money:</b> 0778463660 — Ethan Makasa</p>
+                <p><b>WhatsApp proof of payment:</b> 0768744352</p>
+                <p style="color:var(--muted)">Pay first, then submit your transaction reference. Send a screenshot of the successful payment to the WhatsApp number above. Access is activated only after administrator verification.</p>
+            </div>
+            <form id="paymentForm" class="payment-form">
+                <div class="form-group full"><label for="packageCode">Subscription package</label><select id="packageCode" required><option value="monthly">1 month — K120</option><option value="quarterly">3 months — K320</option><option value="semester">1 semester (6 months) — K550</option></select></div>
+                <div class="form-group"><label for="paymentMethod">Payment method</label><select id="paymentMethod" required><option value="mtn">MTN Mobile Money</option><option value="airtel">Airtel Money</option><option value="bank_transfer">Bank transfer</option></select></div>
+                <div class="form-group"><label for="senderPhone">Number used to pay (optional)</label><input id="senderPhone" type="tel" maxlength="25" placeholder="e.g. 076..."></div>
+                <div class="form-group full"><label for="transactionReference">Transaction reference</label><input id="transactionReference" type="text" maxlength="100" required placeholder="Enter the reference from your payment message"></div>
+                <div class="full"><button class="btn btn-primary" id="submitPayment" type="submit">Submit payment details</button><div id="paymentMessage" class="message" role="status"></div><a id="whatsappProofLink" class="whatsapp-link" href="#" target="_blank" rel="noopener" hidden>Open WhatsApp to send screenshot →</a></div>
+            </form>
+        </section>
+        <section class="section">
+            <h3>Payment history</h3>
+            <div class="payment-history-wrap"><table class="payment-history"><thead><tr><th>Date</th><th>Package</th><th>Amount</th><th>Method</th><th>Status</th><th>Admin note</th></tr></thead><tbody id="paymentHistory"><tr><td colspan="6">Loading payment history...</td></tr></tbody></table></div>
+        </section>
         <section class="section">
             <h3>Change password</h3>
 
@@ -425,6 +464,33 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
+
+
+const PAYMENT_PACKAGES={monthly:{amount_zmw:120,duration_days:30,label:"1 month"},quarterly:{amount_zmw:320,duration_days:90,label:"3 months"},semester:{amount_zmw:550,duration_days:180,label:"1 semester (6 months)"}};
+const WHATSAPP_NUMBER="260768744352";
+async function loadPaymentHistory(studentId){
+ const body=document.getElementById("paymentHistory");
+ const {data,error}=await supabaseClient.from("payment_submissions").select("id,package_code,amount_zmw,payment_method,status,admin_note,created_at").eq("student_id",studentId).order("created_at",{ascending:false});
+ if(error){body.innerHTML='<tr><td colspan="6">Payment history is temporarily unavailable.</td></tr>';return;}
+ if(!data?.length){body.innerHTML='<tr><td colspan="6">No payment submissions yet.</td></tr>';return;}
+ body.innerHTML=data.map(item=>{const pkg=PAYMENT_PACKAGES[item.package_code];const method=item.payment_method==="mtn"?"MTN Money":item.payment_method==="airtel"?"Airtel Money":"Bank transfer";return '<tr><td>'+formatDate(item.created_at)+'</td><td>'+(pkg?.label||item.package_code)+'</td><td>K'+item.amount_zmw+'</td><td>'+method+'</td><td><span class="payment-status">'+item.status+'</span></td><td>'+(item.admin_note||"—")+'</td></tr>';}).join("");
+}
+async function submitPaymentDetails(event){
+ event.preventDefault();
+ const message=document.getElementById("paymentMessage"),button=document.getElementById("submitPayment");
+ const code=document.getElementById("packageCode").value,pkg=PAYMENT_PACKAGES[code],method=document.getElementById("paymentMethod").value;
+ const reference=document.getElementById("transactionReference").value.trim(),senderPhone=document.getElementById("senderPhone").value.trim();
+ const {data:{user}}=await supabaseClient.auth.getUser();if(!user||!pkg||!reference)return;
+ button.disabled=true;message.className="message";message.textContent="Submitting payment details...";
+ const {error}=await supabaseClient.from("payment_submissions").insert({student_id:user.id,package_code:code,amount_zmw:pkg.amount_zmw,duration_days:pkg.duration_days,payment_method:method,sender_phone:senderPhone||null,transaction_reference:reference,screenshot_sent:false});
+ button.disabled=false;
+ if(error){message.textContent="We could not submit your details: "+error.message;message.classList.add("error");return;}
+ const methodLabel=method==="mtn"?"MTN Mobile Money":method==="airtel"?"Airtel Money":"Bank transfer";
+ const text="Hello Ethan, I have submitted a SOMFORGE subscription payment.\nPackage: "+pkg.label+"\nAmount: K"+pkg.amount_zmw+"\nMethod: "+methodLabel+"\nTransaction reference: "+reference+"\nI am sending the payment screenshot here for verification.";
+ const wa=document.getElementById("whatsappProofLink");wa.href="https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(text);wa.hidden=false;
+ message.textContent="Payment details submitted. Open WhatsApp and send the screenshot of your successful payment. Access remains pending until verified.";message.classList.add("success");
+ document.getElementById("paymentForm").reset();await loadPaymentHistory(user.id);
+}
 
 function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("open");
@@ -488,6 +554,8 @@ async function loadAccount() {
         profile.full_name || "Student";
 
     setStatus("accountStatus", profile.account_status);
+    await loadPaymentHistory(user.id);
+    document.getElementById("paymentForm").addEventListener("submit", submitPaymentDetails);
 
     const { data: subscriptions, error: subscriptionError } =
         await supabaseClient
