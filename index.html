@@ -3,244 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#102b46">
-  <meta name="description" content="SOMFORGE is a medical learning platform supporting students through structured academic resources, guided learning and collaborative study.">
+  <meta name="theme-color" content="#081d30">
+  <meta name="description" content="SOMFORGE is a medical learning initiative supporting students through academic resources, focused study and the student learning portal.">
   <title>SOMFORGE | Forging the doctors of tomorrow</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--navy:#102b46;--navy-deep:#091d31;--navy-mid:#1b405f;--gold:#bd9857;--gold-pale:#e5cca0;--teal:#79b7b2;--ink:#203448;--muted:#68798a;--line:#e5ebef;--paper:#f6f8fa;--white:#fff;--shadow:0 22px 60px rgba(10,29,49,.10)}
+    :root{--navy:#081d30;--navy-2:#102b43;--blue:#2876d7;--cyan:#21c4d5;--ink:#172c3d;--muted:#637382;--line:#e4eaee;--pale:#f4f7f9;--white:#fff;--max:1160px}
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:90px}
-    body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.7}
+    html{scroll-behavior:smooth;scroll-padding-top:88px}
+    body{margin:0;color:var(--ink);background:#fff;font-family:"DM Sans",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
     a{color:inherit;text-decoration:none}
     button{font:inherit}
-    .container{width:min(1160px,90%);margin:auto}
-    .site-header{height:82px;position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(229,235,239,.9)}
-    .nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:28px}
-    .brand{display:inline-flex;align-items:center;gap:10px;flex-shrink:0}
-    .brand-mark{width:39px;height:39px}
-    .brand-name{font-family:Manrope,sans-serif;font-weight:800;font-size:22px;letter-spacing:.6px;color:var(--navy);line-height:1}
-    .brand-name span{color:var(--gold)}
-    .nav-links{display:flex;align-items:center;gap:32px;margin-left:auto}
-    .nav-links a{font-size:13px;font-weight:600;color:#596a79;transition:color .2s}
-    .nav-links a:hover{color:var(--gold)}
-    .nav-actions{display:flex;align-items:center;gap:20px}
-    .login-link{font-size:13px;font-weight:700;color:var(--navy)}
-    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 20px;border:1px solid transparent;border-radius:4px;font-size:13px;font-weight:700;transition:transform .2s,background .2s,border-color .2s;cursor:pointer}
-    .button:hover{transform:translateY(-2px)}
-    .button-gold{background:var(--gold);color:var(--navy-deep)}
-    .button-gold:hover{background:var(--gold-pale)}
-    .button-outline{border-color:rgba(255,255,255,.35);color:white;background:transparent}
-    .button-outline:hover{background:rgba(255,255,255,.08)}
-    .button-navy{background:var(--navy);color:white}
-    .button-navy:hover{background:var(--navy-mid)}
-    .menu-toggle{display:none;background:none;border:1px solid var(--line);border-radius:4px;padding:9px 12px;color:var(--navy);font-weight:700}
-    .hero{position:relative;overflow:hidden;background:var(--navy-deep);color:white}
-    .hero:before{content:"";position:absolute;width:680px;height:680px;border:1px solid rgba(255,255,255,.07);border-radius:50%;right:-220px;top:-360px}
-    .hero:after{content:"";position:absolute;width:460px;height:460px;border:1px solid rgba(189,152,87,.18);border-radius:50%;right:-110px;top:-250px}
-    .hero-inner{position:relative;z-index:1;min-height:590px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:65px;padding-top:76px;padding-bottom:76px}
-    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--gold-pale);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
-    .eyebrow:before{content:"";width:30px;height:1px;background:var(--gold)}
-    h1,h2,h3,p{margin-top:0}
-    h1,h2,h3{font-family:Manrope,sans-serif}
-    h1{font-size:clamp(42px,5.2vw,66px);line-height:1.12;letter-spacing:-2.4px;margin-bottom:24px;max-width:700px}
-    h1 span{color:var(--gold-pale)}
-    .hero-copy{max-width:560px;color:#cbd5df;font-size:15px;line-height:1.95;margin-bottom:32px}
-    .hero-actions{display:flex;gap:13px;flex-wrap:wrap}
-    .hero-note{margin-top:27px;color:#aebdca;font-size:12px}
-    .hero-note strong{color:#fff;font-weight:600}
-    .hero-visual{position:relative;min-height:360px;display:flex;align-items:center;justify-content:center}
-    .orbit{position:absolute;width:320px;height:320px;border:1px solid rgba(255,255,255,.13);border-radius:50%}
-    .orbit:before,.orbit:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.09);border-radius:50%;inset:28px}
-    .orbit:after{inset:62px}
-    .crest{position:relative;width:176px;height:176px;border:1px solid rgba(229,204,160,.65);border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.015));box-shadow:0 0 0 16px rgba(255,255,255,.025),0 0 70px rgba(0,0,0,.18)}
-    .crest svg{width:82px;height:82px}
-    .floating-card{position:absolute;background:#fff;color:var(--navy);padding:16px 18px;box-shadow:var(--shadow);border-radius:5px;min-width:180px}
-    .floating-card small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700;margin-bottom:4px}
-    .floating-card strong{font-family:Manrope,sans-serif;font-size:15px}
-    .card-top{top:32px;right:-5px}
-    .card-bottom{bottom:25px;left:-8px}
-    .mini-mark{display:inline-grid;place-items:center;width:26px;height:26px;background:#f3eadb;color:#86652e;border-radius:50%;margin-right:7px;font-size:13px}
-    .trust-strip{border-bottom:1px solid var(--line);background:#fff}
-    .trust-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0}
-    .trust-item{display:flex;align-items:center;gap:11px;color:#5d6e7d;font-size:12px;font-weight:600}
-    .trust-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#f4f6f7;color:var(--navy);font-size:15px}
-    .section{padding:94px 0}
-    .section-soft{background:var(--paper)}
-    .section-heading{max-width:650px;margin-bottom:42px}
-    .section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;color:#a47d3e;margin-bottom:13px}
-    h2{font-size:clamp(29px,3.4vw,40px);line-height:1.25;letter-spacing:-1.2px;color:var(--navy);margin-bottom:15px}
-    .section-intro{font-size:14px;color:var(--muted);line-height:1.9;max-width:590px;margin-bottom:0}
-    .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:start}
-    .about-copy{color:var(--muted);font-size:14px;line-height:2}
-    .about-copy p:last-child{margin-bottom:0}
-    .values{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-    .value-card{padding:25px 23px;border:1px solid var(--line);background:#fff;min-height:190px}
-    .value-number{font-family:Manrope,sans-serif;color:var(--gold);font-size:12px;font-weight:800;margin-bottom:21px}
-    .value-card h3{font-size:16px;color:var(--navy);margin-bottom:9px}
-    .value-card p{font-size:12px;line-height:1.8;color:var(--muted);margin:0}
-    .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .path-card{background:#fff;border:1px solid var(--line);padding:29px;transition:transform .2s,box-shadow .2s}
-    .path-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-    .path-icon{width:44px;height:44px;display:grid;place-items:center;background:#f3eadb;color:#8a682f;border-radius:50%;font-size:19px;margin-bottom:23px}
-    .path-card h3{font-size:17px;color:var(--navy);margin-bottom:10px}
-    .path-card p{font-size:13px;line-height:1.85;color:var(--muted);margin:0}
-    .portal-panel{background:var(--navy);color:#fff;padding:54px 58px;display:flex;align-items:center;justify-content:space-between;gap:35px;position:relative;overflow:hidden}
-    .portal-panel:after{content:"";position:absolute;width:300px;height:300px;border:1px solid rgba(255,255,255,.08);border-radius:50%;right:16%;top:-210px}
-    .portal-panel>*{position:relative;z-index:1}
-    .portal-panel h2{color:#fff;font-size:30px;margin-bottom:10px}
-    .portal-panel p{color:#c3cfda;font-size:13px;margin:0}
-    .portal-panel .button{flex-shrink:0}
-    .footer{background:#071726;color:white;padding:48px 0 25px}
-    .footer-top{display:flex;justify-content:space-between;gap:40px;padding-bottom:35px}
-    .footer .brand-name{color:#fff}
-    .footer-about{max-width:330px;color:#aab8c5;font-size:12px;line-height:1.9;margin-top:17px}
-    .footer-links{display:flex;gap:65px}
-    .footer-group strong{display:block;color:#fff;font-size:12px;margin-bottom:15px}
-    .footer-group a{display:block;color:#aab8c5;font-size:12px;margin:9px 0}
-    .footer-group a:hover{color:var(--gold-pale)}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;gap:20px;color:#8fa0af;font-size:11px}
-    :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-    @media(max-width:900px){.hero-inner{grid-template-columns:1fr .7fr;gap:25px}.hero-visual{transform:scale(.85)}.nav-links{gap:18px}.about-grid{gap:45px}}
-    @media(max-width:720px){
-      .site-header{height:72px}.menu-toggle{display:block}.nav-links,.nav-actions{display:none}.nav.open{position:relative}.nav.open .nav-links{display:flex;position:absolute;top:71px;left:-5.5%;right:-5.5%;background:#fff;padding:22px 5%;align-items:flex-start;flex-direction:column;border-bottom:1px solid var(--line);box-shadow:0 18px 25px rgba(0,0,0,.08);gap:17px}.nav.open .nav-actions{display:flex;position:absolute;top:calc(71px + 206px);left:-5.5%;right:-5.5%;background:#fff;padding:16px 5% 23px;border-bottom:1px solid var(--line)}
-      .hero-inner{display:block;min-height:auto;padding-top:76px;padding-bottom:68px}.hero-visual{display:none}h1{font-size:clamp(40px,11vw,57px)}.trust-inner{display:grid;grid-template-columns:1fr 1fr;gap:17px}.section{padding:70px 0}.about-grid{grid-template-columns:1fr;gap:20px}.values,.path-grid{grid-template-columns:1fr}.value-card{min-height:auto}.portal-panel{padding:36px 28px;align-items:flex-start;flex-direction:column}.portal-panel h2{font-size:26px}.footer-top{flex-direction:column}.footer-links{gap:45px}.footer-bottom{flex-direction:column;gap:7px}
+    .container{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+    .header{height:82px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+    .nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:30px}
+    .brand{display:inline-flex;align-items:center;gap:11px;min-width:0}
+    .brand-mark{width:43px;height:43px;display:block;flex:none}
+    .brand-copy{display:flex;flex-direction:column;line-height:1}
+    .brand-name{font:800 21px/1 "Manrope",sans-serif;letter-spacing:1.15px;color:var(--navy)}
+    .brand-name span{color:var(--blue)}
+    .brand-tag{font-size:8px;letter-spacing:1.25px;font-weight:700;color:#758492;margin-top:6px;text-transform:uppercase}
+    .nav-links{display:flex;align-items:center;gap:34px;margin-left:auto}
+    .nav-links a,.sign-in{font-size:13px;font-weight:600;color:#526474;transition:color .18s}
+    .nav-links a:hover,.sign-in:hover{color:var(--blue)}
+    .nav-actions{display:flex;align-items:center;gap:22px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 21px;border-radius:4px;font-size:13px;font-weight:700;transition:background .18s,border-color .18s,transform .18s}
+    .button:hover{transform:translateY(-1px)}
+    .button-primary{background:var(--blue);color:#fff}
+    .button-primary:hover{background:#1e63b8}
+    .button-light{border:1px solid rgba(255,255,255,.38);color:#fff}
+    .button-light:hover{background:rgba(255,255,255,.08)}
+    .menu-toggle{display:none;border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:4px;padding:9px 12px;font-size:13px;font-weight:700}
+    .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;width:620px;height:620px;border:1px solid rgba(33,196,213,.13);border-radius:50%;right:-185px;top:-315px}
+    .hero:after{content:"";position:absolute;width:440px;height:440px;border:1px solid rgba(255,255,255,.07);border-radius:50%;right:-95px;top:-225px}
+    .hero-inner{min-height:570px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:55px;padding-block:76px;position:relative;z-index:1}
+    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
+    .eyebrow:before{content:"";height:1px;width:28px;background:var(--cyan)}
+    h1,h2,h3{font-family:"Manrope",sans-serif}
+    h1{font-size:clamp(43px,5.1vw,65px);line-height:1.12;letter-spacing:-2.6px;font-weight:700;margin:0 0 23px;max-width:680px}
+    h1 span{color:var(--cyan)}
+    .hero-copy{max-width:540px;color:#c3d0dc;font-size:15px;line-height:1.9;margin:0 0 30px}
+    .hero-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+    .hero-note{font-size:11px;color:#9fb0bf;margin:24px 0 0;letter-spacing:.15px}
+    .hero-emblem{min-height:360px;display:grid;place-items:center;position:relative}
+    .emblem-ring{width:min(340px,80%);aspect-ratio:1;border:1px solid rgba(33,196,213,.28);border-radius:50%;display:grid;place-items:center;position:relative}
+    .emblem-ring:before,.emblem-ring:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.08);border-radius:50%}
+    .emblem-ring:before{inset:27px}.emblem-ring:after{inset:58px}
+    .emblem-core{width:176px;height:176px;display:grid;place-items:center;position:relative;z-index:1;background:rgba(255,255,255,.035);border:1px solid rgba(33,196,213,.4);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);box-shadow:0 0 55px rgba(33,196,213,.09)}
+    .emblem-core svg{width:104px;height:104px}
+    .hero-caption{position:absolute;bottom:14px;right:0;color:#9fb0bf;font-size:10px;letter-spacing:2px;text-transform:uppercase}
+    .intro{padding:83px 0 78px}
+    .intro-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:100px;align-items:start}
+    .section-kicker{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;margin:0 0 14px}
+    h2{font-size:clamp(29px,3.3vw,39px);line-height:1.25;letter-spacing:-1.2px;color:var(--navy);margin:0}
+    .intro-copy{font-size:14px;color:var(--muted);line-height:1.95;margin:3px 0 0;max-width:650px}
+    .learning{background:var(--pale);padding:76px 0 82px}
+    .learning-head{max-width:610px;margin-bottom:35px}
+    .learning-head h2{margin-bottom:12px}
+    .learning-head p{font-size:14px;color:var(--muted);margin:0}
+    .learning-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #dce4e9;border-bottom:1px solid #dce4e9}
+    .learning-item{padding:27px 28px 25px 0}
+    .learning-item+.learning-item{border-left:1px solid #dce4e9;padding-left:28px}
+    .item-index{font-size:10px;color:var(--blue);font-weight:800;letter-spacing:1.4px;margin-bottom:17px}
+    .learning-item h3{font-size:16px;color:var(--navy);margin:0 0 8px}
+    .learning-item p{font-size:12px;line-height:1.85;color:var(--muted);margin:0;max-width:290px}
+    .portal{padding:76px 0}
+    .portal-panel{background:var(--navy);padding:42px 48px;display:flex;align-items:center;justify-content:space-between;gap:30px;color:#fff}
+    .portal-panel .section-kicker{color:var(--cyan);margin-bottom:10px}
+    .portal-panel h2{font-size:clamp(25px,3vw,32px);color:#fff;margin-bottom:8px}
+    .portal-panel p{font-size:13px;color:#b9c8d5;margin:0}
+    .portal-panel .button{flex:none}
+    .footer{background:#061625;color:#fff;padding:36px 0 22px}
+    .footer-top{display:flex;align-items:flex-start;justify-content:space-between;gap:35px;padding-bottom:28px}
+    .footer .brand-name{color:#fff}.footer .brand-tag{color:#91a3b3}
+    .footer-about{font-size:11px;line-height:1.8;color:#9eafbd;max-width:350px;margin:14px 0 0}
+    .footer-links{display:flex;gap:60px}
+    .footer-group strong{font-size:11px;display:block;margin-bottom:11px;color:#fff}
+    .footer-group a{display:block;font-size:11px;color:#a7b6c3;margin:8px 0}
+    .footer-group a:hover{color:var(--cyan)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:17px;display:flex;justify-content:space-between;gap:15px;color:#8294a4;font-size:10px}
+    :focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+    @media(max-width:850px){.nav-links{gap:19px}.hero-inner{gap:20px}.intro-grid{gap:50px}.hero-emblem{transform:scale(.9)}}
+    @media(max-width:700px){
+      .container{width:min(var(--max),calc(100% - 36px))}.header{height:72px}.brand-mark{width:39px;height:39px}.brand-name{font-size:19px}.brand-tag{font-size:7px}
+      .menu-toggle{display:block}.nav-links,.nav-actions{display:none}
+      .nav.open{position:relative}.nav.open .nav-links{display:flex;position:absolute;top:71px;left:-18px;right:-18px;padding:20px 22px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 20px rgba(8,29,48,.08);flex-direction:column;align-items:flex-start;gap:17px}
+      .nav.open .nav-actions{display:flex;position:absolute;top:calc(71px + 185px);left:-18px;right:-18px;padding:14px 22px 20px;background:#fff;border-bottom:1px solid var(--line)}
+      .hero-inner{min-height:0;display:block;padding-block:76px 68px}.hero-emblem{display:none}h1{font-size:clamp(41px,10.5vw,57px);letter-spacing:-1.9px}.hero-copy{font-size:14px}
+      .intro{padding:65px 0}.intro-grid{grid-template-columns:1fr;gap:19px}.learning{padding:64px 0}.learning-grid{grid-template-columns:1fr}.learning-item{padding:22px 0}.learning-item+.learning-item{border-left:0;border-top:1px solid #dce4e9;padding-left:0}
+      .portal{padding:58px 0}.portal-panel{padding:30px 25px;align-items:flex-start;flex-direction:column}.footer-top{flex-direction:column}.footer-links{gap:45px}.footer-bottom{flex-direction:column;gap:5px}
     }
-    @media(max-width:390px){.brand-name{font-size:19px}.hero-actions .button{width:100%}.trust-inner{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+    @media(max-width:390px){.hero-actions .button{width:100%}.footer-links{gap:30px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
   </style>
 </head>
 <body>
-<header class="site-header">
-  <div class="container nav" id="siteNav">
-    <a class="brand" href="index.html" aria-label="SOMFORGE home">
-      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M24 2.8 43 13.5v21L24 45.2 5 34.5v-21L24 2.8Z" stroke="#102B46" stroke-width="2.4"/>
-        <path d="M10 24h7l4-8 5 16 4-10 3 3h5" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span class="brand-name">SOM<span>FORGE</span></span>
-    </a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#about">About</a><a href="#learning">Learning</a><a href="#portal">Student Portal</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="login-link" href="login.html">Sign in</a>
-      <a class="button button-navy" href="register.html">Create account</a>
+  <header class="header">
+    <div class="container nav" id="siteNav">
+      <a class="brand" href="index.html" aria-label="SOMFORGE home">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path d="M24 2.8 43 13.4v21.2L24 45.2 5 34.6V13.4L24 2.8Z" stroke="#2876D7" stroke-width="2"/>
+          <path d="M24 8.5c-2.8 4.1-6.5 7.1-6.5 11.2 0 3.2 2.4 5.8 5.4 6.2-1.2-2.2-.4-4.3 1.1-5.9 1.1 2.4 3.5 3.6 3.5 6.7 0 3.5-2.8 6.1-6.5 6.1-4.1 0-7-3-7-7.1 0-4.6 3.3-8.4 10-17.2Z" fill="#21C4D5"/>
+          <path d="M24 27.2v11.2m-5.3 0h10.6M10 29h6l2.2-3.8 3.2 7 2.4-4.4H32l2 1.2H38" stroke="#21C4D5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="brand-copy"><span class="brand-name">SOMFORGE</span><span class="brand-tag">Forging the doctors of tomorrow</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a><a href="#learning">Learning</a><a href="#student-portal">Student portal</a>
+      </nav>
+      <div class="nav-actions"><a class="sign-in" href="login.html">Sign in</a><a class="button button-primary" href="register.html">Create account</a></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
     </div>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
-  </div>
-</header>
-<main>
-  <section class="hero" id="home">
-    <div class="container hero-inner">
-      <div>
-        <div class="eyebrow">Medical education · Academic development</div>
-        <h1>Forging knowledge.<br><span>Shaping tomorrow's doctors.</span></h1>
-        <p class="hero-copy">A focused learning environment for medical students. Access structured academic resources, strengthen your understanding and make your study more purposeful.</p>
-        <div class="hero-actions">
-          <a class="button button-gold" href="register.html">Join SOMFORGE <span aria-hidden="true">→</span></a>
-          <a class="button button-outline" href="#about">Discover our approach</a>
-        </div>
-        <p class="hero-note"><strong>Built around learning.</strong> Designed to support the journey through medical school.</p>
-      </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="orbit"></div>
-        <div class="crest">
-          <svg viewBox="0 0 80 80" fill="none">
-            <path d="M40 5 70 22v36L40 75 10 58V22L40 5Z" stroke="#E5CCA0" stroke-width="1.6"/>
-            <path d="M18 40h12l7-14 8 28 7-18 5 4h7" stroke="#E5CCA0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="floating-card card-top"><small>Our purpose</small><strong>Learn with intention</strong></div>
-        <div class="floating-card card-bottom"><small>Our community</small><strong><span class="mini-mark">✦</span>Grow through knowledge</strong></div>
-      </div>
-    </div>
-  </section>
-  <section class="trust-strip" aria-label="Platform focus">
-    <div class="container trust-inner">
-      <div class="trust-item"><span class="trust-icon">▤</span>Structured resources</div>
-      <div class="trust-item"><span class="trust-icon">◎</span>Guided learning</div>
-      <div class="trust-item"><span class="trust-icon">⌘</span>Collaborative study</div>
-      <div class="trust-item"><span class="trust-icon">↗</span>Academic development</div>
-    </div>
-  </section>
-  <section class="section" id="about">
-    <div class="container">
-      <div class="about-grid">
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
         <div>
-          <div class="section-label">About SOMFORGE</div>
-          <h2>Supporting the people behind the profession.</h2>
+          <p class="eyebrow">Medical learning · Academic development</p>
+          <h1>Forging the doctors <span>of tomorrow.</span></h1>
+          <p class="hero-copy">A focused learning space for medical students—bringing academic resources and purposeful study together to support the journey through medical school.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="register.html">Join SOMFORGE <span aria-hidden="true">→</span></a>
+            <a class="button button-light" href="login.html">Student sign in</a>
+          </div>
+          <p class="hero-note">Build understanding. Strengthen your foundations. Keep progressing.</p>
         </div>
-        <div class="about-copy">
-          <p>SOMFORGE is a medical learning initiative created to support students throughout their academic and professional development.</p>
-          <p>We bring together learning resources, academic guidance and opportunities for collaborative study in one accessible environment. Our aim is to make it easier for students to find useful material and approach their studies with greater structure.</p>
-          <p>Because good clinical practice begins with a strong foundation of knowledge, curiosity and consistent learning.</p>
+        <div class="hero-emblem" aria-hidden="true">
+          <div class="emblem-ring">
+            <div class="emblem-core">
+              <svg viewBox="0 0 100 100" fill="none">
+                <path d="M50 9c-6 9-14 15-14 25 0 7 5 12 12 13-3-5-1-9 2-13 3 5 8 8 8 15 0 8-6 14-15 14-9 0-15-7-15-16 0-10 7-18 22-38Z" fill="#21C4D5"/>
+                <path d="M50 53v31m-12 0h24M10 67h17l6-10 8 19 7-14h9l5 5h18" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <span class="hero-caption">SOMFORGE · Medical learning</span>
         </div>
       </div>
-      <div class="values">
-        <article class="value-card"><div class="value-number">01 / UNDERSTAND</div><h3>Build strong foundations</h3><p>Develop a deeper understanding of core medical concepts rather than relying on memorisation alone.</p></article>
-        <article class="value-card"><div class="value-number">02 / APPLY</div><h3>Connect learning to practice</h3><p>Use structured academic resources to support clinical reasoning and the application of knowledge.</p></article>
-        <article class="value-card"><div class="value-number">03 / PROGRESS</div><h3>Keep moving forward</h3><p>Make learning more organised, accessible and consistent throughout medical training.</p></article>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="container intro-grid">
+        <div><p class="section-kicker">About SOMFORGE</p><h2>Knowledge is the foundation of good practice.</h2></div>
+        <p class="intro-copy">SOMFORGE is a medical learning initiative built to support students in developing the knowledge, discipline and confidence required throughout medical training. We bring learning resources and academic support into one accessible space, with a simple purpose: make meaningful learning easier to pursue.</p>
       </div>
-    </div>
-  </section>
-  <section class="section section-soft" id="learning">
+    </section>
+
+    <section class="learning" id="learning">
+      <div class="container">
+        <div class="learning-head">
+          <p class="section-kicker">The learning experience</p>
+          <h2>Focused on what matters.</h2>
+          <p>A straightforward environment to support your academic work and progress through medical school.</p>
+        </div>
+        <div class="learning-grid">
+          <article class="learning-item"><div class="item-index">01 / RESOURCES</div><h3>Academic materials</h3><p>Access learning materials organised to support your studies and reinforce core concepts.</p></article>
+          <article class="learning-item"><div class="item-index">02 / STUDY</div><h3>Purposeful preparation</h3><p>Approach your learning with structure and make better use of your study time.</p></article>
+          <article class="learning-item"><div class="item-index">03 / PROGRESS</div><h3>Your student space</h3><p>Sign in to view your courses and the learning resources available to your account.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal" id="student-portal">
+      <div class="container">
+        <div class="portal-panel">
+          <div><p class="section-kicker">Student portal</p><h2>Your learning journey starts here.</h2><p>Access your SOMFORGE account and available course materials.</p></div>
+          <a class="button button-primary" href="login.html">Enter student portal <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
     <div class="container">
-      <div class="section-heading">
-        <div class="section-label">The learning experience</div>
-        <h2>A more purposeful way to learn.</h2>
-        <p class="section-intro">A growing academic environment designed to bring essential learning activities together and help students make better use of their study time.</p>
+      <div class="footer-top">
+        <div>
+          <a class="brand" href="index.html" aria-label="SOMFORGE home">
+            <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M24 2.8 43 13.4v21.2L24 45.2 5 34.6V13.4L24 2.8Z" stroke="#21C4D5" stroke-width="2"/>
+              <path d="M24 8.5c-2.8 4.1-6.5 7.1-6.5 11.2 0 3.2 2.4 5.8 5.4 6.2-1.2-2.2-.4-4.3 1.1-5.9 1.1 2.4 3.5 3.6 3.5 6.7 0 3.5-2.8 6.1-6.5 6.1-4.1 0-7-3-7-7.1 0-4.6 3.3-8.4 10-17.2Z" fill="#21C4D5"/>
+              <path d="M24 27.2v11.2m-5.3 0h10.6M10 29h6l2.2-3.8 3.2 7 2.4-4.4H32l2 1.2H38" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="brand-copy"><span class="brand-name">SOMFORGE</span><span class="brand-tag">Forging the doctors of tomorrow</span></span>
+          </a>
+          <p class="footer-about">A medical learning initiative supporting students throughout their academic journey.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-group"><strong>Explore</strong><a href="#about">About</a><a href="#learning">Learning</a></div>
+          <div class="footer-group"><strong>Student access</strong><a href="login.html">Sign in</a><a href="register.html">Create account</a></div>
+        </div>
       </div>
-      <div class="path-grid">
-        <article class="path-card"><div class="path-icon">▤</div><h3>Academic resources</h3><p>Find organised notes, presentations and other learning materials to support your medical studies.</p></article>
-        <article class="path-card"><div class="path-icon">⌕</div><h3>Examination preparation</h3><p>Prepare with academic practice materials and past-paper resources as they become available.</p></article>
-        <article class="path-card"><div class="path-icon">▶</div><h3>Guided learning</h3><p>Strengthen understanding through focused teaching, discussion and collaborative study.</p></article>
-      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> SOMFORGE. All rights reserved.</span><span>Forging the doctors of tomorrow.</span></div>
     </div>
-  </section>
-  <section class="section" id="portal">
-    <div class="container">
-      <div class="portal-panel">
-        <div><div class="section-label">Your learning space</div><h2>Continue your journey with SOMFORGE.</h2><p>Sign in to access your student portal and available learning resources.</p></div>
-        <a class="button button-gold" href="login.html">Enter student portal <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-</main>
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <a class="brand" href="index.html">
-          <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 2.8 43 13.5v21L24 45.2 5 34.5v-21L24 2.8Z" stroke="#fff" stroke-width="2.4"/><path d="M10 24h7l4-8 5 16 4-10 3 3h5" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="brand-name">SOM<span>FORGE</span></span>
-        </a>
-        <p class="footer-about">A medical learning initiative supporting academic development through structured resources, guided learning and collaborative study.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-group"><strong>Explore</strong><a href="#about">About SOMFORGE</a><a href="#learning">Learning</a><a href="#portal">Student portal</a></div>
-        <div class="footer-group"><strong>Your account</strong><a href="login.html">Student login</a><a href="register.html">Create account</a></div>
-      </div>
-    </div>
-    <div class="footer-bottom"><span>© <span id="year"></span> SOMFORGE. All rights reserved.</span><span>Forging the doctors of tomorrow.</span></div>
-  </div>
-</footer>
-<script>
-  const nav = document.getElementById('siteNav');
-  const toggle = document.getElementById('menuToggle');
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? 'Close' : 'Menu';
-  });
-  document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.textContent = 'Menu';
-  }));
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  </footer>
+  <script>
+    const nav = document.getElementById('siteNav');
+    const toggle = document.getElementById('menuToggle');
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.textContent = isOpen ? 'Close' : 'Menu';
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = 'Menu';
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
