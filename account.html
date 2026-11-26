@@ -322,6 +322,7 @@ button, input { font: inherit; }
     <a class="nav-link" href="courses.html">My Courses</a>
     <a class="nav-link active" href="account.html" aria-current="page">My Account</a>
     <a class="nav-link" href="account.html#subscription">▣ &nbsp; Subscription</a>
+    <a class="nav-link" href="account.html#payment">₭ &nbsp; Payments</a>
 </aside>
 
 <main class="main">
@@ -468,12 +469,13 @@ const supabaseClient = window.supabase.createClient(
 
 const PAYMENT_PACKAGES={monthly:{amount_zmw:120,duration_days:30,label:"1 month"},quarterly:{amount_zmw:320,duration_days:90,label:"3 months"},semester:{amount_zmw:550,duration_days:180,label:"1 semester (6 months)"}};
 const WHATSAPP_NUMBER="260768744352";
+function escapePaymentText(value){return String(value||"").replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));}
 async function loadPaymentHistory(studentId){
  const body=document.getElementById("paymentHistory");
  const {data,error}=await supabaseClient.from("payment_submissions").select("id,package_code,amount_zmw,payment_method,status,admin_note,created_at").eq("student_id",studentId).order("created_at",{ascending:false});
  if(error){body.innerHTML='<tr><td colspan="6">Payment history is temporarily unavailable.</td></tr>';return;}
  if(!data?.length){body.innerHTML='<tr><td colspan="6">No payment submissions yet.</td></tr>';return;}
- body.innerHTML=data.map(item=>{const pkg=PAYMENT_PACKAGES[item.package_code];const method=item.payment_method==="mtn"?"MTN Money":item.payment_method==="airtel"?"Airtel Money":"Bank transfer";return '<tr><td>'+formatDate(item.created_at)+'</td><td>'+(pkg?.label||item.package_code)+'</td><td>K'+item.amount_zmw+'</td><td>'+method+'</td><td><span class="payment-status">'+item.status+'</span></td><td>'+(item.admin_note||"—")+'</td></tr>';}).join("");
+ body.innerHTML=data.map(item=>{const pkg=PAYMENT_PACKAGES[item.package_code];const method=item.payment_method==="mtn"?"MTN Money":item.payment_method==="airtel"?"Airtel Money":"Bank transfer";return '<tr><td>'+formatDate(item.created_at)+'</td><td>'+(pkg?.label||item.package_code)+'</td><td>K'+item.amount_zmw+'</td><td>'+method+'</td><td><span class="payment-status">'+item.status+'</span></td><td>'+(escapePaymentText(item.admin_note)||"—")+'</td></tr>';}).join("");
 }
 async function submitPaymentDetails(event){
  event.preventDefault();
