@@ -831,7 +831,12 @@ body{background:var(--background);color:var(--text)}.topbar{background:rgba(246,
         return;
       }
 
-      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {\n        showMessage("Please enter a valid email address.", "error");\n        return;\n      }\n\n      if (password.length < 8) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMessage("Please enter a valid email address.", "error");
+        return;
+      }
+
+      if (password.length < 8) {
         showMessage("Your password must contain at least 8 characters.", "error");
         return;
       }
