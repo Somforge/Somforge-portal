@@ -801,7 +801,7 @@ td small{font-size:12px;line-height:1.5}
                 <input type="search" id="subscriptionSearch" class="search" placeholder="Search subscriptions…">
             </div>
             <div class="table-wrap"><table><thead><tr><th>Student</th><th>Start date</th><th>Expiry date</th><th>Status</th><th>Action</th></tr></thead><tbody id="subscriptionsTable"><tr><td colspan="5" class="empty">Loading subscriptions…</td></tr></tbody></table></div>
-            <p class="info-text subscription-help">Approve student accounts before activating subscriptions. From the Students page, choose 7, 14, 30 or 90 days when activating access. Active subscriptions can be extended or suspended.</p>
+            <p class="info-text subscription-help">Approve student accounts before activating subscriptions. The packages are K120 for 30 days, K320 for 90 days and K550 for 180 days (one six-month semester). Active subscriptions can be extended or suspended.</p>
         </div>
         </section>
 
@@ -809,7 +809,7 @@ td small{font-size:12px;line-height:1.5}
         <div class="page-heading"><span class="panel-kicker">LEARNING LIBRARY</span><h1>Learning library</h1><p>Publish and organise course resources for students.</p></div>
         <section class="panel" id="content">
             <div class="panel-heading">
-                <div><span class="panel-kicker">LEARNING LIBRARY</span><h2>Content Management</h2><p>Publish course resources and organise them by year, course, term and category.</p></div>
+                <div><span class="panel-kicker">LEARNING LIBRARY</span><h2>Content Management</h2><p>Publish course resources and organise them by year, course, semester and category.</p></div>
                 <button class="btn btn-refresh" id="refreshContentBtn" type="button">Refresh library</button>
             </div>
             <div class="content-layout">
@@ -822,7 +822,7 @@ td small{font-size:12px;line-height:1.5}
                     <div class="form-grid">
                         <div><label for="materialYear">Academic year</label><select id="materialYear" required><option value="Year 2">Year 2</option><option value="Year 3">Year 3</option></select></div>
                         <div><label for="materialCourse">Course</label><select id="materialCourse" required><option value="">Choose a course</option></select></div>
-                        <div><label for="materialTerm">Term</label><select id="materialTerm" required><option value="1">Term 1</option><option value="2">Term 2</option><option value="3">Term 3</option></select></div>
+                        <div><label for="materialTerm">Semester</label><select id="materialTerm" required><option value="1">Semester 1</option><option value="2">Semester 2</option></select></div>
                         <div><label for="materialCategory">Category</label><select id="materialCategory" required><option value="course_document">Course Documents</option><option value="past_paper">Past Papers</option><option value="quiz">Quizzes</option><option value="assignment">Assignments</option><option value="course_guidance">Course Guidance</option></select></div>
                     </div>
                     <label for="materialFile">File</label>
@@ -1339,21 +1339,25 @@ async function activateSubscription(studentId) {
     );
 
     const duration = prompt(
-        "Choose subscription duration:\n\n" +
-        "Enter 7 for 7 days\n" +
-        "Enter 14 for 14 days\n" +
-        "Enter 30 for 30 days\n" +
-        "Enter 90 for 90 days"
+        "Choose the package to activate:\
+\
+" +
+        "Enter 1 for 1 month — K120 (30 days)\
+" +
+        "Enter 2 for 3 months — K320 (90 days)\
+" +
+        "Enter 3 for 1 semester — K550 (180 days)"
     );
 
     if (duration === null) return;
 
-    const days = Number(duration);
+    const packageDays = { "1": 30, "2": 90, "3": 180 };
+    const days = packageDays[duration];
 
-    if (![7, 14, 30, 90].includes(days)) {
+    if (!days) {
 
         showMessage(
-            "Please enter 7, 14, 30 or 90.",
+            "Please enter 1, 2 or 3 to select a package.",
             "error"
         );
 
@@ -1546,7 +1550,7 @@ async function publishLearningMaterial(event) {
     const button = document.getElementById("publishMaterialBtn");
     const course = courses.find(row => row.id === courseId);
     const materialType = file && getMaterialType(file);
-    if (!title || !course || !file || !materialType || ![1,2,3].includes(term) || !categoryLabels[category]) {
+    if (!title || !course || !file || !materialType || ![1,2].includes(term) || !categoryLabels[category]) {
         status.textContent = "Complete all required fields and choose a supported file.";
         return;
     }
@@ -1556,7 +1560,7 @@ async function publishLearningMaterial(event) {
     }
     button.disabled = true;
     status.textContent = "Uploading file securely…";
-    const path = year + "/" + courseId + "/term-" + term + "/" + category + "/" + Date.now() + "-" + safeFileName(file.name);
+    const path = year + "/" + courseId + "/semester-" + term + "/" + category + "/" + Date.now() + "-" + safeFileName(file.name);
     const { data: uploadData, error: uploadError } = await supabaseClient.storage
         .from(STORAGE_BUCKET).upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type || undefined });
     if (uploadError) {
