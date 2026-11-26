@@ -982,12 +982,12 @@ body{background:var(--background)}
 
         <section>
             <div class="section-heading">
-                <h2>Select a Term</h2>
-                <p>Choose the academic term whose materials you want to access.</p>
+                <h2>Select a Semester</h2>
+                <p>Choose the academic semester whose materials you want to access.</p>
             </div>
 
             <div class="term-grid" id="termGrid">
-                <div class="message-box">Loading terms...</div>
+                <div class="message-box">Loading semesters...</div>
             </div>
         </section>
 
@@ -1153,15 +1153,15 @@ function renderTerms() {
     const grid = document.getElementById("termGrid");
     grid.replaceChildren();
 
-    [1, 2, 3].forEach(term => {
+    [1, 2].forEach(term => {
         const button = document.createElement("button");
 
         button.className =
             "term-card" + (term === currentTerm ? " active" : "");
 
         button.innerHTML = `
-            <div class="term-number">ACADEMIC TERM ${term}</div>
-            <h3>Term ${term}</h3>
+            <div class="term-number">ACADEMIC SEMESTER ${term}</div>
+            <h3>Semester ${term}</h3>
             <p>Select to view available course materials.</p>
         `;
 
