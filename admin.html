@@ -1146,7 +1146,7 @@ function renderPaymentSubmissions() {
         const phone = item.sender_phone ? '<br><small>Paid from: ' + escapeHTML(item.sender_phone) + '</small>' : "";
         const badgeClass = item.status === "approved" ? "active" : item.status === "rejected" ? "rejected" : "pending";
         const reviewActions = item.status === "pending"
-            ? '<button class="btn btn-approve" onclick="reviewPayment(\\'' + item.id + '\\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\\'' + item.id + '\\',false)">Reject</button>'
+            ? '<button class="btn btn-approve" onclick="reviewPayment(\'' + item.id + '\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\'' + item.id + '\',false)">Reject</button>'
             : escapeHTML(item.admin_note || "Reviewed");
         return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + pkg + '<br><strong>K' + item.amount_zmw + '</strong></td><td>' + method + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge ' + badgeClass + '">' + escapeHTML(item.status) + '</span></td><td>' + reviewActions + '</td></tr>';
     }).join("");
