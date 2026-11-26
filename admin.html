@@ -341,6 +341,30 @@ input{font-family:inherit}.search{width:280px;padding:11px 13px;border:1px solid
 .info-text{font-size:12px;line-height:1.8;color:var(--muted);max-width:850px}.footer{padding:22px 0 28px;color:#89919a;font-size:10px;letter-spacing:.2px}
 @media(max-width:850px){.admin-header{gap:15px;flex-wrap:wrap;padding:13px 20px}.admin-nav{order:3;width:100%;overflow-x:auto}.admin-actions{margin-left:auto}.container{width:calc(100% - 36px);padding-top:27px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.admin-header{gap:10px}.admin-brand{font-size:14px}.admin-brand img{width:34px;height:38px}.admin-actions button{padding:9px 10px;font-size:10px}.admin-nav a{padding:9px 10px}.container{width:calc(100% - 26px);padding-top:23px}.welcome h1{font-size:29px}.stats{gap:10px}.stat-card{padding:16px}.stat-card h2{font-size:24px}.panel{padding:15px}.panel-heading{align-items:flex-start;flex-direction:column}.search{width:100%}}
+
+.content-layout{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr);gap:22px;align-items:start}
+.content-form,.library-panel{border:1px solid var(--border);border-radius:8px;padding:20px;background:#fffefa}
+.content-form h3,.library-heading h3{font-family:"Playfair Display",Georgia,serif;font-size:19px;font-weight:500;color:var(--navy);margin-bottom:16px}
+.content-form label{display:block;font-size:11px;font-weight:700;color:#445263;margin:14px 0 7px}
+.content-form label span,.form-hint{color:var(--muted);font-weight:400}
+.content-form input,.content-form textarea,.content-form select{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--text);font:12px "DM Sans",Arial,sans-serif}
+.content-form textarea{resize:vertical;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.form-hint{font-size:10px;line-height:1.6;margin-top:7px}
+.publish-btn{width:100%;margin-top:18px;padding:12px;border:0;border-radius:5px;background:var(--navy);color:#fff;font:700 11px "DM Sans",Arial,sans-serif;cursor:pointer}
+.publish-btn:disabled{opacity:.55;cursor:wait}
+.upload-status{font-size:11px;line-height:1.6;margin-top:10px;color:var(--muted)}
+.library-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.library-heading h3{margin-bottom:4px}.library-heading p{font-size:11px;color:var(--muted)}
+.library-heading .search{width:210px}
+.materials-list{display:grid;gap:9px;max-height:620px;overflow:auto}
+.material-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px;border:1px solid var(--border);border-radius:6px;background:#fff}
+.material-row h4{font-size:12px;color:var(--navy);margin-bottom:5px}.material-row p{font-size:10px;line-height:1.5;color:var(--muted)}
+.material-row button{flex:0 0 auto;border:1px solid #e7c7c2;background:#fbefed;color:#a33d35;border-radius:4px;padding:8px 10px;font-size:10px;font-weight:700;cursor:pointer}
+.material-tag{display:inline-block;margin-right:5px;padding:3px 6px;background:#f1eadf;color:#81643b;border-radius:3px;font-size:9px;font-weight:700}
+@media(max-width:950px){.content-layout{grid-template-columns:1fr}}
+@media(max-width:520px){.content-form,.library-panel{padding:14px}.form-grid{grid-template-columns:1fr}.library-heading .search{width:100%}.material-row{align-items:flex-start}}
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"></head>
 
@@ -356,6 +380,7 @@ input{font-family:inherit}.search{width:280px;padding:11px 13px;border:1px solid
         <a class="active" href="#overview">Overview</a>
         <a href="#students">Students</a>
         <a href="#subscriptions">Subscriptions</a>
+        <a href="#content">Content</a>
     </nav>
     <div class="admin-actions">
         <button class="admin-refresh" id="refreshBtn" type="button">Refresh data</button>
@@ -456,7 +481,39 @@ input{font-family:inherit}.search{width:280px;padding:11px 13px;border:1px solid
                 Expired and suspended subscriptions do not grant access.
             </p>
 
+
         </div>
+
+        <section class="panel" id="content">
+            <div class="panel-heading">
+                <div><span class="panel-kicker">LEARNING LIBRARY</span><h2>Content Management</h2><p>Publish course resources and organise them by year, course, term and category.</p></div>
+                <button class="btn btn-refresh" id="refreshContentBtn" type="button">Refresh library</button>
+            </div>
+            <div class="content-layout">
+                <form id="materialForm" class="content-form">
+                    <h3>Publish a resource</h3>
+                    <label for="materialTitle">Resource title</label>
+                    <input id="materialTitle" name="title" type="text" maxlength="140" placeholder="e.g. Upper limb lecture notes" required>
+                    <label for="materialDescription">Description <span>(optional)</span></label>
+                    <textarea id="materialDescription" name="description" rows="3" maxlength="600" placeholder="Briefly describe what students will find in this resource."></textarea>
+                    <div class="form-grid">
+                        <div><label for="materialYear">Academic year</label><select id="materialYear" required><option value="Year 2">Year 2</option><option value="Year 3">Year 3</option></select></div>
+                        <div><label for="materialCourse">Course</label><select id="materialCourse" required><option value="">Choose a course</option></select></div>
+                        <div><label for="materialTerm">Term</label><select id="materialTerm" required><option value="1">Term 1</option><option value="2">Term 2</option><option value="3">Term 3</option></select></div>
+                        <div><label for="materialCategory">Category</label><select id="materialCategory" required><option value="course_document">Course Documents</option><option value="past_paper">Past Papers</option><option value="quiz">Quizzes</option><option value="assignment">Assignments</option><option value="course_guidance">Course Guidance</option></select></div>
+                    </div>
+                    <label for="materialFile">File</label>
+                    <input id="materialFile" type="file" accept=".pdf,.ppt,.pptx,.mp4,.webm,.mov,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,video/mp4,video/webm,video/quicktime" required>
+                    <p class="form-hint">Accepted: PDF, PowerPoint and common video formats. Maximum file size: 50 MB.</p>
+                    <button class="publish-btn" id="publishMaterialBtn" type="submit">Publish resource</button>
+                    <p id="uploadStatus" class="upload-status" role="status"></p>
+                </form>
+                <div class="library-panel">
+                    <div class="library-heading"><div><h3>Published resources</h3><p id="materialCount">Loading library…</p></div><input id="materialSearch" class="search" type="search" placeholder="Search resources…"></div>
+                    <div id="materialsList" class="materials-list"><p class="empty">Loading resources…</p></div>
+                </div>
+            </div>
+        </section>
 
     </div>
 
@@ -485,6 +542,8 @@ const supabaseClient = window.supabase.createClient(
 
 let students = [];
 let subscriptions = [];
+let courses = [];
+let learningMaterials = [];
 
 const loading = document.getElementById("loading");
 const adminContent = document.getElementById("adminContent");
@@ -637,6 +696,7 @@ async function checkAdmin() {
         adminContent.style.display = "block";
 
         await loadData();
+        await loadContentData();
 
     } catch (error) {
 
@@ -1051,6 +1111,153 @@ async function suspendSubscription(subscriptionId) {
     await loadData();
 }
 
+
+/* CONTENT MANAGEMENT */
+const STORAGE_BUCKET = "learning-materials";
+const categoryLabels = {
+    course_document: "Course Documents",
+    past_paper: "Past Papers",
+    quiz: "Quizzes",
+    assignment: "Assignments",
+    course_guidance: "Course Guidance"
+};
+
+async function loadContentData() {
+    const list = document.getElementById("materialsList");
+    if (!list) return;
+    list.innerHTML = '<p class="empty">Loading resources…</p>';
+    const [{ data: courseRows, error: courseError }, { data: materialRows, error: materialError }] = await Promise.all([
+        supabaseClient.from("courses").select("id,title,year_level,subject_id").order("year_level").order("title"),
+        supabaseClient.from("learning_materials").select("id,title,description,year_level,course_id,term,content_category,material_type,file_url,created_at").order("created_at", { ascending: false })
+    ]);
+    if (courseError || materialError) {
+        list.innerHTML = '<p class="empty">The content library could not be loaded.</p>';
+        showMessage("Content library error: " + (courseError || materialError).message, "error");
+        return;
+    }
+    courses = courseRows || [];
+    learningMaterials = materialRows || [];
+    populateCourseOptions();
+    renderLearningMaterials();
+}
+
+function populateCourseOptions() {
+    const year = document.getElementById("materialYear").value;
+    const select = document.getElementById("materialCourse");
+    const previous = select.value;
+    const available = courses.filter(course => course.year_level === year);
+    select.innerHTML = '<option value="">Choose a course</option>' + available.map(course =>
+        '<option value="' + escapeHTML(course.id) + '">' + escapeHTML(course.title) + '</option>'
+    ).join("");
+    if (available.some(course => course.id === previous)) select.value = previous;
+}
+
+function renderLearningMaterials() {
+    const list = document.getElementById("materialsList");
+    const search = document.getElementById("materialSearch").value.trim().toLowerCase();
+    const filtered = learningMaterials.filter(item => {
+        const course = courses.find(row => row.id === item.course_id);
+        const haystack = [item.title, item.description, item.year_level, course?.title, categoryLabels[item.content_category]].join(" ").toLowerCase();
+        return haystack.includes(search);
+    });
+    document.getElementById("materialCount").textContent =
+        learningMaterials.length + (learningMaterials.length === 1 ? " resource published" : " resources published");
+    if (!filtered.length) {
+        list.innerHTML = '<p class="empty">No matching resources. Publish the first one using the form.</p>';
+        return;
+    }
+    list.innerHTML = filtered.map(item => {
+        const course = courses.find(row => row.id === item.course_id);
+        return '<article class="material-row"><div><h4>' + escapeHTML(item.title || "Untitled resource") + '</h4><p><span class="material-tag">' + escapeHTML(item.year_level || "Year not set") + '</span><span class="material-tag">' + escapeHTML(course?.title || "Course unavailable") + '</span><span class="material-tag">Term ' + escapeHTML(item.term || "—") + '</span><span class="material-tag">' + escapeHTML(categoryLabels[item.content_category] || "Uncategorised") + '</span></p><p>' + escapeHTML(item.description || "No description") + '</p></div><button type="button" onclick="deleteLearningMaterial(\'' + item.id + '\')">Delete</button></article>';
+    }).join("");
+}
+
+function safeFileName(name) {
+    return name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]+/g, "-").replace(/^-+|-+$/g, "").slice(-100) || "resource";
+}
+
+function getMaterialType(file) {
+    const type = (file.type || "").toLowerCase();
+    const name = file.name.toLowerCase();
+    if (type === "application/pdf" || name.endsWith(".pdf")) return "pdf";
+    if (type.startsWith("video/") || /\.(mp4|webm|mov)$/.test(name)) return "video";
+    if (/\.(ppt|pptx)$/.test(name) || type.includes("presentation") || type.includes("powerpoint")) return "presentation";
+    return null;
+}
+
+async function publishLearningMaterial(event) {
+    event.preventDefault();
+    const title = document.getElementById("materialTitle").value.trim();
+    const description = document.getElementById("materialDescription").value.trim();
+    const year = document.getElementById("materialYear").value;
+    const courseId = document.getElementById("materialCourse").value;
+    const term = Number(document.getElementById("materialTerm").value);
+    const category = document.getElementById("materialCategory").value;
+    const file = document.getElementById("materialFile").files[0];
+    const status = document.getElementById("uploadStatus");
+    const button = document.getElementById("publishMaterialBtn");
+    const course = courses.find(row => row.id === courseId);
+    const materialType = file && getMaterialType(file);
+    if (!title || !course || !file || !materialType || ![1,2,3].includes(term) || !categoryLabels[category]) {
+        status.textContent = "Complete all required fields and choose a supported file.";
+        return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+        status.textContent = "This file is larger than the 50 MB upload limit.";
+        return;
+    }
+    button.disabled = true;
+    status.textContent = "Uploading file securely…";
+    const path = year + "/" + courseId + "/term-" + term + "/" + category + "/" + Date.now() + "-" + safeFileName(file.name);
+    const { data: uploadData, error: uploadError } = await supabaseClient.storage
+        .from(STORAGE_BUCKET).upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type || undefined });
+    if (uploadError) {
+        status.textContent = "Upload failed: " + uploadError.message;
+        button.disabled = false;
+        return;
+    }
+    status.textContent = "Saving resource details…";
+    const { error: insertError } = await supabaseClient.from("learning_materials").insert({
+        title, description: description || null, subject_id: course.subject_id || null,
+        material_type: materialType, file_url: uploadData.path, year_level: year,
+        course_id: courseId, term, content_category: category
+    });
+    if (insertError) {
+        await supabaseClient.storage.from(STORAGE_BUCKET).remove([uploadData.path]);
+        status.textContent = "The file uploaded, but its details could not be saved: " + insertError.message;
+        button.disabled = false;
+        return;
+    }
+    document.getElementById("materialForm").reset();
+    document.getElementById("materialYear").value = year;
+    document.getElementById("materialTerm").value = String(term);
+    populateCourseOptions();
+    status.textContent = "Resource published. It is now listed in the student course library.";
+    button.disabled = false;
+    await loadContentData();
+    showMessage("Learning resource published successfully.");
+}
+
+async function deleteLearningMaterial(id) {
+    const item = learningMaterials.find(row => row.id === id);
+    if (!item || !confirm("Delete “" + item.title + "”? This removes it from the student library.")) return;
+    if (item.file_url && !/^https?:\/\//i.test(item.file_url)) {
+        const { error: storageError } = await supabaseClient.storage.from(STORAGE_BUCKET).remove([item.file_url]);
+        if (storageError) {
+            showMessage("The file could not be removed: " + storageError.message, "error");
+            return;
+        }
+    }
+    const { error } = await supabaseClient.from("learning_materials").delete().eq("id", id);
+    if (error) {
+        showMessage("The resource record could not be deleted: " + error.message, "error");
+        return;
+    }
+    showMessage("Resource deleted.");
+    await loadContentData();
+}
+
+
 /* BUTTON EVENTS */
 
 document.getElementById("logoutBtn")
@@ -1066,6 +1273,11 @@ document.getElementById("refreshBtn")
 
 document.getElementById("searchInput")
     .addEventListener("input", renderStudents);
+
+document.getElementById("materialForm").addEventListener("submit", publishLearningMaterial);
+document.getElementById("materialYear").addEventListener("change", populateCourseOptions);
+document.getElementById("materialSearch").addEventListener("input", renderLearningMaterials);
+document.getElementById("refreshContentBtn").addEventListener("click", loadContentData);
 
 /* START APPLICATION */
 
