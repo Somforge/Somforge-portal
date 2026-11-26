@@ -1,928 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SOMFORGE | Medical Education</title>
-
-<meta name="description" content="SOMFORGE supports medical students through structured learning, academic resources and collaborative education.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-:root {
-    --navy: #102b46;
-    --navy-dark: #091d31;
-    --navy-light: #1b405f;
-    --gold: #bd9857;
-    --gold-light: #dfc18a;
-    --teal: #7fb7b3;
-    --white: #ffffff;
-    --muted: #687789;
-    --light: #f5f7f9;
-    --border: #e6ebef;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'DM Sans', sans-serif;
-    color: var(--navy);
-    background: var(--white);
-    line-height: 1.7;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-button {
-    font: inherit;
-}
-
-.container {
-    width: min(1160px, 90%);
-    margin: auto;
-}
-
-/* BRAND */
-
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.brand-symbol {
-    width: 37px;
-    height: 37px;
-    flex-shrink: 0;
-}
-
-.brand-name {
-    font-family: 'Manrope', sans-serif;
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: 1.1px;
-    line-height: 1;
-    color: var(--navy);
-    white-space: nowrap;
-}
-
-.brand-name span {
-    color: var(--gold);
-}
-
-.brand-light .brand-name {
-    color: white;
-}
-
-/* HEADER */
-
-header {
-    min-height: 84px;
-    display: flex;
-    align-items: center;
-    background: white;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    z-index: 20;
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 35px;
-    position: relative;
-    min-height: 84px;
-}
-
-.nav-menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    gap: 30px;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-}
-
-.nav-links a {
-    font-size: 13px;
-    font-weight: 600;
-    color: #536273;
-    transition: color .2s;
-}
-
-.nav-links a:hover {
-    color: var(--gold);
-}
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 23px;
-    flex-shrink: 0;
-}
-
-.login-link {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--navy);
-}
-
-.register-link {
-    background: var(--navy);
-    color: white;
-    padding: 12px 20px;
-    font-size: 12px;
-    font-weight: 700;
-    transition: background .2s;
-}
-
-.register-link:hover {
-    background: var(--gold);
-    color: var(--navy-dark);
-}
-
-.menu-toggle {
-    display: none;
-    border: none;
-    background: transparent;
-    color: var(--navy);
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 10px 0 10px 15px;
-}
-
-/* HERO */
-
-.hero {
-    min-height: 570px;
-    background: var(--navy);
-    color: white;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 520px;
-    height: 520px;
-    border: 1px solid rgba(255,255,255,.045);
-    border-radius: 50%;
-    top: -310px;
-    right: -90px;
-}
-
-.hero-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-    padding: 90px 0;
-    position: relative;
-    z-index: 2;
-}
-
-.hero-text {
-    max-width: 680px;
-}
-
-.eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--gold-light);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-}
-
-.eyebrow::before {
-    content: "";
-    width: 28px;
-    height: 1px;
-    background: var(--gold);
-}
-
-.hero h1 {
-    font-family: 'Manrope', sans-serif;
-    font-size: clamp(39px, 5vw, 60px);
-    line-height: 1.16;
-    letter-spacing: -2px;
-    font-weight: 700;
-    margin-bottom: 25px;
-}
-
-.hero h1 span {
-    color: var(--gold-light);
-}
-
-.hero-description {
-    color: #d0d9e2;
-    font-size: 15px;
-    line-height: 1.9;
-    max-width: 480px;
-    margin-bottom: 35px;
-}
-
-.hero-buttons {
-    display: flex;
-    align-items: center;
-    gap: 17px;
-    flex-wrap: wrap;
-}
-
-.primary-button {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--navy-dark);
-    padding: 14px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.primary-button:hover {
-    background: var(--gold-light);
-}
-
-.secondary-button {
-    display: inline-block;
-    color: white;
-    border: 1px solid rgba(255,255,255,.4);
-    padding: 13px 23px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: .2s;
-}
-
-.secondary-button:hover {
-    background: rgba(255,255,255,.08);
-}
-
-/* INTRODUCTION */
-
-.introduction {
-    padding: 100px 0;
-}
-
-.intro-grid {
-    display: grid;
-    grid-template-columns: .8fr 1.2fr;
-    gap: 90px;
-    align-items: start;
-}
-
-.section-label {
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 17px;
-}
-
-.intro-heading {
-    font-family: 'Manrope', sans-serif;
-    font-size: 32px;
-    line-height: 1.35;
-    letter-spacing: -.8px;
-}
-
-.intro-text {
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 2;
-}
-
-.intro-text p + p {
-    margin-top: 17px;
-}
-
-/* LEARNING */
-
-.learning {
-    background: var(--light);
-    padding: 85px 0;
-}
-
-.learning-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 30px;
-    margin-bottom: 42px;
-}
-
-.learning-header h2 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 31px;
-    line-height: 1.3;
-}
-
-.learning-header p {
-    color: var(--muted);
-    font-size: 13px;
-    max-width: 340px;
-}
-
-.learning-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: #dfe6eb;
-    border: 1px solid #dfe6eb;
-}
-
-.learning-item {
-    background: white;
-    padding: 30px;
-    min-height: 190px;
-}
-
-.learning-number {
-    color: var(--gold);
-    font-family: 'Manrope', sans-serif;
-    font-size: 13px;
-    font-weight: 800;
-    margin-bottom: 22px;
-}
-
-.learning-item h3 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 17px;
-    margin-bottom: 10px;
-}
-
-.learning-item p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.8;
-}
-
-/* CALL TO ACTION */
-
-.cta {
-    background: var(--navy-dark);
-    color: white;
-    padding: 75px 0;
-}
-
-.cta-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 35px;
-}
-
-.cta h2 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 30px;
-    line-height: 1.3;
-    margin-bottom: 12px;
-}
-
-.cta p {
-    color: #c0ccd7;
-    font-size: 14px;
-}
-
-/* FOOTER */
-
-footer {
-    background: #071726;
-    color: white;
-    padding: 38px 0;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-}
-
-.footer-copy {
-    color: #9eacbb;
-    font-size: 12px;
-}
-
-.footer-links {
-    display: flex;
-    gap: 25px;
-}
-
-.footer-links a {
-    color: #c5d0da;
-    font-size: 12px;
-}
-
-.footer-links a:hover {
-    color: var(--gold-light);
-}
-
-/* TABLET */
-
-@media(max-width: 850px) {
-    .navbar {
-        gap: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b46">
+  <meta name="description" content="SOMFORGE is a medical learning platform supporting students through structured academic resources, guided learning and collaborative study.">
+  <title>SOMFORGE | Forging the doctors of tomorrow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#102b46;--navy-deep:#091d31;--navy-mid:#1b405f;--gold:#bd9857;--gold-pale:#e5cca0;--teal:#79b7b2;--ink:#203448;--muted:#68798a;--line:#e5ebef;--paper:#f6f8fa;--white:#fff;--shadow:0 22px 60px rgba(10,29,49,.10)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.7}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:min(1160px,90%);margin:auto}
+    .site-header{height:82px;position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(229,235,239,.9)}
+    .nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .brand{display:inline-flex;align-items:center;gap:10px;flex-shrink:0}
+    .brand-mark{width:39px;height:39px}
+    .brand-name{font-family:Manrope,sans-serif;font-weight:800;font-size:22px;letter-spacing:.6px;color:var(--navy);line-height:1}
+    .brand-name span{color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:32px;margin-left:auto}
+    .nav-links a{font-size:13px;font-weight:600;color:#596a79;transition:color .2s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-actions{display:flex;align-items:center;gap:20px}
+    .login-link{font-size:13px;font-weight:700;color:var(--navy)}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 20px;border:1px solid transparent;border-radius:4px;font-size:13px;font-weight:700;transition:transform .2s,background .2s,border-color .2s;cursor:pointer}
+    .button:hover{transform:translateY(-2px)}
+    .button-gold{background:var(--gold);color:var(--navy-deep)}
+    .button-gold:hover{background:var(--gold-pale)}
+    .button-outline{border-color:rgba(255,255,255,.35);color:white;background:transparent}
+    .button-outline:hover{background:rgba(255,255,255,.08)}
+    .button-navy{background:var(--navy);color:white}
+    .button-navy:hover{background:var(--navy-mid)}
+    .menu-toggle{display:none;background:none;border:1px solid var(--line);border-radius:4px;padding:9px 12px;color:var(--navy);font-weight:700}
+    .hero{position:relative;overflow:hidden;background:var(--navy-deep);color:white}
+    .hero:before{content:"";position:absolute;width:680px;height:680px;border:1px solid rgba(255,255,255,.07);border-radius:50%;right:-220px;top:-360px}
+    .hero:after{content:"";position:absolute;width:460px;height:460px;border:1px solid rgba(189,152,87,.18);border-radius:50%;right:-110px;top:-250px}
+    .hero-inner{position:relative;z-index:1;min-height:590px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:65px;padding-top:76px;padding-bottom:76px}
+    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--gold-pale);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+    .eyebrow:before{content:"";width:30px;height:1px;background:var(--gold)}
+    h1,h2,h3,p{margin-top:0}
+    h1,h2,h3{font-family:Manrope,sans-serif}
+    h1{font-size:clamp(42px,5.2vw,66px);line-height:1.12;letter-spacing:-2.4px;margin-bottom:24px;max-width:700px}
+    h1 span{color:var(--gold-pale)}
+    .hero-copy{max-width:560px;color:#cbd5df;font-size:15px;line-height:1.95;margin-bottom:32px}
+    .hero-actions{display:flex;gap:13px;flex-wrap:wrap}
+    .hero-note{margin-top:27px;color:#aebdca;font-size:12px}
+    .hero-note strong{color:#fff;font-weight:600}
+    .hero-visual{position:relative;min-height:360px;display:flex;align-items:center;justify-content:center}
+    .orbit{position:absolute;width:320px;height:320px;border:1px solid rgba(255,255,255,.13);border-radius:50%}
+    .orbit:before,.orbit:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.09);border-radius:50%;inset:28px}
+    .orbit:after{inset:62px}
+    .crest{position:relative;width:176px;height:176px;border:1px solid rgba(229,204,160,.65);border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.015));box-shadow:0 0 0 16px rgba(255,255,255,.025),0 0 70px rgba(0,0,0,.18)}
+    .crest svg{width:82px;height:82px}
+    .floating-card{position:absolute;background:#fff;color:var(--navy);padding:16px 18px;box-shadow:var(--shadow);border-radius:5px;min-width:180px}
+    .floating-card small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1.1px;font-weight:700;margin-bottom:4px}
+    .floating-card strong{font-family:Manrope,sans-serif;font-size:15px}
+    .card-top{top:32px;right:-5px}
+    .card-bottom{bottom:25px;left:-8px}
+    .mini-mark{display:inline-grid;place-items:center;width:26px;height:26px;background:#f3eadb;color:#86652e;border-radius:50%;margin-right:7px;font-size:13px}
+    .trust-strip{border-bottom:1px solid var(--line);background:#fff}
+    .trust-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0}
+    .trust-item{display:flex;align-items:center;gap:11px;color:#5d6e7d;font-size:12px;font-weight:600}
+    .trust-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#f4f6f7;color:var(--navy);font-size:15px}
+    .section{padding:94px 0}
+    .section-soft{background:var(--paper)}
+    .section-heading{max-width:650px;margin-bottom:42px}
+    .section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;color:#a47d3e;margin-bottom:13px}
+    h2{font-size:clamp(29px,3.4vw,40px);line-height:1.25;letter-spacing:-1.2px;color:var(--navy);margin-bottom:15px}
+    .section-intro{font-size:14px;color:var(--muted);line-height:1.9;max-width:590px;margin-bottom:0}
+    .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:90px;align-items:start}
+    .about-copy{color:var(--muted);font-size:14px;line-height:2}
+    .about-copy p:last-child{margin-bottom:0}
+    .values{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+    .value-card{padding:25px 23px;border:1px solid var(--line);background:#fff;min-height:190px}
+    .value-number{font-family:Manrope,sans-serif;color:var(--gold);font-size:12px;font-weight:800;margin-bottom:21px}
+    .value-card h3{font-size:16px;color:var(--navy);margin-bottom:9px}
+    .value-card p{font-size:12px;line-height:1.8;color:var(--muted);margin:0}
+    .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .path-card{background:#fff;border:1px solid var(--line);padding:29px;transition:transform .2s,box-shadow .2s}
+    .path-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .path-icon{width:44px;height:44px;display:grid;place-items:center;background:#f3eadb;color:#8a682f;border-radius:50%;font-size:19px;margin-bottom:23px}
+    .path-card h3{font-size:17px;color:var(--navy);margin-bottom:10px}
+    .path-card p{font-size:13px;line-height:1.85;color:var(--muted);margin:0}
+    .portal-panel{background:var(--navy);color:#fff;padding:54px 58px;display:flex;align-items:center;justify-content:space-between;gap:35px;position:relative;overflow:hidden}
+    .portal-panel:after{content:"";position:absolute;width:300px;height:300px;border:1px solid rgba(255,255,255,.08);border-radius:50%;right:16%;top:-210px}
+    .portal-panel>*{position:relative;z-index:1}
+    .portal-panel h2{color:#fff;font-size:30px;margin-bottom:10px}
+    .portal-panel p{color:#c3cfda;font-size:13px;margin:0}
+    .portal-panel .button{flex-shrink:0}
+    .footer{background:#071726;color:white;padding:48px 0 25px}
+    .footer-top{display:flex;justify-content:space-between;gap:40px;padding-bottom:35px}
+    .footer .brand-name{color:#fff}
+    .footer-about{max-width:330px;color:#aab8c5;font-size:12px;line-height:1.9;margin-top:17px}
+    .footer-links{display:flex;gap:65px}
+    .footer-group strong{display:block;color:#fff;font-size:12px;margin-bottom:15px}
+    .footer-group a{display:block;color:#aab8c5;font-size:12px;margin:9px 0}
+    .footer-group a:hover{color:var(--gold-pale)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;gap:20px;color:#8fa0af;font-size:11px}
+    :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr .7fr;gap:25px}.hero-visual{transform:scale(.85)}.nav-links{gap:18px}.about-grid{gap:45px}}
+    @media(max-width:720px){
+      .site-header{height:72px}.menu-toggle{display:block}.nav-links,.nav-actions{display:none}.nav.open{position:relative}.nav.open .nav-links{display:flex;position:absolute;top:71px;left:-5.5%;right:-5.5%;background:#fff;padding:22px 5%;align-items:flex-start;flex-direction:column;border-bottom:1px solid var(--line);box-shadow:0 18px 25px rgba(0,0,0,.08);gap:17px}.nav.open .nav-actions{display:flex;position:absolute;top:calc(71px + 206px);left:-5.5%;right:-5.5%;background:#fff;padding:16px 5% 23px;border-bottom:1px solid var(--line)}
+      .hero-inner{display:block;min-height:auto;padding-top:76px;padding-bottom:68px}.hero-visual{display:none}h1{font-size:clamp(40px,11vw,57px)}.trust-inner{display:grid;grid-template-columns:1fr 1fr;gap:17px}.section{padding:70px 0}.about-grid{grid-template-columns:1fr;gap:20px}.values,.path-grid{grid-template-columns:1fr}.value-card{min-height:auto}.portal-panel{padding:36px 28px;align-items:flex-start;flex-direction:column}.portal-panel h2{font-size:26px}.footer-top{flex-direction:column}.footer-links{gap:45px}.footer-bottom{flex-direction:column;gap:7px}
     }
-
-    .nav-menu {
-        gap: 18px;
-    }
-
-    .nav-links {
-        gap: 18px;
-    }
-
-    .nav-actions {
-        gap: 15px;
-    }
-
-    .intro-grid {
-        gap: 45px;
-    }
-}
-
-/* MOBILE */
-
-@media(max-width: 700px) {
-
-    header,
-    .navbar {
-        min-height: 76px;
-    }
-
-    .navbar {
-        justify-content: space-between;
-        gap: 15px;
-    }
-
-    .brand-symbol {
-        width: 34px;
-        height: 34px;
-    }
-
-    .brand-name {
-        font-size: 20px;
-    }
-
-    .menu-toggle {
-        display: block;
-        margin-left: auto;
-        font-size: 13px;
-        letter-spacing: .3px;
-    }
-
-    .nav-menu {
-        display: none;
-        position: absolute;
-        top: calc(100% + 1px);
-        left: -5.55%;
-        right: -5.55%;
-        width: 111.1%;
-        padding: 25px 5%;
-        background: white;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 24px;
-        border-bottom: 1px solid var(--border);
-        box-shadow: 0 15px 25px rgba(0,0,0,.07);
-    }
-
-    .nav-menu.open {
-        display: flex;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 19px;
-    }
-
-    .nav-links a {
-        font-size: 14px;
-    }
-
-    .nav-actions {
-        border-top: 1px solid var(--border);
-        padding-top: 20px;
-        justify-content: flex-start;
-        gap: 22px;
-    }
-
-    .login-link {
-        font-size: 13px;
-    }
-
-    .register-link {
-        padding: 11px 16px;
-        font-size: 12px;
-    }
-
-    .hero {
-        min-height: auto;
-    }
-
-    .hero-content {
-        padding-top: 75px;
-        padding-bottom: 75px;
-    }
-
-    .hero h1 {
-        font-size: 43px;
-    }
-
-    .introduction {
-        padding: 70px 0;
-    }
-
-    .intro-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .intro-heading {
-        font-size: 29px;
-    }
-
-    .learning {
-        padding: 70px 0;
-    }
-
-    .learning-header {
-        display: block;
-    }
-
-    .learning-header h2 {
-        margin-bottom: 14px;
-    }
-
-    .learning-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .learning-item {
-        min-height: auto;
-    }
-
-    .cta-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .cta h2 {
-        font-size: 26px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .footer-links {
-        flex-wrap: wrap;
-        gap: 17px;
-    }
-}
-
-@media(max-width: 380px) {
-    .brand-name {
-        font-size: 18px;
-    }
-
-    .brand {
-        gap: 8px;
-    }
-
-    .hero h1 {
-        font-size: 37px;
-    }
-
-    .hero-content {
-        padding-top: 65px;
-        padding-bottom: 65px;
-    }
-}
-</style>
+    @media(max-width:390px){.brand-name{font-size:19px}.hero-actions .button{width:100%}.trust-inner{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+  </style>
 </head>
-
 <body>
-
-<header>
-    <div class="container navbar">
-
-        <a href="index.html" class="brand" aria-label="SOMFORGE Home">
-
-            <svg class="brand-symbol" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z"
-                      stroke="#102B46" stroke-width="2.4"/>
-
-                <path d="M10 24H17L21 16L26 32L30 22L33 25H38"
-                      stroke="#BD9857" stroke-width="2.7"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-
-            <span class="brand-name">SOM<span>FORGE</span></span>
-
-        </a>
-
-        <button class="menu-toggle" id="menuToggle"
-                aria-label="Open navigation" aria-expanded="false">
-            Menu
-        </button>
-
-        <div class="nav-menu" id="navMenu">
-
-            <nav class="nav-links" id="navLinks">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#learning">Learning</a>
-                <a href="#contact">Contact</a>
-            </nav>
-
-            <div class="nav-actions">
-                <a href="login.html" class="login-link">Student Login</a>
-                <a href="register.html" class="register-link">Get Started</a>
-            </div>
-
-        </div>
-
+<header class="site-header">
+  <div class="container nav" id="siteNav">
+    <a class="brand" href="index.html" aria-label="SOMFORGE home">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 2.8 43 13.5v21L24 45.2 5 34.5v-21L24 2.8Z" stroke="#102B46" stroke-width="2.4"/>
+        <path d="M10 24h7l4-8 5 16 4-10 3 3h5" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">SOM<span>FORGE</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a><a href="#about">About</a><a href="#learning">Learning</a><a href="#portal">Student Portal</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="login-link" href="login.html">Sign in</a>
+      <a class="button button-navy" href="register.html">Create account</a>
     </div>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
+  </div>
 </header>
-
 <main>
-
-<section class="hero" id="home">
-
-    <div class="container hero-content">
-
-        <div class="hero-text">
-
-            <div class="eyebrow">
-                Medical education · Academic development
-            </div>
-
-            <h1>
-                Building knowledge.<br>
-                <span>Shaping future doctors.</span>
-            </h1>
-
-            <p class="hero-description">
-                A dedicated learning environment supporting medical students
-                through structured academic resources, guided learning and
-                collaborative study.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="register.html" class="primary-button">
-                    Join SOMFORGE
-                </a>
-
-                <a href="#about" class="secondary-button">
-                    Discover SOMFORGE
-                </a>
-
-            </div>
-
+  <section class="hero" id="home">
+    <div class="container hero-inner">
+      <div>
+        <div class="eyebrow">Medical education · Academic development</div>
+        <h1>Forging knowledge.<br><span>Shaping tomorrow's doctors.</span></h1>
+        <p class="hero-copy">A focused learning environment for medical students. Access structured academic resources, strengthen your understanding and make your study more purposeful.</p>
+        <div class="hero-actions">
+          <a class="button button-gold" href="register.html">Join SOMFORGE <span aria-hidden="true">→</span></a>
+          <a class="button button-outline" href="#about">Discover our approach</a>
         </div>
-
+        <p class="hero-note"><strong>Built around learning.</strong> Designed to support the journey through medical school.</p>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit"></div>
+        <div class="crest">
+          <svg viewBox="0 0 80 80" fill="none">
+            <path d="M40 5 70 22v36L40 75 10 58V22L40 5Z" stroke="#E5CCA0" stroke-width="1.6"/>
+            <path d="M18 40h12l7-14 8 28 7-18 5 4h7" stroke="#E5CCA0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="floating-card card-top"><small>Our purpose</small><strong>Learn with intention</strong></div>
+        <div class="floating-card card-bottom"><small>Our community</small><strong><span class="mini-mark">✦</span>Grow through knowledge</strong></div>
+      </div>
     </div>
-
-</section>
-
-<section class="introduction" id="about">
-
-    <div class="container intro-grid">
-
-        <div>
-            <div class="section-label">About SOMFORGE</div>
-
-            <h2 class="intro-heading">
-                Supporting the people behind the profession.
-            </h2>
-        </div>
-
-        <div class="intro-text">
-
-            <p>
-                SOMFORGE is a medical learning initiative created to support
-                medical students in their academic and professional development.
-            </p>
-
-            <p>
-                We bring together structured learning resources, academic
-                guidance and opportunities for collaborative study in one
-                accessible environment.
-            </p>
-
-            <p>
-                Our focus is on building a deeper understanding of medicine
-                and developing the knowledge that supports responsible
-                clinical practice.
-            </p>
-
-        </div>
-
+  </section>
+  <section class="trust-strip" aria-label="Platform focus">
+    <div class="container trust-inner">
+      <div class="trust-item"><span class="trust-icon">▤</span>Structured resources</div>
+      <div class="trust-item"><span class="trust-icon">◎</span>Guided learning</div>
+      <div class="trust-item"><span class="trust-icon">⌘</span>Collaborative study</div>
+      <div class="trust-item"><span class="trust-icon">↗</span>Academic development</div>
     </div>
-
-</section>
-
-<section class="learning" id="learning">
-
+  </section>
+  <section class="section" id="about">
     <div class="container">
-
-        <div class="learning-header">
-
-            <div>
-                <div class="section-label">The learning experience</div>
-                <h2>Learning with purpose.</h2>
-            </div>
-
-            <p>
-                A structured academic environment designed to make learning
-                more organised, accessible and collaborative.
-            </p>
-
-        </div>
-
-        <div class="learning-grid">
-
-            <article class="learning-item">
-
-                <div class="learning-number">01</div>
-
-                <h3>Structured Resources</h3>
-
-                <p>
-                    Organised academic materials that support learning
-                    across the medical curriculum.
-                </p>
-
-            </article>
-
-            <article class="learning-item">
-
-                <div class="learning-number">02</div>
-
-                <h3>Guided Learning</h3>
-
-                <p>
-                    Opportunities to strengthen understanding through
-                    focused teaching and academic support.
-                </p>
-
-            </article>
-
-            <article class="learning-item">
-
-                <div class="learning-number">03</div>
-
-                <h3>Collaborative Study</h3>
-
-                <p>
-                    A learning environment that encourages discussion,
-                    shared understanding and academic growth.
-                </p>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section class="cta" id="contact">
-
-    <div class="container cta-content">
-
+      <div class="about-grid">
         <div>
-            <h2>Take the next step in your learning.</h2>
-
-            <p>
-                Become part of the SOMFORGE learning community.
-            </p>
+          <div class="section-label">About SOMFORGE</div>
+          <h2>Supporting the people behind the profession.</h2>
         </div>
-
-        <a href="register.html" class="primary-button">
-            Create Your Account
-        </a>
-
+        <div class="about-copy">
+          <p>SOMFORGE is a medical learning initiative created to support students throughout their academic and professional development.</p>
+          <p>We bring together learning resources, academic guidance and opportunities for collaborative study in one accessible environment. Our aim is to make it easier for students to find useful material and approach their studies with greater structure.</p>
+          <p>Because good clinical practice begins with a strong foundation of knowledge, curiosity and consistent learning.</p>
+        </div>
+      </div>
+      <div class="values">
+        <article class="value-card"><div class="value-number">01 / UNDERSTAND</div><h3>Build strong foundations</h3><p>Develop a deeper understanding of core medical concepts rather than relying on memorisation alone.</p></article>
+        <article class="value-card"><div class="value-number">02 / APPLY</div><h3>Connect learning to practice</h3><p>Use structured academic resources to support clinical reasoning and the application of knowledge.</p></article>
+        <article class="value-card"><div class="value-number">03 / PROGRESS</div><h3>Keep moving forward</h3><p>Make learning more organised, accessible and consistent throughout medical training.</p></article>
+      </div>
     </div>
-
-</section>
-
+  </section>
+  <section class="section section-soft" id="learning">
+    <div class="container">
+      <div class="section-heading">
+        <div class="section-label">The learning experience</div>
+        <h2>A more purposeful way to learn.</h2>
+        <p class="section-intro">A growing academic environment designed to bring essential learning activities together and help students make better use of their study time.</p>
+      </div>
+      <div class="path-grid">
+        <article class="path-card"><div class="path-icon">▤</div><h3>Academic resources</h3><p>Find organised notes, presentations and other learning materials to support your medical studies.</p></article>
+        <article class="path-card"><div class="path-icon">⌕</div><h3>Examination preparation</h3><p>Prepare with academic practice materials and past-paper resources as they become available.</p></article>
+        <article class="path-card"><div class="path-icon">▶</div><h3>Guided learning</h3><p>Strengthen understanding through focused teaching, discussion and collaborative study.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="portal">
+    <div class="container">
+      <div class="portal-panel">
+        <div><div class="section-label">Your learning space</div><h2>Continue your journey with SOMFORGE.</h2><p>Sign in to access your student portal and available learning resources.</p></div>
+        <a class="button button-gold" href="login.html">Enter student portal <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 </main>
-
-<footer>
-
-    <div class="container footer-content">
-
-        <div>
-
-            <a href="index.html" class="brand brand-light">
-
-                <svg class="brand-symbol" viewBox="0 0 48 48"
-                     fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                    <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z"
-                          stroke="#FFFFFF" stroke-width="2.4"/>
-
-                    <path d="M10 24H17L21 16L26 32L30 22L33 25H38"
-                          stroke="#BD9857" stroke-width="2.7"
-                          stroke-linecap="round" stroke-linejoin="round"/>
-
-                </svg>
-
-                <span class="brand-name">SOM<span>FORGE</span></span>
-
-            </a>
-
-            <p class="footer-copy" style="margin-top:12px;">
-                © <span id="year"></span> SOMFORGE. All rights reserved.
-            </p>
-
-        </div>
-
-        <div class="footer-links">
-
-            <a href="#about">About</a>
-            <a href="#learning">Learning</a>
-            <a href="login.html">Student Login</a>
-            <a href="register.html">Register</a>
-
-        </div>
-
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a class="brand" href="index.html">
+          <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 2.8 43 13.5v21L24 45.2 5 34.5v-21L24 2.8Z" stroke="#fff" stroke-width="2.4"/><path d="M10 24h7l4-8 5 16 4-10 3 3h5" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="brand-name">SOM<span>FORGE</span></span>
+        </a>
+        <p class="footer-about">A medical learning initiative supporting academic development through structured resources, guided learning and collaborative study.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-group"><strong>Explore</strong><a href="#about">About SOMFORGE</a><a href="#learning">Learning</a><a href="#portal">Student portal</a></div>
+        <div class="footer-group"><strong>Your account</strong><a href="login.html">Student login</a><a href="register.html">Create account</a></div>
+      </div>
     </div>
-
+    <div class="footer-bottom"><span>© <span id="year"></span> SOMFORGE. All rights reserved.</span><span>Forging the doctors of tomorrow.</span></div>
+  </div>
 </footer>
-
 <script>
-
-const menuToggle = document.getElementById("menuToggle");
-const navMenu = document.getElementById("navMenu");
-
-menuToggle.addEventListener("click", function() {
-
-    const isOpen = navMenu.classList.toggle("open");
-
-    menuToggle.setAttribute("aria-expanded", isOpen);
-    menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation" : "Open navigation"
-    );
-
-    menuToggle.textContent = isOpen ? "Close" : "Menu";
-
-});
-
-document.querySelectorAll(".nav-menu a").forEach(link => {
-
-    link.addEventListener("click", function() {
-
-        navMenu.classList.remove("open");
-
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Open navigation");
-        menuToggle.textContent = "Menu";
-
-    });
-
-});
-
-document.getElementById("year").textContent =
-    new Date().getFullYear();
-
+  const nav = document.getElementById('siteNav');
+  const toggle = document.getElementById('menuToggle');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.textContent = open ? 'Close' : 'Menu';
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => {
+    nav.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = 'Menu';
+  }));
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
