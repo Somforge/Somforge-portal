@@ -801,7 +801,9 @@ td small{font-size:12px;line-height:1.5}
                 <input type="search" id="subscriptionSearch" class="search" placeholder="Search subscriptions…">
             </div>
             <div class="table-wrap"><table><thead><tr><th>Student</th><th>Start date</th><th>Expiry date</th><th>Status</th><th>Action</th></tr></thead><tbody id="subscriptionsTable"><tr><td colspan="5" class="empty">Loading subscriptions…</td></tr></tbody></table></div>
-            <p class="info-text subscription-help">Approve student accounts before activating subscriptions. The packages are K120 for 30 days, K320 for 90 days and K550 for 180 days (one six-month semester). Active subscriptions can be extended or suspended.</p>
+            <p class="info-text subscription-help">The packages are K120 for 30 days, K320 for 90 days and K550 for 180 days. Payment approvals activate or extend all-course access for the student's registered year.</p>
+            <div class="panel-heading" style="margin-top:30px"><div><span class="panel-kicker">PAYMENT VERIFICATION</span><h2>Payment submissions</h2><p>Check the transaction reference and confirm the screenshot has arrived on WhatsApp before approving.</p></div><button class="btn btn-refresh" type="button" id="refreshPaymentsBtn">Refresh</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Package</th><th>Payment details</th><th>Submitted</th><th>Status</th><th>Review</th></tr></thead><tbody id="paymentsTable"><tr><td colspan="6" class="empty">Loading payment submissions…</td></tr></tbody></table></div>
         </div>
         </section>
 
@@ -866,6 +868,7 @@ const supabaseClient = window.supabase.createClient(
 
 let students = [];
 let subscriptions = [];
+let paymentSubmissions = [];
 let courses = [];
 let learningMaterials = [];
 
@@ -1081,8 +1084,18 @@ async function loadData() {
         return;
     }
 
+    const { data: paymentData, error: paymentError } = await supabaseClient
+        .from("payment_submissions")
+        .select("id,student_id,package_code,amount_zmw,duration_days,payment_method,sender_phone,transaction_reference,status,admin_note,created_at")
+        .order("created_at", { ascending: false });
+    if (paymentError) {
+        showMessage("Could not load payment submissions: " + paymentError.message, "error");
+        return;
+    }
+
     students = studentData || [];
     subscriptions = subscriptionData || [];
+    paymentSubmissions = paymentData || [];
 
     updateStatistics();
     renderStudents();
@@ -1114,6 +1127,50 @@ function updateStatistics() {
     document.getElementById("activeSubscriptions").textContent =
         activeCount;
     renderSubscriptions();
+    renderPaymentSubmissions();
+}
+
+/* PAYMENT SUBMISSIONS */
+function renderPaymentSubmissions() {
+    const body = document.getElementById("paymentsTable");
+    if (!body) return;
+    const rows = paymentSubmissions.filter(item => item.status === "pending");
+    if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="6" class="empty">There are no pending payment submissions.</td></tr>';
+        return;
+    }
+    body.innerHTML = rows.map(item => {
+        const student = students.find(person => person.id === item.student_id);
+        const pkg = item.package_code === "monthly" ? "1 month" : item.package_code === "quarterly" ? "3 months" : "6-month semester";
+        const method = item.payment_method === "mtn" ? "MTN Money" : item.payment_method === "airtel" ? "Airtel Money" : "Bank transfer";
+        const phone = item.sender_phone ? '<br><small>Paid from: ' + escapeHTML(item.sender_phone) + '</small>' : "";
+        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + pkg + '<br><strong>K' + item.amount_zmw + '</strong></td><td>' + method + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge pending">Pending</span></td><td><button class="btn btn-approve" onclick="reviewPayment(\'' + item.id + '\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\'' + item.id + '\',false)">Reject</button></td></tr>';
+    }).join("");
+}
+
+async function reviewPayment(paymentId, approve) {
+    const payment = paymentSubmissions.find(item => item.id === paymentId);
+    if (!payment) return;
+    const student = students.find(person => person.id === payment.student_id);
+    if (approve && student?.account_status !== "approved") {
+        showMessage("Approve the student's account before activating a subscription.", "error");
+        return;
+    }
+    const action = approve ? "approve this payment and activate the subscription?" : "reject this payment submission?";
+    if (!confirm("After checking the transaction and WhatsApp screenshot, " + action)) return;
+    const note = prompt(approve ? "Optional note for the student:" : "Reason for rejection (shown to the student):", "");
+    if (note === null) return;
+    const { data, error } = await supabaseClient.rpc("admin_review_payment", {
+        p_payment_id: paymentId,
+        p_approve: approve,
+        p_note: note.trim() || null
+    });
+    if (error) {
+        showMessage("Payment review failed: " + error.message, "error");
+        return;
+    }
+    showMessage(approve ? "Payment verified. Student access has been activated or extended." : "Payment rejected.");
+    await loadData();
 }
 
 /* SUBSCRIPTION REGISTER */
@@ -1667,6 +1724,7 @@ document.querySelectorAll(".admin-nav a[data-view]").forEach(link => link.addEve
 }));
 document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showAdminView(button.dataset.go)));
 document.getElementById("subscriptionSearch").addEventListener("input", renderSubscriptions);
+document.getElementById("refreshPaymentsBtn")?.addEventListener("click", loadData);
 
 /* START APPLICATION */
 
