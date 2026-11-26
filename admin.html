@@ -663,6 +663,13 @@ td small{font-size:12px;line-height:1.5}
  .container{padding:70px 14px 25px!important}
 }
 
+.payment-history-tools{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.payment-history-tools .search{flex:1 1 280px;width:auto}
+.payment-history-tools select{min-width:170px;padding:12px 14px;border:1px solid var(--admin-line);border-radius:7px;background:#fff;color:var(--admin-ink);font:inherit}
+.payment-history-summary{display:flex;gap:10px 22px;flex-wrap:wrap;margin:0 0 14px;padding:13px 15px;border:1px solid var(--admin-line);border-radius:7px;background:#f8f5ef;color:var(--admin-muted);font-size:12px}
+.payment-history-summary strong{color:var(--admin-ink)}
+@media(max-width:520px){.payment-history-tools{display:grid}.payment-history-tools .search,.payment-history-tools select{width:100%}}
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"></head>
 
@@ -1547,12 +1554,7 @@ async function suspendSubscription(subscriptionId) {
 
 
 
-.payment-history-tools{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 14px}
-.payment-history-tools .search{flex:1 1 280px;width:auto}
-.payment-history-tools select{min-width:170px;padding:12px 14px;border:1px solid var(--admin-line);border-radius:7px;background:#fff;color:var(--admin-ink);font:inherit}
-.payment-history-summary{display:flex;gap:10px 22px;flex-wrap:wrap;margin:0 0 14px;padding:13px 15px;border:1px solid var(--admin-line);border-radius:7px;background:#f8f5ef;color:var(--admin-muted);font-size:12px}
-.payment-history-summary strong{color:var(--admin-ink)}
-@media(max-width:520px){.payment-history-tools{display:grid}.payment-history-tools .search,.payment-history-tools select{width:100%}}
+
 
 /* CONTENT MANAGEMENT */
 const STORAGE_BUCKET = "learning-materials";
