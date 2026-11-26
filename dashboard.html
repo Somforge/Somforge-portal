@@ -664,6 +664,57 @@ button {
         grid-template-columns: 1fr;
     }
 }
+ 
+/* DASHBOARD FINISHING DETAILS */
+.nav-icon-svg { width:19px; height:19px; flex:0 0 19px; }
+.nav-links a { min-height:44px; }
+.hero { border-radius:14px; padding:48px 46px; min-height:242px; box-shadow:0 16px 38px rgba(16,43,70,.12); }
+.hero::before { width:360px; height:360px; right:-82px; top:-190px; }
+.hero::after { width:270px; height:270px; right:4px; top:-145px; }
+.hero h1 { font-size:clamp(27px,3vw,36px); letter-spacing:-.8px; line-height:1.2; }
+.hero p { max-width:520px; font-size:14px; }
+.hero-action { display:inline-flex; align-items:center; gap:15px; margin-top:22px; padding:11px 16px; border-radius:6px; background:#fff; color:var(--navy); font-size:12px; font-weight:800; transition:transform .2s,background .2s; }
+.hero-action:hover { background:#F4EBDD; transform:translateY(-2px); }
+.section { margin-bottom:38px; }
+.section-heading { display:flex; flex-direction:column; align-items:flex-start; }
+.section-heading h2 { font-size:21px; letter-spacing:-.35px; }
+.overview-card { position:relative; overflow:hidden; border-radius:12px; padding:23px 24px; transition:transform .2s,box-shadow .2s; }
+.overview-card:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(16,43,70,.08); }
+.overview-card::before { content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--teal); opacity:.8; }
+.overview-card:nth-child(2)::before { background:var(--gold); }
+.overview-card:nth-child(3)::before { background:#6C83B8; }
+.overview-label { font-weight:700; letter-spacing:.15px; }
+.overview-value { font-size:23px; }
+.status-pill { display:inline-flex; align-items:center; gap:7px; width:max-content; max-width:100%; border-radius:30px; padding:6px 11px; font-family:"DM Sans",sans-serif; font-size:13px; font-weight:800; line-height:1.2; background:#EEF2F5; color:#536575; }
+.status-pill::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; flex:0 0 7px; }
+.status-pill.approved,.status-pill.active { background:#E8F5EF; color:#167347; }
+.status-pill.pending { background:#FFF5DF; color:#9A690B; }
+.status-pill.rejected,.status-pill.inactive,.status-pill.unavailable { background:#FDEAEA; color:#B42318; }
+.quick-links { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.quick-link { position:relative; min-height:166px; border-radius:12px; padding:23px; }
+.quick-link h3 { font-size:15px; }
+.quick-link p { font-size:12px; }
+.quick-icon { display:flex; align-items:center; min-height:26px; }
+.quick-icon .nav-icon-svg { width:23px; height:23px; flex-basis:23px; }
+.quick-arrow { margin-top:14px; font-weight:700; }
+.announcement { border-radius:11px; padding:24px 26px; }
+.notice { border-radius:11px; background:#F0F5F6; border-color:#DFE9EA; }
+.footer { margin-top:34px; padding-top:22px; }
+@media(max-width:1100px) { .hero { padding:40px 34px; } .quick-links { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:680px) {
+ .hero { padding:29px 22px; min-height:unset; border-radius:12px; }
+ .hero h1 { font-size:25px; }
+ .hero p { font-size:12px; }
+ .hero-action { margin-top:18px; }
+ .overview-grid { grid-template-columns:1fr 1fr; }
+ .overview-card:last-child { grid-column:auto; }
+ .overview-value { font-size:17px; }
+ .quick-links { grid-template-columns:1fr 1fr; }
+ .quick-link { min-height:155px; }
+ .section-heading h2 { font-size:19px; }
+}
+@media(max-width:370px) { .overview-grid,.quick-links { grid-template-columns:1fr; } }
+
 </style>
 </head>
 
@@ -678,7 +729,7 @@ button {
         <div>SOM<span>FORGE</span></div>
     </div>
 
-    <button class="menu-button" id="menuButton" aria-label="Open navigation">☰</button>
+    <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
 </header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -700,18 +751,11 @@ button {
         <li><a href="courses.html"><span class="nav-icon">▦</span>My Courses</a></li>
     </ul>
 
-    <div class="nav-caption">Learning</div>
-
-    <ul class="nav-links">
-        <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
-        <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
-        <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
-    </ul>
-
     <div class="nav-caption">Account</div>
 
     <ul class="nav-links">
         <li><a href="account.html"><span class="nav-icon">◎</span>My Account</a></li>
+        <li><a href="account.html#subscription"><svg class="nav-icon nav-icon-svg" width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Subscription</span></a></li>
     </ul>
 
     <div class="sidebar-bottom">
@@ -748,10 +792,10 @@ button {
                 <h1 id="welcomeMessage">Welcome to your dashboard.</h1>
                 <p>
                     Your academic workspace for medical learning,
-                    revision and professional development.
-                    Everything you need to continue your learning
-                    journey is accessible from here.
+                    revision and professional development. Pick up
+                    where you left off and keep moving forward.
                 </p>
+                <a class="hero-action" href="courses.html">Explore my courses <span aria-hidden="true">→</span></a>
             </div>
         </section>
 
@@ -804,31 +848,17 @@ button {
                     <span class="quick-arrow">→</span>
                 </a>
 
-                <a href="learning.html" class="quick-link">
-                    <div class="quick-icon">▤</div>
-                    <h3>Learning Centre</h3>
-                    <p>Access notes, presentations and recorded lectures.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
-                <a href="examinations.html" class="quick-link">
-                    <div class="quick-icon">✎</div>
-                    <h3>Examination Centre</h3>
-                    <p>Prepare with past papers and practice questions.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
-                <a href="live-learning.html" class="quick-link">
-                    <div class="quick-icon">▶</div>
-                    <h3>Live Learning</h3>
-                    <p>Find scheduled online classes and recordings.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
                 <a href="account.html" class="quick-link">
                     <div class="quick-icon">◎</div>
                     <h3>My Account</h3>
-                    <p>View your personal details and subscription information.</p>
+                    <p>Review your personal details, account status and subscription.</p>
+                    <span class="quick-arrow">→</span>
+                </a>
+
+                <a href="account.html#subscription" class="quick-link">
+                    <div class="quick-icon"><svg class="nav-icon nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+                    <h3>Subscription</h3>
+                    <p>Check your learning access, subscription status and expiry date.</p>
                     <span class="quick-arrow">→</span>
                 </a>
 
@@ -902,6 +932,7 @@ function closeMenu() {
     sidebar.classList.remove("open");
     menuOverlay.classList.remove("show");
     menuButton.textContent = "☰";
+    menuButton.setAttribute("aria-expanded", "false");
 }
 
 menuButton.addEventListener("click", function() {
@@ -909,6 +940,7 @@ menuButton.addEventListener("click", function() {
 
     menuOverlay.classList.toggle("show", open);
     menuButton.textContent = open ? "✕" : "☰";
+    menuButton.setAttribute("aria-expanded", String(open));
 });
 
 menuOverlay.addEventListener("click", closeMenu);
@@ -984,20 +1016,26 @@ async function loadDashboard() {
             profile.year_level || "Academic year not assigned";
 
         const approved = profile.account_status === "approved";
+        const accountStatus = profile.account_status || "pending";
 
-        document.getElementById("accountStatus").textContent =
-            approved ? "Approved" : "Pending";
+        const accountStatusElement = document.getElementById("accountStatus");
+        accountStatusElement.textContent = accountStatus.charAt(0).toUpperCase() + accountStatus.slice(1);
+        accountStatusElement.className = "overview-value status-pill " + accountStatus;
 
         if (!approved) {
 
-            document.getElementById("subscriptionStatus").textContent =
-                "Unavailable";
+            const subscriptionStatusElement = document.getElementById("subscriptionStatus");
+            subscriptionStatusElement.textContent = "Unavailable";
+            subscriptionStatusElement.className = "overview-value status-pill unavailable";
 
             document.getElementById("subscriptionDetail").textContent =
-                "Awaiting account approval";
+                profile.account_status === "rejected"
+                    ? "Registration not approved"
+                    : "Awaiting account approval";
 
-            accessMessage.textContent =
-                "Your account is awaiting administrator approval. Please check again after the administrator has approved it.";
+            accessMessage.textContent = profile.account_status === "rejected"
+                ? "Your registration was not approved. Please contact the SOMFORGE administrator for assistance."
+                : "Your account is awaiting administrator approval. Please check again after the administrator has approved it.";
 
             return;
         }
@@ -1029,8 +1067,9 @@ async function loadDashboard() {
 
         if (activeSubscription) {
 
-            document.getElementById("subscriptionStatus").innerHTML =
-                '<span class="status-dot"></span>Active';
+            const subscriptionStatusElement = document.getElementById("subscriptionStatus");
+            subscriptionStatusElement.textContent = "Active";
+            subscriptionStatusElement.className = "overview-value status-pill active";
 
             document.getElementById("subscriptionDetail").textContent =
                 "Expires " +
@@ -1041,8 +1080,9 @@ async function loadDashboard() {
 
         } else {
 
-            document.getElementById("subscriptionStatus").textContent =
-                "Inactive";
+            const subscriptionStatusElement = document.getElementById("subscriptionStatus");
+            subscriptionStatusElement.textContent = "Inactive";
+            subscriptionStatusElement.className = "overview-value status-pill inactive";
 
             document.getElementById("subscriptionDetail").textContent =
                 "Activation or renewal required";

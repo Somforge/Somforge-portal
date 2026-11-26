@@ -160,6 +160,9 @@ button, input { font: inherit; }
     border-radius: 4px;
     font-size: 12px;
     font-weight: 700;
+}
+
+.status.approved {
     background: #e8f5ef;
     color: #167347;
 }
@@ -169,7 +172,8 @@ button, input { font: inherit; }
     color: #9a690b;
 }
 
-.status.suspended {
+.status.rejected,
+.status.unknown {
     background: #fdeaea;
     color: #b42318;
 }
@@ -303,11 +307,9 @@ button, input { font: inherit; }
     <div class="nav-label">Main menu</div>
 
     <a class="nav-link" href="dashboard.html">Dashboard</a>
-    <a class="nav-link" href="dashboard.html#courses">My Courses</a>
-    <a class="nav-link" href="dashboard.html#learning">Learning Centre</a>
-    <a class="nav-link" href="dashboard.html#examinations">Examination Centre</a>
-    <a class="nav-link" href="dashboard.html#live">Live Learning</a>
-    <a class="nav-link active" href="account.html">My Account</a>
+    <a class="nav-link" href="courses.html">My Courses</a>
+    <a class="nav-link active" href="account.html" aria-current="page">My Account</a>
+    <a class="nav-link" href="account.html#subscription">▣ &nbsp; Subscription</a>
 </aside>
 
 <main class="main">
@@ -353,7 +355,7 @@ button, input { font: inherit; }
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="subscription">
             <h3>Subscription information</h3>
 
             <div class="subscription-panel">
@@ -442,8 +444,14 @@ function formatDate(dateString) {
 function setStatus(elementId, value) {
     const element = document.getElementById(elementId);
     const status = String(value || "Unknown").toLowerCase();
+    const allowedStatuses = ["approved", "pending", "rejected"];
+    const safeStatus = allowedStatuses.includes(status) ? status : "unknown";
 
-    element.innerHTML = `<span class="status ${status}">${value || "Unknown"}</span>`;
+    element.replaceChildren();
+    const badge = document.createElement("span");
+    badge.className = "status " + safeStatus;
+    badge.textContent = value || "Unknown";
+    element.appendChild(badge);
 }
 
 async function loadAccount() {

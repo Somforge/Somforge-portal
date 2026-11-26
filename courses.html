@@ -780,18 +780,11 @@ button {
     <li><a href="courses.html" class="active"><span class="nav-icon">▦</span>My Courses</a></li>
 </ul>
 
-<div class="nav-caption">Learning</div>
-
-<ul class="nav-links">
-    <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
-    <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
-    <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
-</ul>
-
 <div class="nav-caption">Account</div>
 
 <ul class="nav-links">
     <li><a href="account.html"><span class="nav-icon">◎</span>My Account</a></li>
+    <li><a href="account.html#subscription"><svg class="nav-icon nav-icon-svg" width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Subscription</span></a></li>
 </ul>
 
 <div class="sidebar-bottom">
@@ -889,36 +882,11 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-/* COURSE CODES */
+/* COURSE IDENTIFICATION
 
-const COURSE_CODES = {
-    "year 2": {
-        "anatomy": "MBS 200",
-        "physiology": "MBS 210",
-        "pathology": "MBS 220",
-        "therapeutics": "MBS 230",
-        "biochemistry": "MBS 230",
-        "clinical sciences": "MCS 200"
-    },
-
-    "year 3": {
-        "anatomy": "MBS 300",
-        "physiology": "MBS 310",
-        "pathology": "MBS 320",
-        "therapeutics": "MBS 330",
-        "biochemistry": "MBS 330",
-        "clinical sciences": "MCS 300"
-    }
-};
-
-function getCourseCode(title, yearLevel) {
-
-    const year = (yearLevel || "").trim().toLowerCase();
-    const course = (title || "").trim().toLowerCase();
-
-    return COURSE_CODES[year]?.[course] || "COURSE";
-}
-
+   Course codes are not stored in the current database schema.
+   Display the verified academic year instead of assigning guessed codes.
+*/
 
 /* MOBILE MENU */
 
@@ -1131,7 +1099,7 @@ async function loadCourses(yearLevel) {
     courses.forEach((course, index) => {
 
         const details = getCourseDetails(course.title);
-        const courseCode = getCourseCode(course.title, yearLevel);
+        const courseLabel = yearLevel.toUpperCase();
 
         const card = document.createElement("a");
 
@@ -1168,7 +1136,8 @@ async function loadCourses(yearLevel) {
 
         const code = document.createElement("div");
         code.className = "course-code";
-        code.textContent = courseCode;
+        code.setAttribute("aria-label", "Academic year " + yearLevel);
+        code.textContent = courseLabel;
 
         const title = document.createElement("h3");
         title.textContent = course.title;
