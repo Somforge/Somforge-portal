@@ -1009,17 +1009,15 @@ async function loadDashboard() {
             return;
         }
 
-        const { data: authData, error: authError } =
-            await supabaseClient.auth.getUser();
+        // getSession() already provides the signed-in user from the
+        // persisted session. Avoid a second network request to auth.getUser()
+        // before loading the student's profile.
+        const user = sessionData.session.user;
 
-        if (authError) throw authError;
-
-        if (!authData.user) {
+        if (!user) {
             window.location.replace("login.html");
             return;
         }
-
-        const user = authData.user;
 
         const { data: profile, error: profileError } =
             await supabaseClient
