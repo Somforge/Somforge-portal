@@ -1134,9 +1134,9 @@ function updateStatistics() {
 function renderPaymentSubmissions() {
     const body = document.getElementById("paymentsTable");
     if (!body) return;
-    const rows = paymentSubmissions.filter(item => item.status === "pending");
+    const rows = [...paymentSubmissions];
     if (!rows.length) {
-        body.innerHTML = '<tr><td colspan="6" class="empty">There are no pending payment submissions.</td></tr>';
+        body.innerHTML = '<tr><td colspan="6" class="empty">No payment submissions have been received yet.</td></tr>';
         return;
     }
     body.innerHTML = rows.map(item => {
@@ -1144,7 +1144,11 @@ function renderPaymentSubmissions() {
         const pkg = item.package_code === "monthly" ? "1 month" : item.package_code === "quarterly" ? "3 months" : "6-month semester";
         const method = item.payment_method === "mtn" ? "MTN Money" : item.payment_method === "airtel" ? "Airtel Money" : "Bank transfer";
         const phone = item.sender_phone ? '<br><small>Paid from: ' + escapeHTML(item.sender_phone) + '</small>' : "";
-        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + pkg + '<br><strong>K' + item.amount_zmw + '</strong></td><td>' + method + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge pending">Pending</span></td><td><button class="btn btn-approve" onclick="reviewPayment(\'' + item.id + '\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\'' + item.id + '\',false)">Reject</button></td></tr>';
+        const badgeClass = item.status === "approved" ? "active" : item.status === "rejected" ? "rejected" : "pending";
+        const reviewActions = item.status === "pending"
+            ? '<button class="btn btn-approve" onclick="reviewPayment(\\'' + item.id + '\\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\\'' + item.id + '\\',false)">Reject</button>'
+            : escapeHTML(item.admin_note || "Reviewed");
+        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + pkg + '<br><strong>K' + item.amount_zmw + '</strong></td><td>' + method + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge ' + badgeClass + '">' + escapeHTML(item.status) + '</span></td><td>' + reviewActions + '</td></tr>';
     }).join("");
 }
 
