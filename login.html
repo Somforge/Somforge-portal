@@ -743,7 +743,7 @@ body{background:var(--background);color:var(--text)}.topbar{background:rgba(246,
                       : error.message);
                     loginButton.disabled=false; loginButton.textContent="Sign In"; return;
                 }
-                const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("account_status").eq("id",data.user.id).maybeSingle();
+                const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("role,account_status").eq("id",data.user.id).maybeSingle();
                 if(profileError) {
                     await supabaseClient.auth.signOut();
                     showMessage("We could not verify your account status. Please try again.");
@@ -756,7 +756,7 @@ body{background:var(--background);color:var(--text)}.topbar{background:rgba(246,
                 }
                 showMessage(profile && profile.account_status==="pending" ? "Signed in. Your account is awaiting administrator approval." : "Sign in successful. Redirecting...","success");
                 loginButton.textContent="Please wait...";
-                window.location.replace("dashboard.html");
+                window.location.replace(profile && profile.role === "admin" ? "admin.html" : "dashboard.html");
             } catch(error) {
                 showMessage("Something went wrong. Check your connection and try again.");
                 loginButton.disabled=false; loginButton.textContent="Sign In";
@@ -766,7 +766,12 @@ body{background:var(--background);color:var(--text)}.topbar{background:rgba(246,
         /* CURRENT YEAR */
 
         document.getElementById("year").textContent = new Date().getFullYear();
-        supabaseClient.auth.getSession().then(({data:{session}})=>{if(session)window.location.replace("dashboard.html");}).catch(error=>console.warn("Session check failed:",error));
+        supabaseClient.auth.getSession().then(async ({data:{session}})=>{
+            if(!session) return;
+            const {data:profile,error}=await supabaseClient.from("profiles").select("role").eq("id",session.user.id).maybeSingle();
+            if(error){console.warn("Could not resolve signed-in account role:",error);return;}
+            window.location.replace(profile && profile.role === "admin" ? "admin.html" : "dashboard.html");
+        }).catch(error=>console.warn("Session check failed:",error));
 
     </script>
 
