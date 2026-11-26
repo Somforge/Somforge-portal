@@ -24,6 +24,53 @@
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:7px}table{width:100%;min-width:650px;border-collapse:collapse;background:#fff}th,td{text-align:left;padding:14px 13px;border-bottom:1px solid #eee9e0;font-size:12px;line-height:1.5}th{background:#f7f4ee;color:#697681;font-size:10px;letter-spacing:.7px;text-transform:uppercase}tbody tr:last-child td{border-bottom:0}.payment-status{font-weight:800;text-transform:capitalize}.whatsapp-link{display:inline-block;margin-top:14px;color:#28745d;font-size:13px;font-weight:700}
 @media(max-width:1050px){.content{padding:34px 27px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.sidebar{width:275px;max-width:86%;transform:translateX(-105%);transition:transform .25s ease;box-shadow:8px 0 30px rgba(0,0,0,.18)}.sidebar.open{transform:translateX(0)}.menu-overlay{position:fixed;inset:0;background:rgba(8,24,43,.48);z-index:90}.menu-overlay.show{display:block}.mobile-header{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 17px;background:var(--navy);position:sticky;top:0;z-index:80}.mobile-brand{color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:20px;font-weight:600;letter-spacing:.7px}.mobile-brand span{color:var(--gold)}.menu-button{border:0;background:transparent;color:#fff;font-size:24px;padding:6px}.main{margin-left:0}.topbar{height:61px;padding:0 17px}.breadcrumb{display:none}.profile-name{font-size:12px}.content{padding:25px 16px 40px}.page-heading h1{font-size:30px}.page-heading p{font-size:13px}.panel{padding:20px 17px}.detail-grid,.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.package-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Subscription page refinements */
+.page-heading{margin-bottom:26px}
+.page-heading h1{font-size:38px;line-height:1.2;letter-spacing:-.6px}
+.panel{padding:28px;margin-bottom:22px}
+.panel-head{align-items:flex-start}
+.subscription-banner{margin:0 0 18px;padding:22px 24px}
+.subscription-banner h2{line-height:1.35}
+.subscription-banner p{max-width:760px}
+#subscriptionBadge{white-space:nowrap}
+.stats-grid{gap:14px}
+.stat{min-height:91px;padding:17px 18px}
+.stat span{font-size:11px;letter-spacing:.15px}
+.stat strong{display:block;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.package-grid{gap:15px;margin:22px 0 24px}
+.package{position:relative;min-height:140px;padding:21px 20px;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.package strong{font-size:32px;line-height:1.2;letter-spacing:-.4px}
+.package span{margin:0;line-height:1.5}
+.package .package-period{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:#92764b}
+.package-featured{border-color:#c5a166;background:#fbf8f2}
+.payment-details{padding:22px 23px;margin:0 0 25px;background:#f8f6f1}
+.payment-details h3,.form-section h3{font:500 19px "Playfair Display",Georgia,serif;color:var(--navy);margin-bottom:15px}
+.payment-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:15px 0 17px}
+.payment-methods>div{padding:15px 16px;border:1px solid var(--border);border-radius:7px;background:#fff;display:flex;flex-direction:column;gap:5px}
+.payment-methods span{font-size:11px;color:var(--muted)}
+.payment-methods strong{font-size:17px;letter-spacing:.3px;color:var(--navy)}
+.payment-methods small{font-size:11px;color:var(--muted)}
+.payment-details p{font-size:12px;line-height:1.75;color:#566271;margin-top:10px}
+.payment-details .payment-note{padding-top:11px;border-top:1px solid var(--border);font-size:11px}
+.form-section{padding-top:2px}
+.form-section h3{margin-bottom:5px}
+.form-grid{margin-top:21px;gap:0 18px}
+.form-group{margin-bottom:18px}
+.form-group label{font-size:12px;line-height:1.5}
+.form-group input,.form-group select{min-height:47px;padding:12px 13px;font-size:13px}
+.form-group input::placeholder{color:#9aa1a8}
+.optional{font-size:10px;font-weight:400;color:var(--muted)}
+.form-actions{padding-top:3px}
+.btn{min-height:45px;padding:13px 20px;font-size:12px;letter-spacing:.1px}
+.message{max-width:720px}
+.whatsapp-link{line-height:1.6}
+.table-wrap{margin-top:3px}
+table{min-width:720px}
+th,td{padding:14px 15px;vertical-align:middle}
+.payment-status{display:inline-block}
+@media(max-width:900px){.content{max-width:100%;padding-left:26px;padding-right:26px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.content{padding:24px 15px 38px}.page-heading{padding-bottom:20px;margin-bottom:20px}.page-heading h1{font-size:31px}.panel{padding:20px 16px;margin-bottom:16px}.panel-head{margin-bottom:17px}.subscription-banner{padding:19px 18px}.subscription-banner h2{font-size:21px}.stats-grid{gap:9px}.stat{padding:14px 12px;min-height:84px}.stat strong{font-size:12px}.package-grid{grid-template-columns:1fr;gap:10px;margin:17px 0 20px}.package{min-height:108px;padding:16px 18px}.package strong{font-size:29px}.payment-details{padding:17px 15px}.payment-methods{grid-template-columns:1fr;gap:9px}.payment-methods>div{padding:13px}.form-grid{grid-template-columns:1fr;gap:0}.form-grid .full{grid-column:auto}.form-group input,.form-group select{min-height:46px}.btn{width:100%}}
 </style></head><body>
 <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 <aside class="sidebar" id="sidebar"><div class="brand">SOM<span>FORGE</span></div><div class="nav-caption">Learning space</div><ul class="nav-links">
@@ -34,14 +81,68 @@
 <li><a class="" href="settings.html"><span class="nav-icon">⚙</span>Settings</a></li></ul>
 <div class="sidebar-bottom"><div class="sidebar-note">Signed in as<br><strong id="sideName">SOMFORGE student</strong></div><button class="logout" id="logoutButton">Sign out</button></div></aside>
 <div class="main"><div class="mobile-header"><div class="mobile-brand">SOM<span>FORGE</span></div><button class="menu-button" onclick="toggleMenu()" aria-label="Open navigation">☰</button></div>
-<header class="topbar"><div class="breadcrumb">Student portal&nbsp; / &nbsp;<strong>My Account</strong></div><div class="profile-name" id="topName">Loading account...</div></header>
-<main class="content"><section class="intro"><div class="eyebrow">Learning access</div><h2>Subscription overview</h2><p>Review your learning access, renew your plan and track payment verification.</p></section>
-<section class="section"><div class="subscription-panel"><h4 id="subHeading">Checking your subscription…</h4><p id="subMessage">Retrieving your current learning access.</p></div><div class="details-grid">
-<div><div class="detail-label">Activation date</div><div class="detail-value" id="start">—</div></div><div><div class="detail-label">Expiry date</div><div class="detail-value" id="end">—</div></div><div><div class="detail-label">Subscription duration</div><div class="detail-value" id="duration">—</div></div><div><div class="detail-label">Days remaining</div><div class="detail-value" id="remaining">—</div></div></div></section>
-<section class="section"><h3>Subscription packages</h3><p class="panel-sub">Choose a package to access all courses available for your registered academic year.</p><div class="package-grid"><div class="package-card"><strong>K120</strong><span>1 month · 30 days</span></div><div class="package-card"><strong>K320</strong><span>3 months · 90 days</span></div><div class="package-card"><strong>K550</strong><span>1 semester · 6 months</span></div></div>
-<div class="payment-details"><strong>Payment details</strong><p><b>MTN Mobile Money:</b> 0768744352 — Ethan Makasa</p><p><b>Airtel Money:</b> 0778463660 — Ethan Makasa</p><p><b>WhatsApp proof of payment:</b> 0768744352</p><p>Pay first, then submit your transaction reference. Send a screenshot of the successful payment to the WhatsApp number above. For bank transfers, contact the administrator on WhatsApp to request bank account details before paying. Access is activated only after verification.</p></div>
-<form id="paymentForm" class="payment-form"><div class="form-group full"><label for="packageCode">Subscription package</label><select id="packageCode" required><option value="monthly">1 month — K120</option><option value="quarterly">3 months — K320</option><option value="semester">1 semester (6 months) — K550</option></select></div><div class="form-group"><label for="paymentMethod">Payment method</label><select id="paymentMethod"><option value="mtn">MTN Mobile Money</option><option value="airtel">Airtel Money</option><option value="bank_transfer">Bank transfer</option></select></div><div class="form-group"><label for="senderPhone">Number used to pay (optional)</label><input id="senderPhone" type="tel" maxlength="25" placeholder="e.g. 076..."></div><div class="form-group full"><label for="transactionReference">Transaction reference</label><input id="transactionReference" type="text" maxlength="100" required placeholder="Enter the reference from your payment message"></div><div class="full"><button class="btn btn-primary" id="submitPayment" type="submit">Submit payment details</button><div id="paymentMessage" class="message" role="status"></div><a id="whatsappProofLink" class="whatsapp-link" href="#" target="_blank" rel="noopener" hidden>Open WhatsApp to send screenshot →</a></div></form></section>
-<section class="section"><h3>Payment history</h3><div class="payment-history-wrap"><table class="payment-history"><thead><tr><th>Date</th><th>Package</th><th>Amount</th><th>Method</th><th>Status</th><th>Admin note</th></tr></thead><tbody id="paymentHistory"><tr><td colspan="6">Loading payment history…</td></tr></tbody></table></div></section><footer style="padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">© SOMFORGE · Student learning portal</footer></main></div>
+<header class="topbar"><div class="breadcrumb">Student portal&nbsp; / &nbsp;<strong>Subscription</strong></div><div class="profile-name" id="topName">Loading account...</div></header>
+<main class="content">
+<section class="page-heading">
+  <div class="eyebrow">Student account</div>
+  <h1>Subscription</h1>
+  <p>Manage your learning access, choose a subscription package and keep track of your payments.</p>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div><h2>Subscription status</h2><p class="panel-sub">Your subscription covers all courses for your registered academic year.</p></div>
+    <span class="status unknown" id="subscriptionBadge">Checking</span>
+  </div>
+  <div class="subscription-banner">
+    <h2 id="subHeading">Checking your subscription…</h2>
+    <p id="subMessage">Retrieving your current learning access.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat"><span>Activation date</span><strong id="start">—</strong></div>
+    <div class="stat"><span>Expiry date</span><strong id="end">—</strong></div>
+    <div class="stat"><span>Subscription duration</span><strong id="duration">—</strong></div>
+    <div class="stat"><span>Days remaining</span><strong id="remaining">—</strong></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div><h2>Choose a package</h2><p class="panel-sub">One subscription gives you access to all learning materials for your registered year.</p></div>
+  </div>
+  <div class="package-grid">
+    <article class="package"><span class="package-period">30-day access</span><strong>K120</strong><span>One month</span></article>
+    <article class="package"><span class="package-period">90-day access</span><strong>K320</strong><span>Three months</span></article>
+    <article class="package package-featured"><span class="package-period">180-day access</span><strong>K550</strong><span>One semester · six months</span></article>
+  </div>
+  <div class="payment-details">
+    <h3>Payment information</h3>
+    <div class="payment-methods">
+      <div><span>MTN Mobile Money</span><strong>076 874 4352</strong><small>Account name: Ethan Makasa</small></div>
+      <div><span>Airtel Money</span><strong>077 846 3660</strong><small>Account name: Ethan Makasa</small></div>
+    </div>
+    <p><b>After paying:</b> Submit your transaction reference below, then use the WhatsApp link to send a screenshot of the successful payment to 076 874 4352. For bank transfers, contact the administrator on WhatsApp to request bank details before making payment.</p>
+    <p class="payment-note">Your subscription is activated only after the administrator verifies your payment. Do not submit a payment reference before completing the transfer.</p>
+  </div>
+  <div class="form-section">
+    <h3>Submit payment details</h3>
+    <p class="panel-sub">Enter the details exactly as they appear in your payment confirmation.</p>
+    <form id="paymentForm" class="form-grid">
+      <div class="form-group full"><label for="packageCode">Subscription package</label><select id="packageCode" required><option value="monthly">One month — K120</option><option value="quarterly">Three months — K320</option><option value="semester">One semester (six months) — K550</option></select></div>
+      <div class="form-group"><label for="paymentMethod">Payment method</label><select id="paymentMethod" required><option value="mtn">MTN Mobile Money</option><option value="airtel">Airtel Money</option><option value="bank_transfer">Bank transfer</option></select></div>
+      <div class="form-group"><label for="senderPhone">Number used to make payment <span class="optional">(optional)</span></label><input id="senderPhone" type="tel" maxlength="25" placeholder="e.g. 076 123 4567"></div>
+      <div class="form-group full"><label for="transactionReference">Transaction reference</label><input id="transactionReference" type="text" maxlength="100" required autocomplete="off" placeholder="Enter your transaction reference"></div>
+      <div class="full form-actions"><button class="btn" id="submitPayment" type="submit">Submit payment details</button><div id="paymentMessage" class="message" role="status" aria-live="polite"></div><a id="whatsappProofLink" class="whatsapp-link" href="#" target="_blank" rel="noopener" hidden>Continue to WhatsApp to send proof of payment →</a></div>
+    </form>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><div><h2>Payment history</h2><p class="panel-sub">A record of the subscription payments you have submitted.</p></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Date submitted</th><th>Package</th><th>Amount</th><th>Payment method</th><th>Status</th><th>Administrator note</th></tr></thead><tbody id="paymentHistory"><tr><td colspan="6">Loading payment history…</td></tr></tbody></table></div>
+</section>
+<footer style="padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">© SOMFORGE · Student learning portal</footer>
+</main></div>
 <script>
 
 const SUPABASE_URL="https://dfgaywdtxpajsqitaszy.supabase.co";
