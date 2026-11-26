@@ -966,7 +966,9 @@ async function loadDashboard() {
                 "Unavailable";
 
             document.getElementById("subscriptionDetail").textContent =
-                "Awaiting account approval";
+                profile.account_status === "rejected"
+                    ? "Registration not approved"
+                    : "Awaiting account approval";
 
             accessMessage.textContent = profile.account_status === "rejected"
                 ? "Your registration was not approved. Please contact the SOMFORGE administrator for assistance."
