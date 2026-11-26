@@ -1555,7 +1555,6 @@ function showAdminView(view) {
         if (active) link.setAttribute("aria-current", "page");
         else link.removeAttribute("aria-current");
     });
-    document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showAdminView(button.dataset.go), { once: true }));
     history.replaceState(null, "", "#" + view);
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
