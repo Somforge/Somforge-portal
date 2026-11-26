@@ -850,6 +850,35 @@ button {
         margin-top: 35px;
     }
 }
+
+/* SOMFORGE STUDENT LEARNING SPACE — refined visual system */
+:root{--navy:#101f31;--navy-light:#1a2c40;--teal:#9a8057;--gold:#c5a166;--gold-light:#f1e8d8;--background:#f6f3ed;--surface:#fffdf9;--card:#fffdf9;--card-hover:#fffaf1;--text:#18283a;--muted:#66717c;--border:#e4ded3;--shadow:0 5px 20px rgba(16,31,49,.045)}
+body{background:var(--background)}
+.sidebar{background:var(--navy);border-right:1px solid rgba(255,255,255,.07)}
+.brand-name,.mobile-brand{font-family:"DM Sans",sans-serif;letter-spacing:1.7px}
+.nav-links a:hover,.nav-links a.active{background:rgba(197,161,102,.13)}
+.nav-links a.active{border-left-color:var(--gold)}
+.nav-links a.active .nav-icon{color:var(--gold)}
+.topbar{background:rgba(255,253,249,.96);border-color:var(--border);backdrop-filter:blur(12px)}
+.avatar{background:#e9dfce;color:#725a35}
+.content{max-width:1390px}
+.eyebrow,.banner-label{color:#8b7046}
+.page-heading h1,.section-heading h2,.material-heading h2{font-family:"Playfair Display",Georgia,serif;font-weight:500;letter-spacing:-.25px}
+.course-banner{background:linear-gradient(112deg,#101f31 0%,#1a2c40 76%,#51432e 145%);border:1px solid rgba(197,161,102,.28);border-left:4px solid var(--gold);border-radius:13px;box-shadow:0 14px 32px rgba(16,31,49,.09)}
+.banner-label{color:#d7c29d}
+.banner-title{font-family:"Playfair Display",Georgia,serif;font-weight:500}
+.term-card,.category-card,.material-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
+.term-card:hover,.category-card:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 9px 22px rgba(16,31,49,.07)}
+.term-card.active,.category-card.active{border-color:var(--gold);background:#fbf6ec;box-shadow:inset 0 0 0 1px rgba(197,161,102,.28)}
+.category-card{min-height:112px}
+.category-count{background:#f1e8d8;color:#70572f}
+.material-card{padding:22px}
+.material-button{background:var(--navy);border-radius:6px}
+.material-button:hover{background:#263d54}
+.message-box{background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.footer{border-color:var(--border)}
+.mobile-header{background:var(--navy)}
+@media(max-width:680px){.course-banner{border-radius:11px}.category-card{min-height:100px}}
 </style>
 </head>
 
@@ -1202,22 +1231,9 @@ function renderCategories() {
 
     /* Object.keys preserves the order defined in CATEGORIES. */
 
-    const availableCategories = Object.keys(CATEGORIES).filter(category => {
-        return currentMaterials.some(material =>
-            material.content_category === category
-        );
-    });
-
-    if (availableCategories.length === 0) {
-        showMessage(
-            grid,
-            "There are currently no materials published for Term " +
-            currentTerm +
-            ". Please check again later."
-        );
-
-        return;
-    }
+    // Keep the full learning structure visible even when a category is empty.
+    // The count shows what has actually been published for this course and term.
+    const availableCategories = Object.keys(CATEGORIES);
 
     availableCategories.forEach(category => {
         const details = CATEGORIES[category];
@@ -1288,6 +1304,13 @@ function renderMaterials(category) {
     const materials = currentMaterials.filter(material =>
         material.content_category === category
     );
+
+    if (materials.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "message-box";
+        empty.textContent = "No resources have been published in this category for Term " + currentTerm + " yet. Check back later.";
+        list.appendChild(empty);
+    }
 
     materials.forEach(material => {
         const card = document.createElement("article");
