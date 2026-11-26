@@ -1187,7 +1187,7 @@ async function loadTermMaterials() {
     materialSection.hidden = true;
 
     document.getElementById("categoryHeading").textContent =
-        "Term " + currentTerm + " Materials";
+        "Semester " + currentTerm + " Materials";
 
     document.getElementById("categoryDescription").textContent =
         "Choose a category to explore its available materials.";
@@ -1229,7 +1229,7 @@ function renderCategories() {
     /* Object.keys preserves the order defined in CATEGORIES. */
 
     // Keep the full learning structure visible even when a category is empty.
-    // The count shows what has actually been published for this course and term.
+    // The count shows what has actually been published for this course and semester.
     const availableCategories = Object.keys(CATEGORIES);
 
     availableCategories.forEach(category => {
@@ -1299,7 +1299,7 @@ async function renderMaterials(category) {
     if (materials.length === 0) {
         const empty = document.createElement("div");
         empty.className = "message-box";
-        empty.textContent = "No resources have been published in this category for Term " + currentTerm + " yet. Check back later.";
+        empty.textContent = "No resources have been published in this category for Semester " + currentTerm + " yet. Check back later.";
         list.appendChild(empty);
     }
     for (const material of materials) {
