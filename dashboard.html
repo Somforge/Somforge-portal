@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#102B46">
+<meta name="theme-color" content="#101f31">
 
 <title>Dashboard | SOMFORGE</title>
 
@@ -11,19 +11,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --navy: #102B46;
-    --navy-light: #193D5C;
-    --teal: #168C91;
-    --gold: #BD9857;
-    --background: #F5F7F8;
+    --navy: #101f31;
+    --navy-light: #1a2c40;
+    --teal: #9a8057;
+    --gold: #c5a166;
+    --background: #f6f3ed;
     --white: #FFFFFF;
-    --text: #263746;
-    --muted: #788795;
-    --border: #E5EAEE;
+    --text: #18283a;
+    --muted: #66717c;
+    --border: #e4ded3;
     --success: #16835D;
     --shadow: 0 5px 22px rgba(16,43,70,.045);
 }
@@ -78,7 +78,7 @@ button {
 }
 
 .brand-name {
-    font-family: "Manrope", sans-serif;
+    font-family: "Playfair Display", Georgia, serif;
     font-size: 21px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -715,6 +715,45 @@ button {
 }
 @media(max-width:370px) { .overview-grid,.quick-links { grid-template-columns:1fr; } }
 
+
+/* SOMFORGE DESIGN SYSTEM — student workspace */
+body{background:var(--background);-webkit-font-smoothing:antialiased}
+.sidebar{background:var(--navy);padding:27px 18px 20px;border-right:1px solid rgba(255,255,255,.07)}
+.brand{padding:0 9px 34px;gap:12px}
+.brand-symbol{width:43px;height:46px;object-fit:contain;flex:0 0 43px}
+.brand-name,.brand-wordmark{font-family:"DM Sans",sans-serif;font-size:17px;font-weight:700;letter-spacing:2.1px;color:#fff}
+.brand-name span,.brand-wordmark span,.mobile-brand span{color:var(--gold)}
+.nav-caption{color:#aeb9c5;letter-spacing:1.7px;font-size:9px;margin:17px 0 10px}
+.nav-links a{min-height:46px;border-radius:7px;padding:12px 13px;font-size:13px;transition:background .18s,color .18s}
+.nav-links a:hover,.nav-links a.active{background:rgba(197,161,102,.13);color:#fff}
+.nav-links a.active{border-left:2px solid var(--gold);padding-left:11px}
+.nav-links a.active .nav-icon{color:var(--gold)}
+.logout{border-color:rgba(255,255,255,.22);border-radius:7px;min-height:43px}
+.topbar{height:74px;background:rgba(246,243,237,.96);border-color:var(--border);backdrop-filter:blur(12px);padding:0 42px}
+.breadcrumb{font-size:12px;letter-spacing:.1px}.breadcrumb strong{color:var(--navy)}
+.avatar{background:#e9dfce;color:#725a35;font-size:14px}
+.profile-name{font-weight:700}.profile-area{border-radius:8px;padding:6px 9px;transition:background .2s}.profile-area:hover{background:#eee8dd}
+.content{max-width:1390px;padding:38px 42px 34px}
+.hero{background:linear-gradient(112deg,#101f31 0%,#1a2c40 72%,#554832 145%);border:1px solid rgba(197,161,102,.28);border-radius:14px;padding:47px 46px;min-height:235px;box-shadow:0 16px 36px rgba(16,31,49,.11)}
+.hero::before{border-color:rgba(255,255,255,.11)}.hero::after{border-color:rgba(197,161,102,.35)}
+.eyebrow{color:#d7c29d;letter-spacing:2px}.hero h1{font-family:"Playfair Display",Georgia,serif;font-size:clamp(29px,3vw,38px);font-weight:500;letter-spacing:-.45px;line-height:1.2}
+.hero p{color:#e0e4e8;font-size:13px;max-width:530px}
+.hero-action{border-radius:5px;background:var(--gold);color:#172536;padding:12px 17px}.hero-action:hover{background:#d7b982}
+.section-kicker{color:#8b7046}.section-heading h2{font-family:"Playfair Display",Georgia,serif;font-size:23px;font-weight:500;letter-spacing:-.2px}
+.overview-grid,.quick-links{gap:16px}
+.overview-card,.quick-link,.announcement,.notice{background:#fffdf9;border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 16px rgba(30,37,45,.035)}
+.overview-card{padding:22px 23px}.overview-card::before{background:var(--gold)}.overview-card:nth-child(2)::before{background:#9b8764}.overview-card:nth-child(3)::before{background:#8797a6}
+.overview-value{font-family:"DM Sans",sans-serif;font-size:22px;font-weight:700;color:var(--navy)}
+.status-pill{font-size:12px}.quick-link{padding:22px;min-height:158px}.quick-link:hover{border-color:#c5a166;box-shadow:0 10px 24px rgba(30,37,45,.07)}
+.quick-icon{color:#8b7046}.quick-link h3{font-family:"DM Sans",sans-serif;font-weight:700;color:var(--navy)}
+.quick-arrow{color:#8b7046}.announcement{border-left:3px solid var(--gold)}
+.notice{background:#f0ece4}.footer{border-color:var(--border);font-size:11px}
+.mobile-header{background:var(--navy);box-shadow:0 3px 14px rgba(16,31,49,.12)}
+.mobile-brand{font-family:"DM Sans",sans-serif;letter-spacing:1.5px}.mobile-brand .brand-symbol{width:34px;height:38px;object-fit:contain}
+.menu-button{font-size:0;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:6px;position:relative}
+.menu-button::before{content:"☰";font-size:20px}.menu-button[aria-expanded="true"]::before{content:"×";font-size:26px}
+@media(max-width:1100px){.content{padding:28px 25px}.topbar{padding:0 25px}}
+@media(max-width:680px){.topbar{height:62px}.content{padding:20px 15px 27px}.hero{padding:30px 23px}.hero h1{font-size:27px}.overview-card{min-height:110px}.quick-link{min-height:150px}}
 </style>
 </head>
 
@@ -722,11 +761,8 @@ button {
 
 <header class="mobile-header">
     <div class="mobile-brand">
-        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
-            <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
-            <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>SOM<span>FORGE</span></div>
+        <img class="brand-symbol" src="assets/somforge-emblem.svg" alt="" aria-hidden="true">
+        <div class="brand-wordmark">SOM<span>FORGE</span></div>
     </div>
 
     <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
