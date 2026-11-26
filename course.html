@@ -1288,88 +1288,74 @@ function renderCategories() {
 
 /* DISPLAY MATERIALS */
 
-function renderMaterials(category) {
+async function renderMaterials(category) {
     const details = CATEGORIES[category];
-
     const section = document.getElementById("materialSection");
     const heading = document.getElementById("materialHeading");
     const list = document.getElementById("materialList");
-
     heading.textContent = details.title;
     list.replaceChildren();
-
-    const materials = currentMaterials.filter(material =>
-        material.content_category === category
-    );
-
+    const materials = currentMaterials.filter(material => material.content_category === category);
     if (materials.length === 0) {
         const empty = document.createElement("div");
         empty.className = "message-box";
         empty.textContent = "No resources have been published in this category for Term " + currentTerm + " yet. Check back later.";
         list.appendChild(empty);
     }
-
-    materials.forEach(material => {
+    for (const material of materials) {
         const card = document.createElement("article");
         card.className = "material-card";
-
         const info = document.createElement("div");
         info.className = "material-details";
-
         const title = document.createElement("h3");
         title.textContent = material.title || "Untitled material";
-
         info.appendChild(title);
-
         if (material.description) {
             const description = document.createElement("p");
             description.textContent = material.description;
             info.appendChild(description);
         }
-
         if (material.written_text) {
             const written = document.createElement("div");
             written.className = "written-content";
             written.textContent = material.written_text;
             info.appendChild(written);
         }
-
         if (material.created_at) {
             const date = document.createElement("div");
             date.className = "material-meta";
-
-            date.textContent =
-                "Published " +
-                new Date(material.created_at).toLocaleDateString();
-
+            date.textContent = "Published " + new Date(material.created_at).toLocaleDateString();
             info.appendChild(date);
         }
-
         card.appendChild(info);
-
         if (material.file_url) {
+            let fileUrl = material.file_url;
+            if (!/^https?:\/\//i.test(fileUrl)) {
+                const { data: signedData, error: signedError } = await supabaseClient
+                    .storage.from("learning-materials").createSignedUrl(fileUrl, 3600);
+                if (signedError || !signedData?.signedUrl) {
+                    const unavailable = document.createElement("p");
+                    unavailable.className = "material-meta";
+                    unavailable.textContent = "This resource is temporarily unavailable. Please contact the course administrator.";
+                    card.appendChild(unavailable);
+                    list.appendChild(card);
+                    continue;
+                }
+                fileUrl = signedData.signedUrl;
+            }
             const link = document.createElement("a");
-
             link.className = "material-button";
-            link.href = material.file_url;
+            link.href = fileUrl;
             link.target = "_blank";
             link.rel = "noopener noreferrer";
             link.textContent = "Open Material";
-
             card.appendChild(link);
         }
-
         list.appendChild(card);
-    });
-
+    }
     section.hidden = false;
-
-    section.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
 
 /* AUTHENTICATION AND ACCESS CHECKS */
 
