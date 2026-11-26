@@ -75,7 +75,7 @@ button {
     width: 37px;
     height: 37px;
     flex-shrink: 0;
-}
+}width:43px;height:46px;object-fit:contain;flex:0 0 43px;}
 
 .brand-name {
     font-family: "Playfair Display", Georgia, serif;
@@ -578,7 +578,7 @@ button {
     .mobile-brand .brand-symbol {
         width: 32px;
         height: 32px;
-    }
+    }width:43px;height:46px;object-fit:contain;flex:0 0 43px;}
 
     .menu-button {
         border: none;
@@ -716,11 +716,14 @@ button {
 @media(max-width:370px) { .overview-grid,.quick-links { grid-template-columns:1fr; } }
 
 
+/* Use the official SOMFORGE emblem asset in every navigation header. */
+.brand-symbol{display:block;object-fit:contain}
+.mobile-brand .brand-symbol{width:34px;height:38px;flex:0 0 34px}
 /* SOMFORGE DESIGN SYSTEM — student workspace */
 body{background:var(--background);-webkit-font-smoothing:antialiased}
 .sidebar{background:var(--navy);padding:27px 18px 20px;border-right:1px solid rgba(255,255,255,.07)}
 .brand{padding:0 9px 34px;gap:12px}
-.brand-symbol{width:43px;height:46px;object-fit:contain;flex:0 0 43px}
+.brand-symbol{width:43px;height:46px;object-fit:contain;flex:0 0 43px}width:43px;height:46px;object-fit:contain;flex:0 0 43px;}
 .brand-name,.brand-wordmark{font-family:"DM Sans",sans-serif;font-size:17px;font-weight:700;letter-spacing:2.1px;color:#fff}
 .brand-name span,.brand-wordmark span,.mobile-brand span{color:var(--gold)}
 .nav-caption{color:#aeb9c5;letter-spacing:1.7px;font-size:9px;margin:17px 0 10px}
@@ -749,7 +752,7 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
 .quick-arrow{color:#8b7046}.announcement{border-left:3px solid var(--gold)}
 .notice{background:#f0ece4}.footer{border-color:var(--border);font-size:11px}
 .mobile-header{background:var(--navy);box-shadow:0 3px 14px rgba(16,31,49,.12)}
-.mobile-brand{font-family:"DM Sans",sans-serif;letter-spacing:1.5px}.mobile-brand .brand-symbol{width:34px;height:38px;object-fit:contain}
+.mobile-brand{font-family:"DM Sans",sans-serif;letter-spacing:1.5px}.mobile-brand .brand-symbol{width:34px;height:38px;object-fit:contain}width:43px;height:46px;object-fit:contain;flex:0 0 43px;}
 .menu-button{font-size:0;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:6px;position:relative}
 .menu-button::before{content:"☰";font-size:20px}.menu-button[aria-expanded="true"]::before{content:"×";font-size:26px}
 @media(max-width:1100px){.content{padding:28px 25px}.topbar{padding:0 25px}}
@@ -773,10 +776,7 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
 <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-        <svg class="brand-symbol" viewBox="0 0 48 48" fill="none">
-            <path d="M24 2.8L43 13.5V34.5L24 45.2L5 34.5V13.5L24 2.8Z" stroke="#FFFFFF" stroke-width="2.4"/>
-            <path d="M10 24H17L21 16L26 32L30 22L33 25H38" stroke="#BD9857" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img class="brand-symbol" src="assets/somforge-emblem.svg" alt="SOMFORGE emblem">
         <div class="brand-name">SOM<span>FORGE</span></div>
     </div>
 
