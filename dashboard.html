@@ -700,14 +700,6 @@ button {
         <li><a href="courses.html"><span class="nav-icon">▦</span>My Courses</a></li>
     </ul>
 
-    <div class="nav-caption">Learning</div>
-
-    <ul class="nav-links">
-        <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
-        <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
-        <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
-    </ul>
-
     <div class="nav-caption">Account</div>
 
     <ul class="nav-links">
@@ -804,31 +796,10 @@ button {
                     <span class="quick-arrow">→</span>
                 </a>
 
-                <a href="learning.html" class="quick-link">
-                    <div class="quick-icon">▤</div>
-                    <h3>Learning Centre</h3>
-                    <p>Access notes, presentations and recorded lectures.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
-                <a href="examinations.html" class="quick-link">
-                    <div class="quick-icon">✎</div>
-                    <h3>Examination Centre</h3>
-                    <p>Prepare with past papers and practice questions.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
-                <a href="live-learning.html" class="quick-link">
-                    <div class="quick-icon">▶</div>
-                    <h3>Live Learning</h3>
-                    <p>Find scheduled online classes and recordings.</p>
-                    <span class="quick-arrow">→</span>
-                </a>
-
                 <a href="account.html" class="quick-link">
                     <div class="quick-icon">◎</div>
                     <h3>My Account</h3>
-                    <p>View your personal details and subscription information.</p>
+                    <p>Review your personal details, account status and subscription.</p>
                     <span class="quick-arrow">→</span>
                 </a>
 
@@ -984,9 +955,10 @@ async function loadDashboard() {
             profile.year_level || "Academic year not assigned";
 
         const approved = profile.account_status === "approved";
+        const accountStatus = profile.account_status || "pending";
 
         document.getElementById("accountStatus").textContent =
-            approved ? "Approved" : "Pending";
+            accountStatus.charAt(0).toUpperCase() + accountStatus.slice(1);
 
         if (!approved) {
 
@@ -996,8 +968,9 @@ async function loadDashboard() {
             document.getElementById("subscriptionDetail").textContent =
                 "Awaiting account approval";
 
-            accessMessage.textContent =
-                "Your account is awaiting administrator approval. Please check again after the administrator has approved it.";
+            accessMessage.textContent = profile.account_status === "rejected"
+                ? "Your registration was not approved. Please contact the SOMFORGE administrator for assistance."
+                : "Your account is awaiting administrator approval. Please check again after the administrator has approved it.";
 
             return;
         }
