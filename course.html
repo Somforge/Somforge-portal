@@ -886,14 +886,6 @@ button {
         <li><a href="courses.html" class="active"><span class="nav-icon">▦</span>My Courses</a></li>
     </ul>
 
-    <div class="nav-caption">Learning</div>
-
-    <ul class="nav-links">
-        <li><a href="learning.html"><span class="nav-icon">▤</span>Learning Centre</a></li>
-        <li><a href="examinations.html"><span class="nav-icon">✎</span>Examination Centre</a></li>
-        <li><a href="live-learning.html"><span class="nav-icon">▶</span>Live Learning</a></li>
-    </ul>
-
     <div class="nav-caption">Account</div>
 
     <ul class="nav-links">
@@ -957,7 +949,7 @@ button {
 
             <div class="banner-code">
                 <strong id="courseCode">—</strong>
-                <span>COURSE CODE</span>
+                <span>ACADEMIC YEAR</span>
             </div>
         </section>
 
@@ -1026,35 +1018,11 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-/* COURSE CODES */
+/* COURSE IDENTIFICATION
 
-const COURSE_CODES = {
-    "year 2": {
-        "anatomy": "MBS 200",
-        "physiology": "MBS 210",
-        "pathology": "MBS 220",
-        "therapeutics": "MBS 230",
-        "biochemistry": "MBS 230",
-        "clinical sciences": "MCS 200"
-    },
-
-    "year 3": {
-        "anatomy": "MBS 300",
-        "physiology": "MBS 310",
-        "pathology": "MBS 320",
-        "therapeutics": "MBS 330",
-        "biochemistry": "MBS 330",
-        "clinical sciences": "MCS 300"
-    }
-};
-
-function getCourseCode(title, yearLevel) {
-    const year = (yearLevel || "").trim().toLowerCase();
-    const course = (title || "").trim().toLowerCase();
-
-    return COURSE_CODES[year]?.[course] || "COURSE";
-}
-
+   Course codes are not stored in the current database schema.
+   Show the academic year supplied by the course record instead.
+*/
 
 /* CATEGORY SETTINGS */
 
@@ -1488,7 +1456,7 @@ async function loadPage() {
 
         currentCourse = course;
 
-        const code = getCourseCode(course.title, course.year_level);
+        const code = course.year_level || "Not assigned";
 
         document.title = course.title + " | SOMFORGE";
 
@@ -1502,7 +1470,7 @@ async function loadPage() {
             course.description ||
             "Copperbelt University · School of Medicine";
 
-        document.getElementById("courseCode").textContent = code;
+        document.getElementById("courseCode").textContent = code.toUpperCase();
 
         renderTerms();
 
