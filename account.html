@@ -303,11 +303,8 @@ button, input { font: inherit; }
     <div class="nav-label">Main menu</div>
 
     <a class="nav-link" href="dashboard.html">Dashboard</a>
-    <a class="nav-link" href="dashboard.html#courses">My Courses</a>
-    <a class="nav-link" href="dashboard.html#learning">Learning Centre</a>
-    <a class="nav-link" href="dashboard.html#examinations">Examination Centre</a>
-    <a class="nav-link" href="dashboard.html#live">Live Learning</a>
-    <a class="nav-link active" href="account.html">My Account</a>
+    <a class="nav-link" href="courses.html">My Courses</a>
+    <a class="nav-link active" href="account.html" aria-current="page">My Account</a>
 </aside>
 
 <main class="main">
@@ -442,8 +439,14 @@ function formatDate(dateString) {
 function setStatus(elementId, value) {
     const element = document.getElementById(elementId);
     const status = String(value || "Unknown").toLowerCase();
+    const allowedStatuses = ["approved", "pending", "rejected"];
+    const safeStatus = allowedStatuses.includes(status) ? status : "unknown";
 
-    element.innerHTML = `<span class="status ${status}">${value || "Unknown"}</span>`;
+    element.replaceChildren();
+    const badge = document.createElement("span");
+    badge.className = "status " + safeStatus;
+    badge.textContent = value || "Unknown";
+    element.appendChild(badge);
 }
 
 async function loadAccount() {
