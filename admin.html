@@ -802,8 +802,10 @@ td small{font-size:12px;line-height:1.5}
             </div>
             <div class="table-wrap"><table><thead><tr><th>Student</th><th>Start date</th><th>Expiry date</th><th>Status</th><th>Action</th></tr></thead><tbody id="subscriptionsTable"><tr><td colspan="5" class="empty">Loading subscriptions…</td></tr></tbody></table></div>
             <p class="info-text subscription-help">The packages are K120 for 30 days, K320 for 90 days and K550 for 180 days. Payment approvals activate or extend all-course access for the student's registered year.</p>
-            <div class="panel-heading" style="margin-top:30px"><div><span class="panel-kicker">PAYMENT VERIFICATION</span><h2>Payment submissions</h2><p>Check the transaction reference and confirm the screenshot has arrived on WhatsApp before approving.</p></div><button class="btn btn-refresh" type="button" id="refreshPaymentsBtn">Refresh</button></div>
-            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Package</th><th>Payment details</th><th>Submitted</th><th>Status</th><th>Review</th></tr></thead><tbody id="paymentsTable"><tr><td colspan="6" class="empty">Loading payment submissions…</td></tr></tbody></table></div>
+            <div class="panel-heading" style="margin-top:30px"><div><span class="panel-kicker">PAYMENT RECORDS</span><h2>Payment history</h2><p>All submitted payments, including pending, approved and rejected transactions.</p></div><button class="btn btn-refresh" type="button" id="refreshPaymentsBtn">Refresh history</button></div>
+            <div class="payment-history-tools"><input type="search" id="paymentSearch" class="search" placeholder="Search student, email or reference…"><select id="paymentStatusFilter" aria-label="Filter payments by status"><option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></div>
+            <div class="payment-history-summary" id="paymentHistorySummary" aria-live="polite">Loading payment records…</div>
+            <div class="table-wrap"><table><thead><tr><th>Student</th><th>Package / Amount</th><th>Payment details</th><th>Submitted</th><th>Status</th><th>Review</th></tr></thead><tbody id="paymentsTable"><tr><td colspan="6" class="empty">Loading payment history…</td></tr></tbody></table></div>
         </div>
         </section>
 
@@ -1086,7 +1088,7 @@ async function loadData() {
 
     const { data: paymentData, error: paymentError } = await supabaseClient
         .from("payment_submissions")
-        .select("id,student_id,package_code,amount_zmw,duration_days,payment_method,sender_phone,transaction_reference,status,admin_note,created_at")
+        .select("id,student_id,package_code,amount_zmw,duration_days,payment_method,sender_phone,transaction_reference,status,admin_note,reviewed_at,created_at")
         .order("created_at", { ascending: false });
     if (paymentError) {
         showMessage("Could not load payment submissions: " + paymentError.message, "error");
@@ -1134,9 +1136,28 @@ function updateStatistics() {
 function renderPaymentSubmissions() {
     const body = document.getElementById("paymentsTable");
     if (!body) return;
-    const rows = [...paymentSubmissions];
+    const query = (document.getElementById("paymentSearch")?.value || "").trim().toLowerCase();
+    const statusFilter = document.getElementById("paymentStatusFilter")?.value || "all";
+    const allRows = [...paymentSubmissions];
+    const counts = {
+        all: allRows.length,
+        pending: allRows.filter(item => item.status === "pending").length,
+        approved: allRows.filter(item => item.status === "approved").length,
+        rejected: allRows.filter(item => item.status === "rejected").length
+    };
+    const summary = document.getElementById("paymentHistorySummary");
+    if (summary) summary.innerHTML =
+        '<span><strong>' + counts.all + '</strong> total submissions</span>' +
+        '<span><strong>' + counts.pending + '</strong> pending</span>' +
+        '<span><strong>' + counts.approved + '</strong> approved</span>' +
+        '<span><strong>' + counts.rejected + '</strong> rejected</span>';
+    const rows = allRows.filter(item => {
+        const student = students.find(person => person.id === item.student_id);
+        const searchable = [student?.full_name, student?.email, item.transaction_reference, item.sender_phone, item.package_code, item.status].join(" ").toLowerCase();
+        return (statusFilter === "all" || item.status === statusFilter) && searchable.includes(query);
+    });
     if (!rows.length) {
-        body.innerHTML = '<tr><td colspan="6" class="empty">No payment submissions have been received yet.</td></tr>';
+        body.innerHTML = '<tr><td colspan="6" class="empty">No payment records match these filters.</td></tr>';
         return;
     }
     body.innerHTML = rows.map(item => {
@@ -1147,8 +1168,8 @@ function renderPaymentSubmissions() {
         const badgeClass = item.status === "approved" ? "active" : item.status === "rejected" ? "rejected" : "pending";
         const reviewActions = item.status === "pending"
             ? '<button class="btn btn-approve" onclick="reviewPayment(\'' + item.id + '\',true)">Approve</button> <button class="btn btn-suspend" onclick="reviewPayment(\'' + item.id + '\',false)">Reject</button>'
-            : escapeHTML(item.admin_note || "Reviewed");
-        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + pkg + '<br><strong>K' + item.amount_zmw + '</strong></td><td>' + method + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge ' + badgeClass + '">' + escapeHTML(item.status) + '</span></td><td>' + reviewActions + '</td></tr>';
+            : '<small>' + escapeHTML(item.admin_note || (item.reviewed_at ? "Reviewed " + formatDate(item.reviewed_at) : "Reviewed")) + '</small>';
+        return '<tr><td><strong>' + escapeHTML(student?.full_name || "Student unavailable") + '</strong><br><small>' + escapeHTML(student?.email || "") + '</small></td><td>' + escapeHTML(pkg) + '<br><strong>K' + Number(item.amount_zmw).toLocaleString() + '</strong></td><td>' + escapeHTML(method) + phone + '<br><small>Ref: ' + escapeHTML(item.transaction_reference) + '</small></td><td>' + escapeHTML(formatDate(item.created_at)) + '</td><td><span class="badge ' + badgeClass + '">' + escapeHTML(item.status) + '</span></td><td>' + reviewActions + '</td></tr>';
     }).join("");
 }
 
@@ -1525,6 +1546,14 @@ async function suspendSubscription(subscriptionId) {
 }
 
 
+
+.payment-history-tools{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+.payment-history-tools .search{flex:1 1 280px;width:auto}
+.payment-history-tools select{min-width:170px;padding:12px 14px;border:1px solid var(--admin-line);border-radius:7px;background:#fff;color:var(--admin-ink);font:inherit}
+.payment-history-summary{display:flex;gap:10px 22px;flex-wrap:wrap;margin:0 0 14px;padding:13px 15px;border:1px solid var(--admin-line);border-radius:7px;background:#f8f5ef;color:var(--admin-muted);font-size:12px}
+.payment-history-summary strong{color:var(--admin-ink)}
+@media(max-width:520px){.payment-history-tools{display:grid}.payment-history-tools .search,.payment-history-tools select{width:100%}}
+
 /* CONTENT MANAGEMENT */
 const STORAGE_BUCKET = "learning-materials";
 const categoryLabels = {
@@ -1728,6 +1757,8 @@ document.querySelectorAll(".admin-nav a[data-view]").forEach(link => link.addEve
 }));
 document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showAdminView(button.dataset.go)));
 document.getElementById("subscriptionSearch").addEventListener("input", renderSubscriptions);
+document.getElementById("paymentSearch")?.addEventListener("input", renderPaymentSubmissions);
+document.getElementById("paymentStatusFilter")?.addEventListener("change", renderPaymentSubmissions);
 document.getElementById("refreshPaymentsBtn")?.addEventListener("click", loadData);
 
 /* START APPLICATION */
