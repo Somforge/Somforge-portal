@@ -7,53 +7,7 @@
 
 <title>Dashboard | SOMFORGE</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-/* Load the student's assigned courses directly into the sidebar navigation. */
-async function loadCourseNavigation(){
- const list=document.getElementById("courseNavList");
- const item=document.querySelector(".course-nav-item");
- const toggle=document.querySelector(".course-nav-toggle");
- if(!list||!item||!toggle||typeof supabaseClient==="undefined")return;
- const currentCourseId=new URLSearchParams(location.search).get("id");
- try{
-  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
-  if(userError||!user){list.innerHTML='<li><span class="course-nav-loading">Sign in to view courses</span></li>';return;}
-  const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("year_level,account_status").eq("id",user.id).single();
-  if(profileError||!profile||profile.account_status!=="approved"||!profile.year_level){
-   list.innerHTML='<li><span class="course-nav-loading">Courses unavailable</span></li>';return;
-  }
-  const {data:subs,error:subError}=await supabaseClient.from("subscriptions").select("status,start_date,end_date").eq("student_id",user.id).order("end_date",{ascending:false});
-  if(subError)throw subError;
-  const now=new Date();
-  const active=(subs||[]).some(s=>s.status==="active"&&s.start_date&&s.end_date&&new Date(s.start_date)<=now&&new Date(s.end_date)>now);
-  if(!active){list.innerHTML='<li><span class="course-nav-loading">Active subscription required</span></li>';return;}
-  const {data:courses,error:courseError}=await supabaseClient.from("courses").select("id,title,year_level").eq("year_level",profile.year_level).order("title");
-  if(courseError)throw courseError;
-  list.replaceChildren();
-  if(!courses||!courses.length){
-   const li=document.createElement("li");const span=document.createElement("span");
-   span.className="course-nav-loading";span.textContent="No courses assigned";li.appendChild(span);list.appendChild(li);return;
-  }
-  courses.forEach(course=>{
-   const li=document.createElement("li");const a=document.createElement("a");
-   a.href="course.html?id="+encodeURIComponent(course.id);a.textContent=course.title;
-   if(currentCourseId===String(course.id)){a.classList.add("active");a.setAttribute("aria-current","page");}
-   li.appendChild(a);list.appendChild(li);
-  });
-  if(currentCourseId){item.classList.add("expanded");toggle.setAttribute("aria-expanded","true");}
- }catch(error){
-  console.error("Course navigation error:",error);
-  list.innerHTML='<li><span class="course-nav-loading">Unable to load courses</span></li>';
- }
-}
-document.querySelector(".course-nav-toggle")?.addEventListener("click",function(){
- const item=this.closest(".course-nav-item");
- const expanded=item.classList.toggle("expanded");
- this.setAttribute("aria-expanded",String(expanded));
-});
-loadCourseNavigation();
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1284,5 +1238,51 @@ loadDashboard();
 
 </script>
 
+<script>
+/* Load the student's assigned courses directly into the sidebar navigation. */
+async function loadCourseNavigation(){
+ const list=document.getElementById("courseNavList");
+ const item=document.querySelector(".course-nav-item");
+ const toggle=document.querySelector(".course-nav-toggle");
+ if(!list||!item||!toggle||typeof supabaseClient==="undefined")return;
+ const currentCourseId=new URLSearchParams(location.search).get("id");
+ try{
+  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
+  if(userError||!user){list.innerHTML='<li><span class="course-nav-loading">Sign in to view courses</span></li>';return;}
+  const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("year_level,account_status").eq("id",user.id).single();
+  if(profileError||!profile||profile.account_status!=="approved"||!profile.year_level){
+   list.innerHTML='<li><span class="course-nav-loading">Courses unavailable</span></li>';return;
+  }
+  const {data:subs,error:subError}=await supabaseClient.from("subscriptions").select("status,start_date,end_date").eq("student_id",user.id).order("end_date",{ascending:false});
+  if(subError)throw subError;
+  const now=new Date();
+  const active=(subs||[]).some(s=>s.status==="active"&&s.start_date&&s.end_date&&new Date(s.start_date)<=now&&new Date(s.end_date)>now);
+  if(!active){list.innerHTML='<li><span class="course-nav-loading">Active subscription required</span></li>';return;}
+  const {data:courses,error:courseError}=await supabaseClient.from("courses").select("id,title,year_level").eq("year_level",profile.year_level).order("title");
+  if(courseError)throw courseError;
+  list.replaceChildren();
+  if(!courses||!courses.length){
+   const li=document.createElement("li");const span=document.createElement("span");
+   span.className="course-nav-loading";span.textContent="No courses assigned";li.appendChild(span);list.appendChild(li);return;
+  }
+  courses.forEach(course=>{
+   const li=document.createElement("li");const a=document.createElement("a");
+   a.href="course.html?id="+encodeURIComponent(course.id);a.textContent=course.title;
+   if(currentCourseId===String(course.id)){a.classList.add("active");a.setAttribute("aria-current","page");}
+   li.appendChild(a);list.appendChild(li);
+  });
+  if(currentCourseId){item.classList.add("expanded");toggle.setAttribute("aria-expanded","true");}
+ }catch(error){
+  console.error("Course navigation error:",error);
+  list.innerHTML='<li><span class="course-nav-loading">Unable to load courses</span></li>';
+ }
+}
+document.querySelector(".course-nav-toggle")?.addEventListener("click",function(){
+ const item=this.closest(".course-nav-item");
+ const expanded=item.classList.toggle("expanded");
+ this.setAttribute("aria-expanded",String(expanded));
+});
+loadCourseNavigation();
+</script>
 </body>
 </html>
