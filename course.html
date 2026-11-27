@@ -1086,13 +1086,6 @@ body{font-size:16px}
             </div>
         </section>
 
-        <section class="material-section" id="materialSection" hidden>
-            <div class="material-heading">
-                <h2 id="materialHeading">Materials</h2>
-            </div>
-
-            <div class="material-list" id="materialList"></div>
-        </section>
 
         <footer class="footer">
             <div><strong>SOMFORGE</strong> · Student Learning Portal</div>
@@ -1456,6 +1449,7 @@ async function renderMaterials(category, panel) {
                     unavailable.className = "material-meta";
                     unavailable.textContent = "This resource is temporarily unavailable. Please contact the course administrator.";
                     card.appendChild(unavailable);
+                    fileUrl = null;
                 } else {
                     fileUrl = signedData.signedUrl;
                 }
