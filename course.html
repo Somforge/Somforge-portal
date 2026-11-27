@@ -7,7 +7,53 @@
 
 <title>Course Learning Space | SOMFORGE</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+/* Load the student's assigned courses directly into the sidebar navigation. */
+async function loadCourseNavigation(){
+ const list=document.getElementById("courseNavList");
+ const item=document.querySelector(".course-nav-item");
+ const toggle=document.querySelector(".course-nav-toggle");
+ if(!list||!item||!toggle||typeof supabaseClient==="undefined")return;
+ const currentCourseId=new URLSearchParams(location.search).get("id");
+ try{
+  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
+  if(userError||!user){list.innerHTML='<li><span class="course-nav-loading">Sign in to view courses</span></li>';return;}
+  const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("year_level,account_status").eq("id",user.id).single();
+  if(profileError||!profile||profile.account_status!=="approved"||!profile.year_level){
+   list.innerHTML='<li><span class="course-nav-loading">Courses unavailable</span></li>';return;
+  }
+  const {data:subs,error:subError}=await supabaseClient.from("subscriptions").select("status,start_date,end_date").eq("student_id",user.id).order("end_date",{ascending:false});
+  if(subError)throw subError;
+  const now=new Date();
+  const active=(subs||[]).some(s=>s.status==="active"&&s.start_date&&s.end_date&&new Date(s.start_date)<=now&&new Date(s.end_date)>now);
+  if(!active){list.innerHTML='<li><span class="course-nav-loading">Active subscription required</span></li>';return;}
+  const {data:courses,error:courseError}=await supabaseClient.from("courses").select("id,title,year_level").eq("year_level",profile.year_level).order("title");
+  if(courseError)throw courseError;
+  list.replaceChildren();
+  if(!courses||!courses.length){
+   const li=document.createElement("li");const span=document.createElement("span");
+   span.className="course-nav-loading";span.textContent="No courses assigned";li.appendChild(span);list.appendChild(li);return;
+  }
+  courses.forEach(course=>{
+   const li=document.createElement("li");const a=document.createElement("a");
+   a.href="course.html?id="+encodeURIComponent(course.id);a.textContent=course.title;
+   if(currentCourseId===String(course.id)){a.classList.add("active");a.setAttribute("aria-current","page");}
+   li.appendChild(a);list.appendChild(li);
+  });
+  if(currentCourseId){item.classList.add("expanded");toggle.setAttribute("aria-expanded","true");}
+ }catch(error){
+  console.error("Course navigation error:",error);
+  list.innerHTML='<li><span class="course-nav-loading">Unable to load courses</span></li>';
+ }
+}
+document.querySelector(".course-nav-toggle")?.addEventListener("click",function(){
+ const item=this.closest(".course-nav-item");
+ const expanded=item.classList.toggle("expanded");
+ this.setAttribute("aria-expanded",String(expanded));
+});
+loadCourseNavigation();
+
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -882,6 +928,27 @@ body{background:var(--background)}
 /* Official SOMFORGE emblem asset */
 .brand-symbol{display:block;object-fit:contain;width:43px;height:46px;flex:0 0 43px}
 .mobile-brand .brand-symbol{width:34px;height:38px;flex:0 0 34px}
+
+/* Expandable course navigation */
+.course-nav-toggle{
+ width:100%;display:flex;align-items:center;gap:13px;padding:13px;
+ border:0;border-radius:5px;background:transparent;color:#c6d3e0;
+ text-align:left;font:600 14px "DM Sans",sans-serif;cursor:pointer;transition:background .18s,color .18s;
+}
+.course-nav-toggle:hover,.course-nav-toggle[aria-expanded="true"]{background:rgba(197,161,102,.13);color:#fff}
+.course-nav-toggle .nav-icon{flex:0 0 20px}
+.course-nav-list{display:none;list-style:none;margin:2px 0 8px 33px;padding:0 0 0 12px;border-left:1px solid rgba(197,161,102,.35)}
+.course-nav-item.expanded .course-nav-list{display:block}
+.course-nav-list li{margin:2px 0}
+.course-nav-list a,.course-nav-loading{
+ display:block;padding:8px 9px;border-radius:4px;color:#b8c5d0;font-size:13px;line-height:1.4;
+}
+.course-nav-list a:hover,.course-nav-list a.active{background:rgba(197,161,102,.12);color:#fff}
+.course-nav-list a.active{border-left:2px solid #c5a166;padding-left:7px}
+.course-nav-loading{color:#91a0ad;font-size:12px}
+.course-nav-toggle:focus-visible,.course-nav-list a:focus-visible{outline:2px solid #c5a166;outline-offset:2px}
+@media(max-width:680px){.course-nav-list a{font-size:14px;padding:9px}}
+
 </style>
 </head>
 
@@ -909,7 +976,12 @@ body{background:var(--background)}
 
     <ul class="nav-links">
         <li><a href="dashboard.html"><span class="nav-icon">⌂</span>Dashboard</a></li>
-        <li><a href="courses.html" class="active"><span class="nav-icon">▦</span>My Courses</a></li>
+        <li class="course-nav-item">
+<button class="course-nav-toggle" type="button" aria-expanded="false" aria-controls="courseNavList">
+<span class="nav-icon">▦</span><span>My Courses</span>
+</button>
+<ul class="course-nav-list" id="courseNavList"><li><span class="course-nav-loading">Loading courses…</span></li></ul>
+</li>
     </ul>
 
     <div class="nav-caption">Account</div>
