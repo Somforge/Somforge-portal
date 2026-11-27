@@ -1300,13 +1300,18 @@ async function loadTermMaterials() {
 
 function renderCategories() {
     const grid = document.getElementById("categoryGrid");
+    const searchQuery = (document.getElementById("courseMaterialSearch")?.value || "").trim().toLowerCase();
     grid.replaceChildren();
 
     Object.keys(CATEGORIES).forEach(category => {
         const details = CATEGORIES[category];
-        const materials = currentMaterials.filter(material =>
-            material.content_category === category
-        );
+        const materials = currentMaterials.filter(material => {
+            if (material.content_category !== category) return false;
+            if (!searchQuery) return true;
+            return [material.title || "", material.description || "", material.written_text || ""]
+                .join(" ").toLowerCase().includes(searchQuery);
+        });
+        if (searchQuery && materials.length === 0) return;
 
         const wrapper = document.createElement("section");
         wrapper.className = "category-group";
@@ -1315,7 +1320,7 @@ function renderCategories() {
         button.type = "button";
         button.className = "category-card" +
             (activeCategory === category ? " active" : "");
-        button.setAttribute("aria-expanded", String(activeCategory === category));
+        button.setAttribute("aria-expanded", String(categoryIsOpen));
 
         const icon = document.createElement("div");
         icon.className = "category-icon";
@@ -1342,7 +1347,8 @@ function renderCategories() {
 
         const panel = document.createElement("div");
         panel.className = "category-panel";
-        panel.hidden = activeCategory !== category;
+        const categoryIsOpen = searchQuery ? true : activeCategory === category;
+        panel.hidden = !categoryIsOpen;
         panel.id = "materials-" + category;
 
         button.setAttribute("aria-controls", panel.id);
@@ -1354,7 +1360,7 @@ function renderCategories() {
         wrapper.append(button, panel);
         grid.appendChild(wrapper);
 
-        if (activeCategory === category) {
+        if (categoryIsOpen) {
             renderMaterials(category, panel);
         }
     });
@@ -1461,10 +1467,7 @@ async function renderMaterials(category, panel) {
     }
 
 }
-document.getElementById("courseMaterialSearch")?.addEventListener("input", () => {
-    activeCategory = null;
-    renderCategories();
-});
+document.getElementById("courseMaterialSearch")?.addEventListener("input", renderCategories);
 
 /* AUTHENTICATION AND ACCESS CHECKS */
 
