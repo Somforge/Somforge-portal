@@ -922,6 +922,9 @@ body{font-size:16px}
 .banner-code span{font-size:13px}
 .term-number{font-size:13px}
 .term-card p{font-size:14px}
+.course-material-search{display:grid;gap:8px;max-width:560px;margin:0 0 20px;color:var(--text);font-size:14px;font-weight:700}
+.course-material-search input{width:100%;min-height:48px;padding:12px 15px;border:1px solid var(--border);border-radius:7px;background:#fffdf9;color:var(--text);font:inherit;font-weight:400}
+.course-material-search input:focus{outline:2px solid rgba(154,128,87,.35);border-color:#9a8057}
 .category-grid{display:grid;grid-template-columns:1fr;gap:13px}
 .category-group{min-width:0}
 .category-card{min-height:104px}
@@ -1079,6 +1082,12 @@ body{font-size:16px}
                 </p>
             </div>
 
+            <label class="course-material-search">
+                <span>Search all course materials</span>
+                <input id="courseMaterialSearch" type="search"
+                    placeholder="Search by title, description or content..."
+                    aria-label="Search all course materials">
+            </label>
             <div class="category-grid" id="categoryGrid">
                 <div class="message-box">
                     Loading course materials...
@@ -1289,26 +1298,38 @@ async function loadTermMaterials() {
 }
 
 
-/* DISPLAY AVAILABLE CATEGORIES */
+/* DISPLAY AVAILABLE CATEGORIES AND COURSE-WIDE SEARCH RESULTS */
 
 function renderCategories() {
     const grid = document.getElementById("categoryGrid");
+    const search = document.getElementById("courseMaterialSearch");
+    const query = (search?.value || "").trim().toLowerCase();
     grid.replaceChildren();
 
     Object.keys(CATEGORIES).forEach(category => {
         const details = CATEGORIES[category];
-        const materials = currentMaterials.filter(material =>
-            material.content_category === category
-        );
+        const materials = currentMaterials.filter(material => {
+            if (material.content_category !== category) return false;
+            if (!query) return true;
+            const searchable = [
+                material.title || "",
+                material.description || "",
+                material.written_text || ""
+            ].join(" ").toLowerCase();
+            return searchable.includes(query);
+        });
+
+        if (query && materials.length === 0) return;
 
         const wrapper = document.createElement("section");
         wrapper.className = "category-group";
 
+        const isOpen = query ? true : activeCategory === category;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "category-card" +
-            (activeCategory === category ? " active" : "");
-        button.setAttribute("aria-expanded", String(activeCategory === category));
+            (isOpen ? " active" : "");
+        button.setAttribute("aria-expanded", String(isOpen));
 
         const icon = document.createElement("div");
         icon.className = "category-icon";
@@ -1331,76 +1352,62 @@ function renderCategories() {
         count.className = "category-count";
         count.textContent = materials.length + (materials.length === 1 ? " item" : " items");
 
-        const chevron = document.createElement("span");
-        chevron.className = "category-chevron";
-        chevron.setAttribute("aria-hidden", "true");
-        chevron.textContent = activeCategory === category ? "−" : "+";
-
-        button.append(icon, info, count, chevron);
+        button.append(icon, info, count);
 
         const panel = document.createElement("div");
         panel.className = "category-panel";
-        panel.hidden = activeCategory !== category;
+        panel.hidden = !isOpen;
         panel.id = "materials-" + category;
 
         button.setAttribute("aria-controls", panel.id);
         button.addEventListener("click", () => {
-            activeCategory = activeCategory === category ? null : category;
+            if (query) {
+                search.value = "";
+            }
+            activeCategory = activeCategory === category && !query ? null : category;
             renderCategories();
         });
 
         wrapper.append(button, panel);
         grid.appendChild(wrapper);
 
-        if (activeCategory === category) {
-            renderMaterials(category, panel);
+        if (isOpen) {
+            renderMaterials(category, panel, query);
         }
     });
+
+    if (query && !grid.children.length) {
+        showMessage(grid, "No materials match your search. Try another keyword.");
+    } else if (!query && !currentMaterials.length) {
+        showMessage(grid, "No course materials have been published for this semester yet.");
+    }
 }
 
 
-/* DISPLAY MATERIALS INSIDE THE SELECTED CATEGORY */
+/* DISPLAY MATERIALS INSIDE A CATEGORY */
 
-async function renderMaterials(category, panel) {
+async function renderMaterials(category, panel, query = "") {
     const details = CATEGORIES[category];
     panel.replaceChildren();
 
-    const toolbar = document.createElement("div");
-    toolbar.className = "material-toolbar";
-
     const heading = document.createElement("h3");
+    heading.className = "material-panel-heading";
     heading.textContent = details.title;
-
-    const searchWrap = document.createElement("label");
-    searchWrap.className = "material-search";
-    searchWrap.textContent = "Search this category";
-
-    const search = document.createElement("input");
-    search.type = "search";
-    search.placeholder = "Search by material title or description...";
-    search.setAttribute("aria-label", "Search " + details.title);
-    searchWrap.appendChild(search);
-
-    toolbar.append(heading, searchWrap);
-    panel.appendChild(toolbar);
+    panel.appendChild(heading);
 
     const list = document.createElement("div");
     list.className = "material-list";
     panel.appendChild(list);
 
-    const materials = currentMaterials.filter(material =>
-        material.content_category === category
-    );
-
-    if (materials.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "message-box";
-        empty.textContent = "No resources have been published in this category for Semester " + currentTerm + " yet. Check back later.";
-        list.appendChild(empty);
-        return;
-    }
-
-    const cards = [];
+    const materials = currentMaterials.filter(material => {
+        if (material.content_category !== category) return false;
+        if (!query) return true;
+        return [
+            material.title || "",
+            material.description || "",
+            material.written_text || ""
+        ].join(" ").toLowerCase().includes(query);
+    });
 
     for (const material of materials) {
         const card = document.createElement("article");
@@ -1463,39 +1470,13 @@ async function renderMaterials(category, panel) {
             }
         }
 
-        const searchable = [
-            material.title || "",
-            material.description || "",
-            material.written_text || ""
-        ].join(" ").toLowerCase();
-        card.dataset.search = searchable;
-        cards.push(card);
         list.appendChild(card);
     }
-
-    search.addEventListener("input", () => {
-        const query = search.value.trim().toLowerCase();
-        let visible = 0;
-
-        cards.forEach(card => {
-            const match = card.dataset.search.includes(query);
-            card.hidden = !match;
-            if (match) visible++;
-        });
-
-        let noResults = list.querySelector(".search-empty");
-        if (visible === 0) {
-            if (!noResults) {
-                noResults = document.createElement("div");
-                noResults.className = "message-box search-empty";
-                noResults.textContent = "No materials match your search. Try another keyword.";
-                list.appendChild(noResults);
-            }
-        } else if (noResults) {
-            noResults.remove();
-        }
-    });
 }
+
+document.getElementById("courseMaterialSearch")?.addEventListener("input", renderCategories);
+
+
 /* AUTHENTICATION AND ACCESS CHECKS */
 
 async function loadPage() {
