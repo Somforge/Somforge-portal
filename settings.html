@@ -1,52 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#101f31"><title>My Account | SOMFORGE</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-/* Load the student's assigned courses directly into the sidebar navigation. */
-async function loadCourseNavigation(){
- const list=document.getElementById("courseNavList");
- const item=document.querySelector(".course-nav-item");
- const toggle=document.querySelector(".course-nav-toggle");
- if(!list||!item||!toggle||typeof supabaseClient==="undefined")return;
- const currentCourseId=new URLSearchParams(location.search).get("id");
- try{
-  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
-  if(userError||!user){list.innerHTML='<li><span class="course-nav-loading">Sign in to view courses</span></li>';return;}
-  const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("year_level,account_status").eq("id",user.id).single();
-  if(profileError||!profile||profile.account_status!=="approved"||!profile.year_level){
-   list.innerHTML='<li><span class="course-nav-loading">Courses unavailable</span></li>';return;
-  }
-  const {data:subs,error:subError}=await supabaseClient.from("subscriptions").select("status,start_date,end_date").eq("student_id",user.id).order("end_date",{ascending:false});
-  if(subError)throw subError;
-  const now=new Date();
-  const active=(subs||[]).some(s=>s.status==="active"&&s.start_date&&s.end_date&&new Date(s.start_date)<=now&&new Date(s.end_date)>now);
-  if(!active){list.innerHTML='<li><span class="course-nav-loading">Active subscription required</span></li>';return;}
-  const {data:courses,error:courseError}=await supabaseClient.from("courses").select("id,title,year_level").eq("year_level",profile.year_level).order("title");
-  if(courseError)throw courseError;
-  list.replaceChildren();
-  if(!courses||!courses.length){
-   const li=document.createElement("li");const span=document.createElement("span");
-   span.className="course-nav-loading";span.textContent="No courses assigned";li.appendChild(span);list.appendChild(li);return;
-  }
-  courses.forEach(course=>{
-   const li=document.createElement("li");const a=document.createElement("a");
-   a.href="course.html?id="+encodeURIComponent(course.id);a.textContent=course.title;
-   if(currentCourseId===String(course.id)){a.classList.add("active");a.setAttribute("aria-current","page");}
-   li.appendChild(a);list.appendChild(li);
-  });
-  if(currentCourseId){item.classList.add("expanded");toggle.setAttribute("aria-expanded","true");}
- }catch(error){
-  console.error("Course navigation error:",error);
-  list.innerHTML='<li><span class="course-nav-loading">Unable to load courses</span></li>';
- }
-}
-document.querySelector(".course-nav-toggle")?.addEventListener("click",function(){
- const item=this.closest(".course-nav-item");
- const expanded=item.classList.toggle("expanded");
- this.setAttribute("aria-expanded",String(expanded));
-});
-loadCourseNavigation();
-
-</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><style>
 :root{--navy:#101f31;--navy-light:#1a2c40;--gold:#c5a166;--paper:#f6f3ed;--white:#fffefa;--text:#18283a;--muted:#66717c;--border:#e4ded3;--green:#276746;--red:#a33d35;--shadow:0 5px 22px rgba(16,31,49,.045)}
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;background:var(--paper);color:var(--text);-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}button,input,select{font:inherit}
 .sidebar{position:fixed;inset:0 auto 0 0;width:258px;background:var(--navy);color:#fff;padding:29px 19px 20px;display:flex;flex-direction:column;z-index:100}
@@ -132,4 +86,50 @@ function formatDate(value){return value?new Date(value).toLocaleDateString("en-G
 async function requireUser(){const {data:{user},error}=await supabaseClient.auth.getUser();if(error||!user){location.href="login.html";return null;}const {data}=await supabaseClient.from("profiles").select("full_name").eq("id",user.id).single();const name=data?.full_name||"Student";document.getElementById("topName").textContent=name;document.getElementById("sideName").textContent=name;return user;}
 document.getElementById("logoutButton").addEventListener("click",async()=>{const {error}=await supabaseClient.auth.signOut();if(error){alert("Unable to sign out. Please try again.");return;}location.href="login.html";});
 (async()=>{await requireUser()})();document.getElementById("passwordForm").addEventListener("submit",async e=>{e.preventDefault();const current=document.getElementById("currentPassword").value,next=document.getElementById("newPassword").value,confirm=document.getElementById("confirmPassword").value,msg=document.getElementById("passwordMessage"),btn=document.getElementById("updatePassword");msg.className="message";if(next.length<8){msg.textContent="Your new password must contain at least 8 characters.";msg.classList.add("error");return;}if(next!==confirm){msg.textContent="The new passwords do not match.";msg.classList.add("error");return;}if(next===current){msg.textContent="Choose a password different from your current password.";msg.classList.add("error");return;}btn.disabled=true;const {data:{user}}=await supabaseClient.auth.getUser();const {error:verify}=await supabaseClient.auth.signInWithPassword({email:user.email,password:current});if(verify){btn.disabled=false;msg.textContent="Your current password could not be verified. Check it and try again.";msg.classList.add("error");return;}const {error}=await supabaseClient.auth.updateUser({password:next});btn.disabled=false;if(error){msg.textContent=error.message;msg.classList.add("error");return;}msg.textContent="Your password has been updated.";msg.classList.add("success");e.target.reset();});
-</script></body></html>
+</script><script>
+/* Load the student's assigned courses directly into the sidebar navigation. */
+async function loadCourseNavigation(){
+ const list=document.getElementById("courseNavList");
+ const item=document.querySelector(".course-nav-item");
+ const toggle=document.querySelector(".course-nav-toggle");
+ if(!list||!item||!toggle||typeof supabaseClient==="undefined")return;
+ const currentCourseId=new URLSearchParams(location.search).get("id");
+ try{
+  const {data:{user},error:userError}=await supabaseClient.auth.getUser();
+  if(userError||!user){list.innerHTML='<li><span class="course-nav-loading">Sign in to view courses</span></li>';return;}
+  const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("year_level,account_status").eq("id",user.id).single();
+  if(profileError||!profile||profile.account_status!=="approved"||!profile.year_level){
+   list.innerHTML='<li><span class="course-nav-loading">Courses unavailable</span></li>';return;
+  }
+  const {data:subs,error:subError}=await supabaseClient.from("subscriptions").select("status,start_date,end_date").eq("student_id",user.id).order("end_date",{ascending:false});
+  if(subError)throw subError;
+  const now=new Date();
+  const active=(subs||[]).some(s=>s.status==="active"&&s.start_date&&s.end_date&&new Date(s.start_date)<=now&&new Date(s.end_date)>now);
+  if(!active){list.innerHTML='<li><span class="course-nav-loading">Active subscription required</span></li>';return;}
+  const {data:courses,error:courseError}=await supabaseClient.from("courses").select("id,title,year_level").eq("year_level",profile.year_level).order("title");
+  if(courseError)throw courseError;
+  list.replaceChildren();
+  if(!courses||!courses.length){
+   const li=document.createElement("li");const span=document.createElement("span");
+   span.className="course-nav-loading";span.textContent="No courses assigned";li.appendChild(span);list.appendChild(li);return;
+  }
+  courses.forEach(course=>{
+   const li=document.createElement("li");const a=document.createElement("a");
+   a.href="course.html?id="+encodeURIComponent(course.id);a.textContent=course.title;
+   if(currentCourseId===String(course.id)){a.classList.add("active");a.setAttribute("aria-current","page");}
+   li.appendChild(a);list.appendChild(li);
+  });
+  if(currentCourseId){item.classList.add("expanded");toggle.setAttribute("aria-expanded","true");}
+ }catch(error){
+  console.error("Course navigation error:",error);
+  list.innerHTML='<li><span class="course-nav-loading">Unable to load courses</span></li>';
+ }
+}
+document.querySelector(".course-nav-toggle")?.addEventListener("click",function(){
+ const item=this.closest(".course-nav-item");
+ const expanded=item.classList.toggle("expanded");
+ this.setAttribute("aria-expanded",String(expanded));
+});
+loadCourseNavigation();
+</script>
+</body></html>
