@@ -1298,38 +1298,24 @@ async function loadTermMaterials() {
 }
 
 
-/* DISPLAY AVAILABLE CATEGORIES AND COURSE-WIDE SEARCH RESULTS */
-
 function renderCategories() {
     const grid = document.getElementById("categoryGrid");
-    const search = document.getElementById("courseMaterialSearch");
-    const query = (search?.value || "").trim().toLowerCase();
     grid.replaceChildren();
 
     Object.keys(CATEGORIES).forEach(category => {
         const details = CATEGORIES[category];
-        const materials = currentMaterials.filter(material => {
-            if (material.content_category !== category) return false;
-            if (!query) return true;
-            const searchable = [
-                material.title || "",
-                material.description || "",
-                material.written_text || ""
-            ].join(" ").toLowerCase();
-            return searchable.includes(query);
-        });
-
-        if (query && materials.length === 0) return;
+        const materials = currentMaterials.filter(material =>
+            material.content_category === category
+        );
 
         const wrapper = document.createElement("section");
         wrapper.className = "category-group";
 
-        const isOpen = query ? true : activeCategory === category;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "category-card" +
-            (isOpen ? " active" : "");
-        button.setAttribute("aria-expanded", String(isOpen));
+            (activeCategory === category ? " active" : "");
+        button.setAttribute("aria-expanded", String(activeCategory === category));
 
         const icon = document.createElement("div");
         icon.className = "category-icon";
@@ -1356,58 +1342,59 @@ function renderCategories() {
 
         const panel = document.createElement("div");
         panel.className = "category-panel";
-        panel.hidden = !isOpen;
+        panel.hidden = activeCategory !== category;
         panel.id = "materials-" + category;
 
         button.setAttribute("aria-controls", panel.id);
         button.addEventListener("click", () => {
-            if (query) {
-                search.value = "";
-            }
-            activeCategory = activeCategory === category && !query ? null : category;
+            activeCategory = activeCategory === category ? null : category;
             renderCategories();
         });
 
         wrapper.append(button, panel);
         grid.appendChild(wrapper);
 
-        if (isOpen) {
-            renderMaterials(category, panel, query);
+        if (activeCategory === category) {
+            renderMaterials(category, panel);
         }
     });
-
-    if (query && !grid.children.length) {
-        showMessage(grid, "No materials match your search. Try another keyword.");
-    } else if (!query && !currentMaterials.length) {
-        showMessage(grid, "No course materials have been published for this semester yet.");
-    }
 }
 
 
-/* DISPLAY MATERIALS INSIDE A CATEGORY */
+/* DISPLAY MATERIALS INSIDE THE SELECTED CATEGORY */
 
-async function renderMaterials(category, panel, query = "") {
+async function renderMaterials(category, panel) {
     const details = CATEGORIES[category];
     panel.replaceChildren();
 
+    const toolbar = document.createElement("div");
+    toolbar.className = "material-toolbar";
+
     const heading = document.createElement("h3");
-    heading.className = "material-panel-heading";
     heading.textContent = details.title;
-    panel.appendChild(heading);
+    toolbar.appendChild(heading);
+    panel.appendChild(toolbar);
 
     const list = document.createElement("div");
     list.className = "material-list";
     panel.appendChild(list);
 
+    const query = (document.getElementById("courseMaterialSearch")?.value || "").trim().toLowerCase();
     const materials = currentMaterials.filter(material => {
         if (material.content_category !== category) return false;
         if (!query) return true;
-        return [
-            material.title || "",
-            material.description || "",
-            material.written_text || ""
-        ].join(" ").toLowerCase().includes(query);
+        return [material.title || "", material.description || "", material.written_text || ""]
+            .join(" ").toLowerCase().includes(query);
     });
+
+    if (materials.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "message-box";
+        empty.textContent = "No resources have been published in this category for Semester " + currentTerm + " yet. Check back later.";
+        list.appendChild(empty);
+        return;
+    }
+
 
     for (const material of materials) {
         const card = document.createElement("article");
@@ -1472,10 +1459,12 @@ async function renderMaterials(category, panel, query = "") {
 
         list.appendChild(card);
     }
+
 }
-
-document.getElementById("courseMaterialSearch")?.addEventListener("input", renderCategories);
-
+document.getElementById("courseMaterialSearch")?.addEventListener("input", () => {
+    activeCategory = null;
+    renderCategories();
+});
 
 /* AUTHENTICATION AND ACCESS CHECKS */
 
