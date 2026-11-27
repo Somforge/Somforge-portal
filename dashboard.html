@@ -760,6 +760,47 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
 /* Official SOMFORGE emblem asset */
 .brand-symbol{display:block;object-fit:contain;width:43px;height:46px;flex:0 0 43px}
 .mobile-brand .brand-symbol{width:34px;height:38px;flex:0 0 34px}
+
+/* Readability and restrained navigation */
+.nav-links a{font-size:14px}
+.nav-caption{font-size:10px}
+.sidebar-note{font-size:12px}
+.logout{font-size:13px}
+.breadcrumb{font-size:13px}
+.profile-name{font-size:14px}
+.profile-year{font-size:12px}
+.eyebrow{font-size:11px}
+.hero p{font-size:15px;line-height:1.8}
+.hero-action{font-size:14px}
+.section-kicker{font-size:11px}
+.section-heading h2{font-size:24px}
+.section-heading p{font-size:14px}
+.overview-label{font-size:13px}
+.overview-value{font-size:23px}
+.overview-foot{font-size:13px}
+.quick-link h3{font-size:16px}
+.quick-link p{font-size:14px;line-height:1.75}
+.announcement h3,.notice h3{font-size:15px}
+.announcement p,.notice p{font-size:14px;line-height:1.8}
+.footer{font-size:12px}
+.quick-arrow{display:none}
+@media(max-width:680px){
+ .nav-links a{font-size:14px}
+ .sidebar-note{font-size:12px}
+ .profile-name{font-size:13px}
+ .profile-year{font-size:11px}
+ .hero p{font-size:14px}
+ .hero-action{font-size:13px}
+ .section-heading h2{font-size:21px}
+ .section-heading p{font-size:13px}
+ .overview-label,.overview-foot{font-size:12px}
+ .overview-value{font-size:18px}
+ .quick-link h3{font-size:15px}
+ .quick-link p{font-size:13px}
+ .announcement h3,.notice h3{font-size:14px}
+ .announcement p,.notice p{font-size:13px}
+ .footer{font-size:12px}
+}
 </style>
 </head>
 
@@ -803,7 +844,7 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
             <strong>SOMFORGE</strong><br>
             Medical Learning Portal
         </div>
-        <button class="logout" id="logoutButton">↪ &nbsp; Log Out</button>
+        <button class="logout" id="logoutButton">Log Out</button>
     </div>
 
 </aside>
@@ -835,7 +876,7 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
                     revision and professional development. Pick up
                     where you left off and keep moving forward.
                 </p>
-                <a class="hero-action" href="courses.html">Explore my courses <span aria-hidden="true">→</span></a>
+                <a class="hero-action" href="courses.html">Explore my courses</a>
             </div>
         </section>
 
@@ -885,7 +926,7 @@ body{background:var(--background);-webkit-font-smoothing:antialiased}
                     <div class="quick-icon">▦</div>
                     <h3>My Courses</h3>
                     <p>Explore your academic subjects and course materials.</p>
-                    <span class="quick-arrow">→</span>
+                    
                 </a>
 
                 <a href="account.html" class="quick-link">
