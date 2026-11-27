@@ -903,6 +903,60 @@ body{background:var(--background)}
 .course-nav-toggle:focus-visible,.course-nav-list a:focus-visible{outline:2px solid #c5a166;outline-offset:2px}
 @media(max-width:680px){.course-nav-list a{font-size:14px;padding:9px}}
 
+
+/* COURSE PAGE ACCESSIBILITY AND INLINE MATERIAL ACCORDIONS */
+body{font-size:16px}
+.nav-links a{font-size:15px}
+.nav-caption{font-size:12px}
+.sidebar-note{font-size:13px}
+.logout{font-size:14px}
+.breadcrumb{font-size:14px}
+.profile-name{font-size:15px}
+.profile-year{font-size:13px}
+.back-link{font-size:14px}
+.eyebrow,.banner-label{font-size:13px}
+.page-heading p,.section-heading p{font-size:15px}
+.banner-title{font-size:26px}
+.banner-description{font-size:15px}
+.banner-code strong{font-size:26px}
+.banner-code span{font-size:13px}
+.term-number{font-size:13px}
+.term-card p{font-size:14px}
+.category-grid{display:grid;grid-template-columns:1fr;gap:13px}
+.category-group{min-width:0}
+.category-card{min-height:104px}
+.category-info h3{font-size:18px}
+.category-info p{font-size:14px;line-height:1.55}
+.category-count{font-size:13px;white-space:nowrap}
+.category-chevron{font-size:25px;font-weight:400;color:#8b7046;margin-left:5px}
+.category-panel{margin-top:9px;padding:20px;background:#fbf9f4;border:1px solid var(--border);border-radius:10px}
+.category-panel[hidden]{display:none}
+.material-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+.material-toolbar h3{font-family:"Playfair Display",Georgia,serif;font-size:21px;font-weight:500;color:var(--navy)}
+.material-search{display:grid;gap:7px;min-width:min(100%,330px);font-size:14px;font-weight:700;color:var(--text)}
+.material-search input{width:100%;min-height:46px;padding:11px 14px;border:1px solid var(--border);border-radius:7px;background:#fffdf9;color:var(--text);font:inherit;font-weight:400}
+.material-search input:focus{outline:2px solid rgba(154,128,87,.35);border-color:#9a8057}
+.material-list{display:grid;gap:12px}
+.material-card{padding:21px;gap:20px}
+.material-details h3{font-size:17px}
+.material-details p{font-size:15px;line-height:1.65}
+.material-meta{font-size:13px}
+.material-button{font-size:14px;padding:11px 17px}
+.written-content{font-size:15px}
+.message-box{font-size:15px}
+.footer{font-size:13px}
+@media(max-width:680px){
+ .category-panel{padding:15px}
+ .material-toolbar{align-items:stretch;flex-direction:column}
+ .material-toolbar h3{font-size:20px}
+ .material-search{min-width:0}
+ .category-info h3{font-size:17px}
+ .category-info p{font-size:14px}
+ .category-count{font-size:12px}
+ .banner-description{font-size:14px}
+ .term-card p{font-size:14px}
+}
+
 </style>
 </head>
 
@@ -1249,27 +1303,22 @@ async function loadTermMaterials() {
 
 function renderCategories() {
     const grid = document.getElementById("categoryGrid");
-
     grid.replaceChildren();
 
-    /* Object.keys preserves the order defined in CATEGORIES. */
-
-    // Keep the full learning structure visible even when a category is empty.
-    // The count shows what has actually been published for this course and semester.
-    const availableCategories = Object.keys(CATEGORIES);
-
-    availableCategories.forEach(category => {
+    Object.keys(CATEGORIES).forEach(category => {
         const details = CATEGORIES[category];
-
         const materials = currentMaterials.filter(material =>
             material.content_category === category
         );
 
-        const button = document.createElement("button");
+        const wrapper = document.createElement("section");
+        wrapper.className = "category-group";
 
-        button.className =
-            "category-card" +
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "category-card" +
             (activeCategory === category ? " active" : "");
+        button.setAttribute("aria-expanded", String(activeCategory === category));
 
         const icon = document.createElement("div");
         icon.className = "category-icon";
@@ -1286,103 +1335,176 @@ function renderCategories() {
         const description = document.createElement("p");
         description.textContent = details.description;
 
-        info.appendChild(title);
-        info.appendChild(description);
+        info.append(title, description);
 
         const count = document.createElement("span");
         count.className = "category-count";
-        count.textContent = materials.length;
+        count.textContent = materials.length + (materials.length === 1 ? " item" : " items");
 
-        button.appendChild(icon);
-        button.appendChild(info);
-        button.appendChild(count);
+        const chevron = document.createElement("span");
+        chevron.className = "category-chevron";
+        chevron.setAttribute("aria-hidden", "true");
+        chevron.textContent = activeCategory === category ? "−" : "+";
 
+        button.append(icon, info, count, chevron);
+
+        const panel = document.createElement("div");
+        panel.className = "category-panel";
+        panel.hidden = activeCategory !== category;
+        panel.id = "materials-" + category;
+
+        button.setAttribute("aria-controls", panel.id);
         button.addEventListener("click", () => {
-            activeCategory = category;
+            activeCategory = activeCategory === category ? null : category;
             renderCategories();
-            renderMaterials(category);
         });
 
-        grid.appendChild(button);
-    });
+        wrapper.append(button, panel);
+        grid.appendChild(wrapper);
 
-    if (activeCategory && availableCategories.includes(activeCategory)) {
-        renderMaterials(activeCategory);
-    }
+        if (activeCategory === category) {
+            renderMaterials(category, panel);
+        }
+    });
 }
 
 
-/* DISPLAY MATERIALS */
+/* DISPLAY MATERIALS INSIDE THE SELECTED CATEGORY */
 
-async function renderMaterials(category) {
+async function renderMaterials(category, panel) {
     const details = CATEGORIES[category];
-    const section = document.getElementById("materialSection");
-    const heading = document.getElementById("materialHeading");
-    const list = document.getElementById("materialList");
+    panel.replaceChildren();
+
+    const toolbar = document.createElement("div");
+    toolbar.className = "material-toolbar";
+
+    const heading = document.createElement("h3");
     heading.textContent = details.title;
-    list.replaceChildren();
-    const materials = currentMaterials.filter(material => material.content_category === category);
+
+    const searchWrap = document.createElement("label");
+    searchWrap.className = "material-search";
+    searchWrap.textContent = "Search this category";
+
+    const search = document.createElement("input");
+    search.type = "search";
+    search.placeholder = "Search by material title or description...";
+    search.setAttribute("aria-label", "Search " + details.title);
+    searchWrap.appendChild(search);
+
+    toolbar.append(heading, searchWrap);
+    panel.appendChild(toolbar);
+
+    const list = document.createElement("div");
+    list.className = "material-list";
+    panel.appendChild(list);
+
+    const materials = currentMaterials.filter(material =>
+        material.content_category === category
+    );
+
     if (materials.length === 0) {
         const empty = document.createElement("div");
         empty.className = "message-box";
         empty.textContent = "No resources have been published in this category for Semester " + currentTerm + " yet. Check back later.";
         list.appendChild(empty);
+        return;
     }
+
+    const cards = [];
+
     for (const material of materials) {
         const card = document.createElement("article");
         card.className = "material-card";
+
         const info = document.createElement("div");
         info.className = "material-details";
+
         const title = document.createElement("h3");
         title.textContent = material.title || "Untitled material";
         info.appendChild(title);
+
         if (material.description) {
             const description = document.createElement("p");
             description.textContent = material.description;
             info.appendChild(description);
         }
+
         if (material.written_text) {
             const written = document.createElement("div");
             written.className = "written-content";
             written.textContent = material.written_text;
             info.appendChild(written);
         }
+
         if (material.created_at) {
             const date = document.createElement("div");
             date.className = "material-meta";
             date.textContent = "Published " + new Date(material.created_at).toLocaleDateString();
             info.appendChild(date);
         }
+
         card.appendChild(info);
+
         if (material.file_url) {
             let fileUrl = material.file_url;
             if (!/^https?:\/\//i.test(fileUrl)) {
                 const { data: signedData, error: signedError } = await supabaseClient
                     .storage.from("learning-materials").createSignedUrl(fileUrl, 3600);
+
                 if (signedError || !signedData?.signedUrl) {
                     const unavailable = document.createElement("p");
                     unavailable.className = "material-meta";
                     unavailable.textContent = "This resource is temporarily unavailable. Please contact the course administrator.";
                     card.appendChild(unavailable);
-                    list.appendChild(card);
-                    continue;
+                } else {
+                    fileUrl = signedData.signedUrl;
                 }
-                fileUrl = signedData.signedUrl;
             }
-            const link = document.createElement("a");
-            link.className = "material-button";
-            link.href = fileUrl;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            link.textContent = "Open Material";
-            card.appendChild(link);
+
+            if (fileUrl) {
+                const link = document.createElement("a");
+                link.className = "material-button";
+                link.href = fileUrl;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "Open Material";
+                card.appendChild(link);
+            }
         }
+
+        const searchable = [
+            material.title || "",
+            material.description || "",
+            material.written_text || ""
+        ].join(" ").toLowerCase();
+        card.dataset.search = searchable;
+        cards.push(card);
         list.appendChild(card);
     }
-    section.hidden = false;
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-}
 
+    search.addEventListener("input", () => {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+
+        cards.forEach(card => {
+            const match = card.dataset.search.includes(query);
+            card.hidden = !match;
+            if (match) visible++;
+        });
+
+        let noResults = list.querySelector(".search-empty");
+        if (visible === 0) {
+            if (!noResults) {
+                noResults = document.createElement("div");
+                noResults.className = "message-box search-empty";
+                noResults.textContent = "No materials match your search. Try another keyword.";
+                list.appendChild(noResults);
+            }
+        } else if (noResults) {
+            noResults.remove();
+        }
+    });
+}
 /* AUTHENTICATION AND ACCESS CHECKS */
 
 async function loadPage() {
